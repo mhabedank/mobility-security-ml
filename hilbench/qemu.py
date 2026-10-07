@@ -36,8 +36,10 @@ def _pidfile(port: int) -> Path:
     return Path(tempfile.gettempdir()) / f"hilbench-qemu-{port}.pid"
 
 
-def merge_flash(fw_dir: Path, size: str = "4MB") -> Path:
+def merge_flash(fw_dir: Path, size: str | None = None) -> Path:
     manifest = json.loads((fw_dir / "manifest.json").read_text())
+    # QEMU needs an image of exactly the size the bootloader header announces.
+    size = size or manifest.get("flash_size") or "4MB"
     chip = manifest.get("mcu") or "esp32"
     out = fw_dir / "qemu_flash.bin"
     args = ["--chip", chip, "merge_bin", "--fill-flash-size", size, "-o", str(out)]

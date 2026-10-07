@@ -87,6 +87,10 @@ jobs:
         run: |
           hilbench --boards hil/qemu-boards.yaml run -b ${{ matrix.board }} --quick --require-all \
             --results results/${{ matrix.board }} --junit results/${{ matrix.board }}/junit.xml
+      - name: diagnostics
+        if: failure()
+        run: |
+          for f in build/fw/*/qemu.log results/*/logs/*.log; do echo "=== $f"; tail -n 60 "$f" | cut -c1-300; done
       - name: stop QEMU
         if: always()
         run: python -m hilbench.qemu stop --port 5555; python -m hilbench.qemu stop --port 5556; python -m hilbench.qemu stop --port 5557

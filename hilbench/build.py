@@ -115,8 +115,8 @@ def build_platformio(lab: Lab, target: Target, build_id: int, verbose: bool = Fa
             name = src.name if src.name not in {i["file"] for i in images} else f"{img['offset']}_{src.name}"
             shutil.copy2(src, out / name)
             images.append({"offset": img["offset"], "file": name})
-        extra.update(flash_images=images, **{k: pio_manifest[k] for k in ("flash_mode", "flash_freq", "mcu")
-                                              if k in pio_manifest})
+        keys = ("flash_mode", "flash_freq", "mcu", "flash_size")
+        extra.update(flash_images=images, **{k: pio_manifest[k] for k in keys if k in pio_manifest})
     return _write_manifest(out, target, build_id, files, extra)
 
 

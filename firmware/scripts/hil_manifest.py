@@ -16,6 +16,7 @@ def _write_manifest(source, target, env):
         "platform": platform,
         "board": board.id,
         "mcu": board.get("build.mcu", ""),
+        "flash_size": board.get("upload.flash_size", ""),
         "build_id": "0x%08x" % (int(os.environ.get("HIL_BUILD_ID", "0"), 0) & 0xFFFFFFFF),
         "flash_images": [],
     }
