@@ -107,15 +107,54 @@ def remote_files(src: Source) -> list[RemoteFile]:
 
 # ------------------------------------------------ partial (range) zip reads --
 
-def _range_get(url: str, start: int, end: int, retries: int = 4) -> bytes:
-    """Bytes [start, end] (inclusive) of a remote file; the server must honour Range."""
+class _RateLimit:
+    """Spacing between requests to one host, shared by all threads (Zenodo answers
+    429 above roughly 100-130 requests per minute)."""
+
+    def __init__(self, per_minute: float):
+        import threading
+
+        self.interval, self.next, self.lock = 60.0 / per_minute, 0.0, threading.Lock()
+
+    def wait(self) -> None:
+        with self.lock:
+            now = time.monotonic()
+            delay = max(0.0, self.next - now)
+            self.next = max(now, self.next) + self.interval
+        if delay:
+            time.sleep(delay)
+
+    def backoff(self, seconds: float) -> None:
+        with self.lock:
+            self.next = max(self.next, time.monotonic() + seconds)
+
+
+RANGE_RATE = _RateLimit(per_minute=90)
+
+
+def _range_get(url: str, start: int, end: int, retries: int = 8) -> bytes:
+    """Bytes [start, end] (inclusive) of a remote file; the server must honour Range.
+    Rate-limited; backs off on 429/503 as the server asks (Retry-After)."""
+    import urllib.error
+
     for attempt in range(retries):
+        RANGE_RATE.wait()
         try:
             req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Range": f"bytes={start}-{end}"})
             with urllib.request.urlopen(req, timeout=120) as resp:
                 if resp.status != 206:
                     raise DataError(f"{url}: server ignores Range requests")
                 return resp.read()
+        except urllib.error.HTTPError as e:
+            if e.code not in (429, 500, 502, 503, 504) or attempt == retries - 1:
+                raise
+            try:
+                pause = float(e.headers.get("Retry-After") or 0)
+            except ValueError:
+                pause = 0.0
+            pause = max(pause, min(120.0, 5.0 * 2 ** attempt))
+            print(f"    HTTP {e.code}, pausing {pause:.0f} s", flush=True)
+            RANGE_RATE.backoff(pause)
         except OSError:
             if attempt == retries - 1:
                 raise
@@ -206,7 +245,7 @@ def select_members(names: list[str], select: tuple[tuple[str, int], ...], seed: 
 
 
 def fetch_zip_members(f: RemoteFile, target: Path, select: tuple[tuple[str, int], ...], seed: int = 0,
-                      workers: int = 8) -> int:
+                      workers: int = 4) -> int:
     """Extract only members matching (glob, max count) pairs from a remote zip:
     the central directory is read via ranges, then each member with one request."""
     from concurrent.futures import ThreadPoolExecutor

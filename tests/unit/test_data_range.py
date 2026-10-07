@@ -84,3 +84,37 @@ def test_zero_filled_wrapper_is_reported(tmp_path):
     wrapped.write_bytes(empty.getvalue() + b"\0" * (3 << 20))
     with pytest.raises(dl.DataError, match="only by zero bytes"):
         dl._extract(wrapped, tmp_path / "out")
+
+
+def test_range_get_backs_off_on_429(monkeypatch):
+    import email.message
+    import urllib.error
+
+    calls, pauses = [], []
+
+    class Resp:
+        status = 206
+
+        def read(self):
+            return b"abc"
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+    def fake_urlopen(req, timeout=0):
+        calls.append(req.get_header("Range"))
+        if len(calls) == 1:
+            hdrs = email.message.Message()
+            hdrs["Retry-After"] = "7"
+            raise urllib.error.HTTPError(req.full_url, 429, "TOO MANY REQUESTS", hdrs, None)
+        return Resp()
+
+    monkeypatch.setattr(dl.urllib.request, "urlopen", fake_urlopen)
+    limiter = dl._RateLimit(per_minute=6000)
+    monkeypatch.setattr(limiter, "backoff", lambda s: pauses.append(s))
+    monkeypatch.setattr(dl, "RANGE_RATE", limiter)
+    assert dl._range_get("https://example.invalid/x", 10, 12) == b"abc"
+    assert calls == ["bytes=10-12", "bytes=10-12"] and pauses == [7.0]

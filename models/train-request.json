@@ -4,5 +4,6 @@
   ],
   "epochs": 40,
   "version": "0.2.0",
+  "seed": 0,
   "note": "Pushing a change to this file trains these tasks on GitHub Actions (workflow train.yml) and commits the resulting models (parameters + reports only, never data) back to the branch."
 }
