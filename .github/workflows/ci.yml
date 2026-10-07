@@ -54,6 +54,50 @@ jobs:
           name: fw-${{ matrix.target }}
           path: build/fw/${{ matrix.target }}
 
+  qemu:
+    name: ${{ matrix.board }} (real firmware in QEMU)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {board: esp32-qemu, target: esp32, arch: xtensa}
+          - {board: esp32s3-qemu, target: esp32s3, arch: xtensa}
+          - {board: esp32c3-qemu, target: esp32c3, arch: riscv32}
+    env:
+      QEMU_RELEASE: esp-develop-9.2.2-20250817
+      QEMU_VERSION: esp_develop_9.2.2_20250817
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ matrix.target }}-${{ hashFiles('firmware/platformio.ini') }}
+          restore-keys: pio-${{ matrix.target }}-
+      - name: Espressif QEMU
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq libslirp0 libsdl2-2.0-0 libpixman-1-0
+          curl -sSL "https://github.com/espressif/qemu/releases/download/$QEMU_RELEASE/qemu-${{ matrix.arch }}-softmmu-$QEMU_VERSION-x86_64-linux-gnu.tar.xz" | tar xJ -C "$HOME"
+          echo "$HOME/qemu/bin" >> "$GITHUB_PATH"
+      - run: pip install -e ".[hw]"
+      - name: HIL suite on the emulated board
+        run: |
+          hilbench --boards hil/qemu-boards.yaml run -b ${{ matrix.board }} --quick --require-all \
+            --results results/${{ matrix.board }} --junit results/${{ matrix.board }}/junit.xml
+      - name: stop QEMU
+        if: always()
+        run: python -m hilbench.qemu stop --port 5555; python -m hilbench.qemu stop --port 5556; python -m hilbench.qemu stop --port 5557
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qemu-${{ matrix.board }}
+          path: |
+            results/
+            build/fw/*/qemu.log
+
   firmware-summary:
     name: firmware size overview
     needs: firmware

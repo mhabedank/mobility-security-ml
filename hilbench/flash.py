@@ -8,7 +8,7 @@ Flashers (target `flasher:` / board `flasher:`):
                 "st-flash --reset write {bin} 0x08000000"
                 "pyocd flash -t stm32f446re {hex}"
                 "openocd -f board/st_nucleo_f4.cfg -c 'program {elf} verify reset exit'"
-              placeholders: {port} {bin} {elf} {hex} {uf2} {dir}
+              placeholders: {port} {bin} {elf} {hex} {uf2} {dir} {python}
   none        nothing to flash (simulator)
 """
 from __future__ import annotations
@@ -64,7 +64,7 @@ def _esptool_major() -> int:
         return 4
 
 
-_V5_TOKENS = {"chip_id", "write_flash", "read_mac", "erase_flash", "default_reset", "hard_reset",
+_V5_TOKENS = {"chip_id", "write_flash", "merge_bin", "read_mac", "erase_flash", "default_reset", "hard_reset",
               "no_reset", "usb_reset", "--flash_mode", "--flash_freq", "--flash_size"}
 
 
@@ -154,7 +154,7 @@ class CommandFlasher(Flasher):
         if not tmpl:
             raise FlashError(f"{self.board.id}: flasher 'command' needs flasher_options.command")
         files = {ext: str(fw.file(ext) or "") for ext in ("bin", "elf", "hex", "uf2")}
-        return shlex.split(tmpl.format(port=port or "", dir=str(fw.dir), **files))
+        return shlex.split(tmpl.format(port=port or "", dir=str(fw.dir), python=sys.executable, **files))
 
 
 class Uf2Flasher(Flasher):

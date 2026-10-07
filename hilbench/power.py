@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import shlex
 import subprocess
+import sys
 import time
 from typing import Any
 
@@ -47,7 +48,8 @@ class NoPower(PowerControl):
 
 
 def _run(cmd: list[str] | str, timeout: float = 30.0) -> None:
-    argv = shlex.split(cmd) if isinstance(cmd, str) else cmd
+    """Run a command; in string commands {python} is the bench's interpreter."""
+    argv = shlex.split(cmd.replace("{python}", sys.executable)) if isinstance(cmd, str) else cmd
     try:
         res = subprocess.run(argv, capture_output=True, text=True, timeout=timeout)
     except FileNotFoundError as e:
