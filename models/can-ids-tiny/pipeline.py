@@ -140,15 +140,22 @@ def alarm_grid(caps: list[dict], scores: list[np.ndarray], thr: float) -> dict:
     for k, w in ALARM_GRID:
         runs = [(c["ts"], c["y"], alarms(t, sc >= thr, k, w, ALARM_HOLDOFF_MS))
                 for c, t, sc in zip(caps, ts_us, scores)]
-        out[f"k{k}_w{w}"] = alarm_metrics(runs, window_s=w / 1000)
+        out[f"k{k}_w{w}"] = alarm_metrics(runs)
     return out
 
 
-def pick_alarm(grid: dict, recall_tolerance: float = 0.02) -> str:
-    """Fewest false alarms among settings whose episode recall is within tolerance of the best."""
-    best_recall = max(m["episode_recall"] for m in grid.values())
-    ok = {k: m for k, m in grid.items() if m["episode_recall"] >= best_recall - recall_tolerance}
-    return min(ok, key=lambda k: ok[k]["false_alarms_per_hour"])
+ALARM_BUDGET_PER_HOUR = 2.0
+
+
+def pick_alarm(grid: dict) -> str:
+    """Highest episode recall among settings within the false-alarm budget (ties: faster alarm).
+
+    If no setting meets the budget, take the one with the fewest false alarms.
+    """
+    ok = {k: m for k, m in grid.items() if m["false_alarms_per_hour"] <= ALARM_BUDGET_PER_HOUR}
+    if not ok:
+        return min(grid, key=lambda k: grid[k]["false_alarms_per_hour"])
+    return max(ok, key=lambda k: (ok[k]["episode_recall"], -ok[k]["median_latency_ms"]))
 
 
 def select(train_caps: list[dict], idx: list[int], rng) -> tuple[dict, float, list]:
@@ -168,6 +175,38 @@ def select(train_caps: list[dict], idx: list[int], rng) -> tuple[dict, float, li
     return best[0], best[1], log
 
 
+SCORES = OUT / "scores"
+
+
+def save_scores(set_name, fs_name, split, caps, scores, n_trees) -> None:
+    """Store per-frame tree votes (uint8) so alarm metrics can be recomputed without training."""
+    d = SCORES / set_name / fs_name
+    d.mkdir(parents=True, exist_ok=True)
+    votes = {c["name"]: np.rint(sc * n_trees).astype(np.uint8) for c, sc in zip(caps, scores)}
+    np.savez_compressed(d / f"{split}.npz", n_trees=n_trees, **votes)
+
+
+def cmd_alarms(args) -> None:
+    """Recompute the alarm grid in protocol_results.json from stored scores."""
+    path = OUT / "protocol_results.json"
+    results = json.loads(path.read_text())
+    for set_name, entry in results.items():
+        for fs_name, fs_entry in entry.items():
+            thr = fs_entry["threshold"]
+            for split, r in fs_entry["splits"].items():
+                saved = np.load(SCORES / set_name / fs_name / f"{split}.npz")
+                n_trees = int(saved["n_trees"])
+                frames = load(DATA, set_name, split)
+                caps, scores = [], []
+                for name, df in frames.items():
+                    caps.append({"ts": df["ts"].to_numpy(np.float64),
+                                 "y": df["label"].to_numpy(np.uint8)})
+                    scores.append(saved[name].astype(np.float32) / np.float32(n_trees))
+                r["alarm"] = alarm_grid(caps, scores, thr)
+            print(set_name, fs_name, "done", flush=True)
+    path.write_text(json.dumps(results, indent=2))
+
+
 def cmd_evaluate(args) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     results = {}
@@ -184,7 +223,9 @@ def cmd_evaluate(args) -> None:
             clf = fit(X[:, idx], y, hp)
             entry = {"hyperparameters": hp, "threshold": thr, "selection": log, "splits": {}}
             for split, caps in tests.items():
-                r = evaluate_caps(caps, predict(clf, caps, idx), thr)
+                scores = predict(clf, caps, idx)
+                save_scores(set_name, fs_name, split, caps, scores, len(clf.estimators_))
+                r = evaluate_caps(caps, scores, thr)
                 r["vehicle"] = vehicle_of(set_name, split)
                 entry["splits"][split] = r
                 print(f"{set_name} {fs_name:9s} {split:42s} F1={r['f1']:.3f} "
@@ -491,6 +532,8 @@ def main() -> None:
     ev.set_defaults(func=cmd_evaluate)
     ex = sub.add_parser("export")
     ex.set_defaults(func=cmd_export)
+    al = sub.add_parser("alarms")
+    al.set_defaults(func=cmd_alarms)
     cv = sub.add_parser("convert")
     cv.set_defaults(func=cmd_convert)
     tv = sub.add_parser("testvectors")

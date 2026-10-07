@@ -55,31 +55,28 @@ def attack_episodes(ts: np.ndarray, y: np.ndarray, gap_s: float = 1.0) -> list[t
 
 
 def alarm_metrics(captures: list[tuple[np.ndarray, np.ndarray, np.ndarray]],
-                  window_s: float) -> dict:
+                  grace_s: float = 1.0) -> dict:
     """Event-level metrics for alarms.
 
-    captures: list of (ts_seconds, y, alarm). An alarm is true if an attack frame occurred within
-    window_s before it (inclusive); otherwise it is a false alarm. An attack episode is detected
-    if a true alarm falls inside [start, end + window_s].
+    captures: list of (ts_seconds, y, alarm). An alarm is true if it falls inside an attack
+    episode or up to grace_s after it ends: while an attack runs, the detector may also flag the
+    legitimate frames whose timing the attack disturbs, and that is not a false alarm in
+    operation. An episode is detected if a true alarm falls inside [start, end + grace_s].
     """
     false_alarms, seconds, episodes, detected, latencies = 0, 0.0, 0, 0, []
     for ts, y, alarm in captures:
         seconds += float(ts[-1] - ts[0]) if ts.size > 1 else 0.0
         t_alarm = ts[alarm.astype(bool)]
-        t_attack = ts[y == 1]
-        if t_attack.size:
-            i = np.searchsorted(t_attack, t_alarm, side="right") - 1
-            ok = (i >= 0) & (t_alarm - t_attack[np.clip(i, 0, None)] <= window_s)
-        else:
-            ok = np.zeros(t_alarm.size, dtype=bool)
-        false_alarms += int(np.count_nonzero(~ok))
-        true_alarms = t_alarm[ok]
-        for start, end in attack_episodes(ts, y):
+        eps = attack_episodes(ts, y)
+        ok = np.zeros(t_alarm.size, dtype=bool)
+        for start, end in eps:
+            inside = (t_alarm >= start) & (t_alarm <= end + grace_s)
+            ok |= inside
             episodes += 1
-            hit = true_alarms[(true_alarms >= start) & (true_alarms <= end + window_s)]
-            if hit.size:
+            if inside.any():
                 detected += 1
-                latencies.append(float(hit[0] - start))
+                latencies.append(float(t_alarm[inside][0] - start))
+        false_alarms += int(np.count_nonzero(~ok))
     hours = seconds / 3600.0
     return {
         "episodes": episodes,

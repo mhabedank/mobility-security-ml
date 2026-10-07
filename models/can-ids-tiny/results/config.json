@@ -3,8 +3,8 @@
   "task": "frame-level CAN intrusion detection (binary: benign / attack)",
   "algorithm": "random forest, hard voting, exported to C with emlearn (float)",
   "hyperparameters": {
-    "n_estimators": 20,
-    "max_depth": 10,
+    "n_estimators": 30,
+    "max_depth": 12,
     "min_samples_leaf": 20
   },
   "inputs": [
@@ -35,9 +35,113 @@
     10,
     11
   ],
-  "threshold": 0.6499999761581421,
+  "threshold": 0.5666666626930237,
   "score": "share of trees voting attack",
-  "tree_nodes": 11244,
+  "alarm": {
+    "k": 1,
+    "window_ms": 50,
+    "holdoff_ms": 1000,
+    "selected_on": "validation captures",
+    "validation": {
+      "episodes": 29,
+      "episode_recall": 1.0,
+      "median_latency_ms": 0.0,
+      "false_alarms_per_hour": 39.21944194645841
+    },
+    "validation_grid": {
+      "k1_w50": {
+        "episodes": 29,
+        "episode_recall": 1.0,
+        "median_latency_ms": 0.0,
+        "false_alarms_per_hour": 39.21944194645841
+      },
+      "k1_w200": {
+        "episodes": 29,
+        "episode_recall": 1.0,
+        "median_latency_ms": 0.0,
+        "false_alarms_per_hour": 39.21944194645841
+      },
+      "k1_w1000": {
+        "episodes": 29,
+        "episode_recall": 1.0,
+        "median_latency_ms": 0.0,
+        "false_alarms_per_hour": 39.21944194645841
+      },
+      "k2_w50": {
+        "episodes": 29,
+        "episode_recall": 0.7586206896551724,
+        "median_latency_ms": 9.001970291137695,
+        "false_alarms_per_hour": 4.902430243307301
+      },
+      "k2_w200": {
+        "episodes": 29,
+        "episode_recall": 0.8275862068965517,
+        "median_latency_ms": 12.501001358032227,
+        "false_alarms_per_hour": 8.170717072178835
+      },
+      "k2_w1000": {
+        "episodes": 29,
+        "episode_recall": 0.8620689655172413,
+        "median_latency_ms": 12.58397102355957,
+        "false_alarms_per_hour": 17.703220323054143
+      },
+      "k3_w50": {
+        "episodes": 29,
+        "episode_recall": 0.6896551724137931,
+        "median_latency_ms": 15.890955924987793,
+        "false_alarms_per_hour": 1.6341434144357672
+      },
+      "k3_w200": {
+        "episodes": 29,
+        "episode_recall": 0.7931034482758621,
+        "median_latency_ms": 24.45197105407715,
+        "false_alarms_per_hour": 1.9065006501750617
+      },
+      "k3_w1000": {
+        "episodes": 29,
+        "episode_recall": 0.7931034482758621,
+        "median_latency_ms": 24.45197105407715,
+        "false_alarms_per_hour": 4.902430243307301
+      },
+      "k5_w50": {
+        "episodes": 29,
+        "episode_recall": 0.6206896551724138,
+        "median_latency_ms": 12.607574462890625,
+        "false_alarms_per_hour": 0.8170717072178836
+      },
+      "k5_w200": {
+        "episodes": 29,
+        "episode_recall": 0.6896551724137931,
+        "median_latency_ms": 21.664142608642578,
+        "false_alarms_per_hour": 0.8170717072178836
+      },
+      "k5_w1000": {
+        "episodes": 29,
+        "episode_recall": 0.7931034482758621,
+        "median_latency_ms": 48.48599433898926,
+        "false_alarms_per_hour": 0.8170717072178836
+      },
+      "k8_w50": {
+        "episodes": 29,
+        "episode_recall": 0.3793103448275862,
+        "median_latency_ms": 16.268014907836914,
+        "false_alarms_per_hour": 0.2723572357392945
+      },
+      "k8_w200": {
+        "episodes": 29,
+        "episode_recall": 0.6896551724137931,
+        "median_latency_ms": 31.440019607543945,
+        "false_alarms_per_hour": 0.544714471478589
+      },
+      "k8_w1000": {
+        "episodes": 29,
+        "episode_recall": 0.7931034482758621,
+        "median_latency_ms": 78.70221138000488,
+        "false_alarms_per_hour": 0.544714471478589
+      }
+    }
+  },
+  "tree_nodes": 22346,
   "training_data": {
     "dataset": "can-train-and-test (Lampe & Meng)",
     "doi": "10.11583/DTU.24805533",
@@ -49,23 +153,23 @@
     {
       "n_estimators": 10,
       "max_depth": 8,
-      "threshold": 0.699999988079071,
-      "val_f1": 0.942612976381437,
-      "val_auc_pr": 0.9439091109353245
+      "threshold": 0.6000000238418579,
+      "val_f1": 0.9396202755932342,
+      "val_auc_pr": 0.9466704093902584
     },
     {
       "n_estimators": 20,
       "max_depth": 10,
-      "threshold": 0.6499999761581421,
-      "val_f1": 0.9543918803155218,
-      "val_auc_pr": 0.9672949574800236
+      "threshold": 0.550000011920929,
+      "val_f1": 0.9520103227223434,
+      "val_auc_pr": 0.969065119138907
     },
     {
       "n_estimators": 30,
       "max_depth": 12,
       "threshold": 0.5666666626930237,
-      "val_f1": 0.9528188286808976,
-      "val_auc_pr": 0.9600517129500066
+      "val_f1": 0.9562789421328851,
+      "val_auc_pr": 0.9716286434596151
     }
   ],
   "parity_c_vs_python": {

@@ -3,7 +3,12 @@
 #define CAN_IDS_TINY_CONFIG_H
 
 #define CAN_IDS_TINY_N_INPUTS 12
-#define CAN_IDS_TINY_THRESHOLD 0.649999976f
+#define CAN_IDS_TINY_THRESHOLD 0.566666663f
+
+/* Alarm when ALARM_K flagged frames fall within ALARM_WINDOW_US; then hold off. */
+#define CAN_IDS_TINY_ALARM_K 1
+#define CAN_IDS_TINY_ALARM_WINDOW_US 50000
+#define CAN_IDS_TINY_ALARM_HOLDOFF_US 1000000
 
 /* Model input i = feature can_ids_tiny_input_index[i] of msml_can_update(). */
 static const int can_ids_tiny_input_index[CAN_IDS_TINY_N_INPUTS] = {

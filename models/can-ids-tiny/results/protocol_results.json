@@ -65,6 +65,98 @@
               "fpr": 0.0006877837908817004
             }
           },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 11,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.8590221405029297,
+              "false_alarms_per_hour": 1.8457759245038894
+            },
+            "k1_w200": {
+              "episodes": 11,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.8590221405029297,
+              "false_alarms_per_hour": 1.8457759245038894
+            },
+            "k1_w1000": {
+              "episodes": 11,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.8590221405029297,
+              "false_alarms_per_hour": 1.8457759245038894
+            },
+            "k2_w50": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 3.3109188079833984,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w200": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 4.805922508239746,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w1000": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 4.805922508239746,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w50": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 6.628990173339844,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 8.152961730957031,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 8.152961730957031,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 12.936830520629883,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 12.936830520629883,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 16.01994037628174,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 11,
+              "episode_recall": 0.7272727272727273,
+              "median_latency_ms": 14.939427375793457,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 19.696950912475586,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 24.23691749572754,
+              "false_alarms_per_hour": 0.0
+            }
+          },
           "vehicle": "chevrolet_impala"
         },
         "test_02_unknown_vehicle_known_attack": {
@@ -102,6 +194,98 @@
               "fpr": 1.3272353375627899e-05
             }
           },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 33,
+              "episode_recall": 0.5151515151515151,
+              "median_latency_ms": 0.08702278137207031,
+              "false_alarms_per_hour": 0.0
+            },
+            "k1_w200": {
+              "episodes": 33,
+              "episode_recall": 0.5151515151515151,
+              "median_latency_ms": 0.08702278137207031,
+              "false_alarms_per_hour": 0.0
+            },
+            "k1_w1000": {
+              "episodes": 33,
+              "episode_recall": 0.5151515151515151,
+              "median_latency_ms": 0.08702278137207031,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w50": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 1.0944604873657227,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w200": {
+              "episodes": 33,
+              "episode_recall": 0.21212121212121213,
+              "median_latency_ms": 717.9200649261475,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w1000": {
+              "episodes": 33,
+              "episode_recall": 0.21212121212121213,
+              "median_latency_ms": 717.9200649261475,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w50": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 1.8476247787475586,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 1.8476247787475586,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 33,
+              "episode_recall": 0.21212121212121213,
+              "median_latency_ms": 1844.7940349578857,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 3.544926643371582,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 3.544926643371582,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 33,
+              "episode_recall": 0.09090909090909091,
+              "median_latency_ms": 4.353046417236328,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 6.612896919250488,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 6.612896919250488,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 6.612896919250488,
+              "false_alarms_per_hour": 0.0
+            }
+          },
           "vehicle": "chevrolet_silverado"
         },
         "test_03_known_vehicle_unknown_attack": {
@@ -111,7 +295,7 @@
           "recall": 0.49853541416566627,
           "f1": 0.6542521347323313,
           "fpr": 6.152453145586776e-05,
-          "auc_pr": 0.6053862978307648,
+          "auc_pr": 0.6100060275018271,
           "false_alarms_per_hour": 6.647879009040181,
           "per_attack": {
             "double": {
@@ -151,6 +335,98 @@
               "fpr": 0.00011413227562576395
             }
           },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 50,
+              "episode_recall": 0.22,
+              "median_latency_ms": 3.448963165283203,
+              "false_alarms_per_hour": 0.6043526371854709
+            },
+            "k1_w200": {
+              "episodes": 50,
+              "episode_recall": 0.22,
+              "median_latency_ms": 3.448963165283203,
+              "false_alarms_per_hour": 0.6043526371854709
+            },
+            "k1_w1000": {
+              "episodes": 50,
+              "episode_recall": 0.22,
+              "median_latency_ms": 3.448963165283203,
+              "false_alarms_per_hour": 0.6043526371854709
+            },
+            "k2_w50": {
+              "episodes": 50,
+              "episode_recall": 0.12,
+              "median_latency_ms": 16.303539276123047,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w200": {
+              "episodes": 50,
+              "episode_recall": 0.18,
+              "median_latency_ms": 17.822980880737305,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w1000": {
+              "episodes": 50,
+              "episode_recall": 0.2,
+              "median_latency_ms": 19.76001262664795,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w50": {
+              "episodes": 50,
+              "episode_recall": 0.12,
+              "median_latency_ms": 30.49755096435547,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 50,
+              "episode_recall": 0.18,
+              "median_latency_ms": 33.831119537353516,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 50,
+              "episode_recall": 0.18,
+              "median_latency_ms": 33.831119537353516,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 50,
+              "episode_recall": 0.12,
+              "median_latency_ms": 72.83854484558105,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 50,
+              "episode_recall": 0.12,
+              "median_latency_ms": 50.81498622894287,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 50,
+              "episode_recall": 0.18,
+              "median_latency_ms": 86.55595779418945,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 50,
+              "episode_recall": 0.06,
+              "median_latency_ms": 30.04598617553711,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 50,
+              "episode_recall": 0.12,
+              "median_latency_ms": 109.01296138763428,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 50,
+              "episode_recall": 0.18,
+              "median_latency_ms": 117.919921875,
+              "false_alarms_per_hour": 0.0
+            }
+          },
           "vehicle": "chevrolet_impala"
         },
         "test_04_unknown_vehicle_unknown_attack": {
@@ -160,7 +436,7 @@
           "recall": 0.29500140409997194,
           "f1": 0.4415720891130727,
           "fpr": 4.437272452541819e-05,
-          "auc_pr": 0.3672601128310503,
+          "auc_pr": 0.37027388604706357,
           "false_alarms_per_hour": 9.269767123036868,
           "per_attack": {
             "double": {
@@ -198,6 +474,98 @@
               "precision": 0.6510480887792849,
               "f1": 0.41739130434782606,
               "fpr": 0.00010941896211281443
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 2.5415420532226562,
+              "false_alarms_per_hour": 7.20981887347312
+            },
+            "k1_w200": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 2.5415420532226562,
+              "false_alarms_per_hour": 7.20981887347312
+            },
+            "k1_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 2.5415420532226562,
+              "false_alarms_per_hour": 7.20981887347312
+            },
+            "k2_w50": {
+              "episodes": 71,
+              "episode_recall": 0.07042253521126761,
+              "median_latency_ms": 14.896869659423828,
+              "false_alarms_per_hour": 4.119896499127497
+            },
+            "k2_w200": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 47.72365093231201,
+              "false_alarms_per_hour": 4.119896499127497
+            },
+            "k2_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 47.72365093231201,
+              "false_alarms_per_hour": 4.119896499127497
+            },
+            "k3_w50": {
+              "episodes": 71,
+              "episode_recall": 0.07042253521126761,
+              "median_latency_ms": 33.082008361816406,
+              "false_alarms_per_hour": 2.5749353119546856
+            },
+            "k3_w200": {
+              "episodes": 71,
+              "episode_recall": 0.09859154929577464,
+              "median_latency_ms": 41.918039321899414,
+              "false_alarms_per_hour": 2.5749353119546856
+            },
+            "k3_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.09859154929577464,
+              "median_latency_ms": 41.918039321899414,
+              "false_alarms_per_hour": 2.5749353119546856
+            },
+            "k5_w50": {
+              "episodes": 71,
+              "episode_recall": 0.07042253521126761,
+              "median_latency_ms": 47.25790023803711,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 71,
+              "episode_recall": 0.07042253521126761,
+              "median_latency_ms": 47.25790023803711,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.09859154929577464,
+              "median_latency_ms": 66.59889221191406,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 71,
+              "episode_recall": 0.056338028169014086,
+              "median_latency_ms": 351.7944812774658,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 71,
+              "episode_recall": 0.07042253521126761,
+              "median_latency_ms": 72.92890548706055,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.09859154929577464,
+              "median_latency_ms": 105.71908950805664,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "chevrolet_silverado"
@@ -269,6 +637,98 @@
               "fpr": 0.0008439163161691644
             }
           },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 11,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.8590221405029297,
+              "false_alarms_per_hour": 4.614439811259723
+            },
+            "k1_w200": {
+              "episodes": 11,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.8590221405029297,
+              "false_alarms_per_hour": 4.614439811259723
+            },
+            "k1_w1000": {
+              "episodes": 11,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.8590221405029297,
+              "false_alarms_per_hour": 4.614439811259723
+            },
+            "k2_w50": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 3.3109188079833984,
+              "false_alarms_per_hour": 0.9228879622519447
+            },
+            "k2_w200": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 4.805922508239746,
+              "false_alarms_per_hour": 0.9228879622519447
+            },
+            "k2_w1000": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 4.805922508239746,
+              "false_alarms_per_hour": 0.9228879622519447
+            },
+            "k3_w50": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 6.628990173339844,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 6.628990173339844,
+              "false_alarms_per_hour": 0.9228879622519447
+            },
+            "k3_w1000": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 8.152961730957031,
+              "false_alarms_per_hour": 0.9228879622519447
+            },
+            "k5_w50": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 12.936830520629883,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 12.936830520629883,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 13.093352317810059,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 11,
+              "episode_recall": 0.7272727272727273,
+              "median_latency_ms": 14.939427375793457,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 11,
+              "episode_recall": 0.8181818181818182,
+              "median_latency_ms": 19.696950912475586,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 11,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 21.137475967407227,
+              "false_alarms_per_hour": 0.0
+            }
+          },
           "vehicle": "chevrolet_impala"
         },
         "test_02_unknown_vehicle_known_attack": {
@@ -306,6 +766,98 @@
               "fpr": 4.372069347265661e-05
             }
           },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 33,
+              "episode_recall": 0.6363636363636364,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 27.99691965331475
+            },
+            "k1_w200": {
+              "episodes": 33,
+              "episode_recall": 0.6363636363636364,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 26.523397566298186
+            },
+            "k1_w1000": {
+              "episodes": 33,
+              "episode_recall": 0.6363636363636364,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 26.523397566298186
+            },
+            "k2_w50": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 1.0944604873657227,
+              "false_alarms_per_hour": 1.473522087016566
+            },
+            "k2_w200": {
+              "episodes": 33,
+              "episode_recall": 0.21212121212121213,
+              "median_latency_ms": 410.57705879211426,
+              "false_alarms_per_hour": 2.947044174033132
+            },
+            "k2_w1000": {
+              "episodes": 33,
+              "episode_recall": 0.21212121212121213,
+              "median_latency_ms": 308.55607986450195,
+              "false_alarms_per_hour": 8.841132522099397
+            },
+            "k3_w50": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 1.8476247787475586,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 33,
+              "episode_recall": 0.12121212121212122,
+              "median_latency_ms": 2712.5171422958374,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 33,
+              "episode_recall": 0.21212121212121213,
+              "median_latency_ms": 410.57705879211426,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 3.544926643371582,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 3.544926643371582,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 33,
+              "episode_recall": 0.15151515151515152,
+              "median_latency_ms": 821.1350440979004,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 6.612896919250488,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 33,
+              "episode_recall": 0.06060606060606061,
+              "median_latency_ms": 6.612896919250488,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 33,
+              "episode_recall": 0.12121212121212122,
+              "median_latency_ms": 1333.78005027771,
+              "false_alarms_per_hour": 0.0
+            }
+          },
           "vehicle": "chevrolet_silverado"
         },
         "test_03_known_vehicle_unknown_attack": {
@@ -315,7 +867,7 @@
           "recall": 0.5171668667466987,
           "f1": 0.6504408745017514,
           "fpr": 0.00017656379687617897,
-          "auc_pr": 0.5822773364153347,
+          "auc_pr": 0.5870276938665427,
           "false_alarms_per_hour": 15.713168566822246,
           "per_attack": {
             "double": {
@@ -355,6 +907,98 @@
               "fpr": 0.00026324057120135876
             }
           },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 50,
+              "episode_recall": 0.22,
+              "median_latency_ms": 2.6280879974365234,
+              "false_alarms_per_hour": 32.03068977082996
+            },
+            "k1_w200": {
+              "episodes": 50,
+              "episode_recall": 0.22,
+              "median_latency_ms": 2.6280879974365234,
+              "false_alarms_per_hour": 5.439173734669239
+            },
+            "k1_w1000": {
+              "episodes": 50,
+              "episode_recall": 0.22,
+              "median_latency_ms": 2.6280879974365234,
+              "false_alarms_per_hour": 4.2304684602982965
+            },
+            "k2_w50": {
+              "episodes": 50,
+              "episode_recall": 0.16,
+              "median_latency_ms": 16.315937042236328,
+              "false_alarms_per_hour": 0.6043526371854709
+            },
+            "k2_w200": {
+              "episodes": 50,
+              "episode_recall": 0.18,
+              "median_latency_ms": 16.731977462768555,
+              "false_alarms_per_hour": 1.813057911556413
+            },
+            "k2_w1000": {
+              "episodes": 50,
+              "episode_recall": 0.22,
+              "median_latency_ms": 21.697044372558594,
+              "false_alarms_per_hour": 1.2087052743709419
+            },
+            "k3_w50": {
+              "episodes": 50,
+              "episode_recall": 0.12,
+              "median_latency_ms": 16.849040985107422,
+              "false_alarms_per_hour": 0.6043526371854709
+            },
+            "k3_w200": {
+              "episodes": 50,
+              "episode_recall": 0.18,
+              "median_latency_ms": 28.64694595336914,
+              "false_alarms_per_hour": 0.6043526371854709
+            },
+            "k3_w1000": {
+              "episodes": 50,
+              "episode_recall": 0.22,
+              "median_latency_ms": 33.831119537353516,
+              "false_alarms_per_hour": 0.6043526371854709
+            },
+            "k5_w50": {
+              "episodes": 50,
+              "episode_recall": 0.12,
+              "median_latency_ms": 44.32249069213867,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 50,
+              "episode_recall": 0.16,
+              "median_latency_ms": 44.87943649291992,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 50,
+              "episode_recall": 0.18,
+              "median_latency_ms": 45.13192176818848,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 50,
+              "episode_recall": 0.12,
+              "median_latency_ms": 323.45497608184814,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 50,
+              "episode_recall": 0.12,
+              "median_latency_ms": 94.63751316070557,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 50,
+              "episode_recall": 0.18,
+              "median_latency_ms": 116.6069507598877,
+              "false_alarms_per_hour": 0.0
+            }
+          },
           "vehicle": "chevrolet_impala"
         },
         "test_04_unknown_vehicle_unknown_attack": {
@@ -364,7 +1008,7 @@
           "recall": 0.32715529345689415,
           "f1": 0.47089733225545677,
           "fpr": 6.724057914431971e-05,
-          "auc_pr": 0.3453079209265689,
+          "auc_pr": 0.35728928140736016,
           "false_alarms_per_hour": 13.389663622164365,
           "per_attack": {
             "double": {
@@ -404,6 +1048,98 @@
               "fpr": 0.00014112339636458397
             }
           },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 71,
+              "episode_recall": 0.15492957746478872,
+              "median_latency_ms": 3.798961639404297,
+              "false_alarms_per_hour": 8.754780060645931
+            },
+            "k1_w200": {
+              "episodes": 71,
+              "episode_recall": 0.15492957746478872,
+              "median_latency_ms": 3.798961639404297,
+              "false_alarms_per_hour": 8.754780060645931
+            },
+            "k1_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.15492957746478872,
+              "median_latency_ms": 3.798961639404297,
+              "false_alarms_per_hour": 8.754780060645931
+            },
+            "k2_w50": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 34.749627113342285,
+              "false_alarms_per_hour": 7.20981887347312
+            },
+            "k2_w200": {
+              "episodes": 71,
+              "episode_recall": 0.15492957746478872,
+              "median_latency_ms": 100.09002685546875,
+              "false_alarms_per_hour": 7.20981887347312
+            },
+            "k2_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.15492957746478872,
+              "median_latency_ms": 100.09002685546875,
+              "false_alarms_per_hour": 7.20981887347312
+            },
+            "k3_w50": {
+              "episodes": 71,
+              "episode_recall": 0.07042253521126761,
+              "median_latency_ms": 33.082008361816406,
+              "false_alarms_per_hour": 5.664857686300309
+            },
+            "k3_w200": {
+              "episodes": 71,
+              "episode_recall": 0.14084507042253522,
+              "median_latency_ms": 232.22196102142334,
+              "false_alarms_per_hour": 5.664857686300309
+            },
+            "k3_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.14084507042253522,
+              "median_latency_ms": 132.38346576690674,
+              "false_alarms_per_hour": 5.664857686300309
+            },
+            "k5_w50": {
+              "episodes": 71,
+              "episode_recall": 0.07042253521126761,
+              "median_latency_ms": 47.25790023803711,
+              "false_alarms_per_hour": 2.0599482495637487
+            },
+            "k5_w200": {
+              "episodes": 71,
+              "episode_recall": 0.07042253521126761,
+              "median_latency_ms": 47.25790023803711,
+              "false_alarms_per_hour": 2.0599482495637487
+            },
+            "k5_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.14084507042253522,
+              "median_latency_ms": 252.40755081176758,
+              "false_alarms_per_hour": 3.089922374345623
+            },
+            "k8_w50": {
+              "episodes": 71,
+              "episode_recall": 0.056338028169014086,
+              "median_latency_ms": 187.8269910812378,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 71,
+              "episode_recall": 0.07042253521126761,
+              "median_latency_ms": 72.92890548706055,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 136.62254810333252,
+              "false_alarms_per_hour": 0.0
+            }
+          },
           "vehicle": "chevrolet_silverado"
         }
       }
@@ -412,79 +1148,171 @@
   "set_02": {
     "full": {
       "hyperparameters": {
-        "n_estimators": 10,
-        "max_depth": 8
+        "n_estimators": 30,
+        "max_depth": 12
       },
-      "threshold": 0.4000000059604645,
+      "threshold": 0.30000001192092896,
       "selection": [
         {
           "n_estimators": 10,
           "max_depth": 8,
-          "threshold": 0.4000000059604645,
-          "val_f1": 0.949072762535684,
-          "val_auc_pr": 0.966088882362181
+          "threshold": 0.30000001192092896,
+          "val_f1": 0.9211008383440012,
+          "val_auc_pr": 0.9369002796642901
         },
         {
           "n_estimators": 20,
           "max_depth": 10,
           "threshold": 0.25,
-          "val_f1": 0.9484257046795374,
-          "val_auc_pr": 0.9774630221530038
+          "val_f1": 0.9359181024556702,
+          "val_auc_pr": 0.9740858171547757
         },
         {
           "n_estimators": 30,
           "max_depth": 12,
-          "threshold": 0.1666666716337204,
-          "val_f1": 0.9355529230833177,
-          "val_auc_pr": 0.9687790684310297
+          "threshold": 0.30000001192092896,
+          "val_f1": 0.9590062111801242,
+          "val_auc_pr": 0.9776148879489692
         }
       ],
       "splits": {
         "test_01_known_vehicle_known_attack": {
           "frames": 13220555,
           "attack_frames": 14244,
-          "precision": 0.7933693138010794,
-          "recall": 0.8668913226621735,
-          "f1": 0.8285024154589372,
-          "fpr": 0.00024351993527942813,
-          "auc_pr": 0.898920896201527,
-          "false_alarms_per_hour": 86.0028394192865,
+          "precision": 0.7563665163884489,
+          "recall": 0.8715950575680989,
+          "f1": 0.8099027986170004,
+          "fpr": 0.0003028097702681695,
+          "auc_pr": 0.9495762795612108,
+          "false_alarms_per_hour": 77.7630464210315,
           "per_attack": {
             "double": {
-              "recall": 0.4595452141723956,
-              "precision": 0.5956134338588074,
-              "f1": 0.5188059701492538,
-              "fpr": 0.000245276045717792
+              "recall": 0.49762030671602325,
+              "precision": 0.514207650273224,
+              "f1": 0.5057780166621876,
+              "fpr": 0.0003695769570222324
             },
             "fuzzing": {
-              "recall": 0.9993665874901029,
-              "precision": 0.9324763593380615,
-              "f1": 0.964763433463273,
-              "fpr": 0.00041234843713626267
+              "recall": 0.9998416468725257,
+              "precision": 0.9675145571559914,
+              "f1": 0.9834125068141111,
+              "fpr": 0.00019128636471091396
             },
             "interval": {
               "recall": 1.0,
-              "precision": 0.5341365461847389,
-              "f1": 0.6963350785340314,
-              "fpr": 6.633961996548053e-05
+              "precision": 0.5807860262008734,
+              "f1": 0.7348066298342542,
+              "fpr": 5.490175445419078e-05
             },
             "speed": {
-              "recall": 0.9868954758190328,
-              "precision": 0.7041406945681211,
-              "f1": 0.8218786540210472,
-              "fpr": 0.0002939876538457965
+              "recall": 0.988767550702028,
+              "precision": 0.6364731873870255,
+              "f1": 0.7744379276637341,
+              "fpr": 0.0004003895059901367
             },
             "systematic": {
               "recall": 0.9989806320081549,
-              "precision": 0.8263069139966274,
-              "f1": 0.904476234425473,
-              "fpr": 0.00024611502651710203
+              "precision": 0.835464620630861,
+              "f1": 0.9099350046425255,
+              "fpr": 0.00023058349571747905
             },
             "triple": {
-              "recall": 0.5189063408958697,
-              "precision": 0.6326241134751773,
-              "f1": 0.5701502077341003,
-              "fpr": 0.00020027923100508083
+              "recall": 0.5107620709714951,
+              "precision": 0.5235539654144306,
+              "f1": 0.5170789163722026,
+              "fpr": 0.00030892491423370575
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 71,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 78.79302054581338
+            },
+            "k1_w200": {
+              "episodes": 71,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 78.79302054581338
+            },
+            "k1_w1000": {
+              "episodes": 71,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 76.2180852338587
+            },
+            "k2_w50": {
+              "episodes": 71,
+              "episode_recall": 0.14084507042253522,
+              "median_latency_ms": 2.4939775466918945,
+              "false_alarms_per_hour": 29.354262556283416
+            },
+            "k2_w200": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 6.923913955688477,
+              "false_alarms_per_hour": 36.0490943673656
+            },
+            "k2_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 6.923913955688477,
+              "false_alarms_per_hour": 40.68397792888403
+            },
+            "k3_w50": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 4.553556442260742,
+              "false_alarms_per_hour": 15.449611871728115
+            },
+            "k3_w200": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 16.677021980285645,
+              "false_alarms_per_hour": 24.719378994764984
+            },
+            "k3_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 16.677021980285645,
+              "false_alarms_per_hour": 28.83927549389248
+            },
+            "k5_w50": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 14.282464981079102,
+              "false_alarms_per_hour": 14.41963774694624
+            },
+            "k5_w200": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 14.282464981079102,
+              "false_alarms_per_hour": 17.509560121291862
+            },
+            "k5_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 33.141493797302246,
+              "false_alarms_per_hour": 20.599482495637485
+            },
+            "k8_w50": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 24.346113204956055,
+              "false_alarms_per_hour": 11.329715372600617
+            },
+            "k8_w200": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 24.346113204956055,
+              "false_alarms_per_hour": 11.329715372600617
+            },
+            "k8_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 54.624080657958984,
+              "false_alarms_per_hour": 15.449611871728115
             }
           },
           "vehicle": "chevrolet_traverse"
@@ -492,48 +1320,140 @@
         "test_02_unknown_vehicle_known_attack": {
           "frames": 8445427,
           "attack_frames": 20049,
-          "precision": 0.835298452468681,
-          "recall": 0.9045837697640781,
-          "f1": 0.8685615765905988,
-          "fpr": 0.00042443199581075175,
-          "auc_pr": 0.8863534332790439,
-          "false_alarms_per_hour": 112.66189068646538,
+          "precision": 0.8353459754809679,
+          "recall": 0.9074268043293929,
+          "f1": 0.8698957636033279,
+          "fpr": 0.00042561888617935007,
+          "auc_pr": 0.8952892807531092,
+          "false_alarms_per_hour": 113.34885343455359,
           "per_attack": {
             "double": {
-              "recall": 0.5328587075575028,
-              "precision": 0.4919110212335693,
-              "f1": 0.5115667718191378,
-              "fpr": 0.0015371884898996773
+              "recall": 0.5345016429353778,
+              "precision": 0.4860557768924303,
+              "f1": 0.5091288471570161,
+              "fpr": 0.0015784860911208628
             },
             "fuzzing": {
-              "recall": 0.9987394957983193,
-              "precision": 0.9156394453004623,
-              "f1": 0.9553858520900321,
-              "fpr": 0.00019244000748670713
+              "recall": 0.9995798319327731,
+              "precision": 0.9242424242424242,
+              "f1": 0.9604360113039968,
+              "fpr": 0.00017135069159775293
             },
             "interval": {
               "recall": 1.0,
-              "precision": 0.8323977546110666,
-              "f1": 0.9085339168490153,
-              "fpr": 0.0001607574831070037
+              "precision": 0.8564356435643564,
+              "f1": 0.9226666666666666,
+              "fpr": 0.000133836373495783
             },
             "speed": {
               "recall": 0.9955022488755623,
-              "precision": 0.7443946188340808,
-              "f1": 0.8518280949326491,
-              "fpr": 0.00020083027463540056
+              "precision": 0.7528344671201814,
+              "f1": 0.8573273079406069,
+              "fpr": 0.00019202192925665492
             },
             "systematic": {
-              "recall": 0.999165205776776,
-              "precision": 0.9492426044888571,
-              "f1": 0.9735643403286156,
-              "fpr": 0.0002861211141735012
+              "recall": 0.9999165205776775,
+              "precision": 0.9462042815388262,
+              "f1": 0.9723191817517656,
+              "fpr": 0.00030445074805024105
             },
             "triple": {
-              "recall": 0.4264264264264264,
-              "precision": 0.3446601941747573,
-              "f1": 0.3812080536912752,
-              "fpr": 0.0002064880061059268
+              "recall": 0.5465465465465466,
+              "precision": 0.41743119266055045,
+              "f1": 0.47334200260078024,
+              "fpr": 0.0001942516798181682
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 96.1747847323485
+            },
+            "k1_w200": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 96.1747847323485
+            },
+            "k1_w1000": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 94.80085923617209
+            },
+            "k2_w50": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.09100341796875,
+              "false_alarms_per_hour": 21.982807938822514
+            },
+            "k2_w200": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.09100341796875,
+              "false_alarms_per_hour": 24.043696183087125
+            },
+            "k2_w1000": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.09100341796875,
+              "false_alarms_per_hour": 26.104584427351735
+            },
+            "k3_w50": {
+              "episodes": 15,
+              "episode_recall": 0.9333333333333333,
+              "median_latency_ms": 2.4296045303344727,
+              "false_alarms_per_hour": 20.608882442646106
+            },
+            "k3_w200": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 2.607107162475586,
+              "false_alarms_per_hour": 21.29584519073431
+            },
+            "k3_w1000": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 2.607107162475586,
+              "false_alarms_per_hour": 24.043696183087125
+            },
+            "k5_w50": {
+              "episodes": 15,
+              "episode_recall": 0.8,
+              "median_latency_ms": 7.969498634338379,
+              "false_alarms_per_hour": 20.608882442646106
+            },
+            "k5_w200": {
+              "episodes": 15,
+              "episode_recall": 0.9333333333333333,
+              "median_latency_ms": 12.40992546081543,
+              "false_alarms_per_hour": 20.608882442646106
+            },
+            "k5_w1000": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 13.356924057006836,
+              "false_alarms_per_hour": 21.982807938822514
+            },
+            "k8_w50": {
+              "episodes": 15,
+              "episode_recall": 0.7333333333333333,
+              "median_latency_ms": 7.880926132202148,
+              "false_alarms_per_hour": 6.869627480882035
+            },
+            "k8_w200": {
+              "episodes": 15,
+              "episode_recall": 0.9333333333333333,
+              "median_latency_ms": 19.812464714050293,
+              "false_alarms_per_hour": 17.861031450293293
+            },
+            "k8_w1000": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 20.076990127563477,
+              "false_alarms_per_hour": 19.234956946469698
             }
           },
           "vehicle": "subaru_forester"
@@ -541,36 +1461,128 @@
         "test_03_known_vehicle_unknown_attack": {
           "frames": 12150056,
           "attack_frames": 28791,
-          "precision": 0.9210095366535016,
-          "recall": 0.9962488277586746,
-          "f1": 0.9571528681549705,
-          "fpr": 0.0002029491146344874,
-          "auc_pr": 0.9502872664089679,
+          "precision": 0.9101671309192201,
+          "recall": 0.9987148761765829,
+          "f1": 0.9523872613152708,
+          "fpr": 0.0002341339785905184,
+          "auc_pr": 0.9750992582018272,
           "false_alarms_per_hour": 84.50996326659688,
           "per_attack": {
             "DoS": {
-              "recall": 0.9972814721873693,
-              "precision": 0.9407239372719203,
-              "f1": 0.9681774349083896,
-              "fpr": 0.0012314884002398772
+              "recall": 0.999721176634602,
+              "precision": 0.9289762606470836,
+              "f1": 0.9630512514898689,
+              "fpr": 0.0014978669227543265
             },
             "force-neutral": {
-              "recall": 0.7,
-              "precision": 0.08177570093457943,
-              "f1": 0.14644351464435146,
-              "fpr": 5.7230273212664345e-05
+              "recall": 0.72,
+              "precision": 0.08430913348946135,
+              "f1": 0.1509433962264151,
+              "fpr": 5.6939025002930686e-05
             },
             "rpm": {
               "recall": 0.6666666666666666,
-              "precision": 0.11428571428571428,
-              "f1": 0.1951219512195122,
-              "fpr": 6.720569973707397e-05
+              "precision": 0.11976047904191617,
+              "f1": 0.20304568527918782,
+              "fpr": 6.373701846032175e-05
             },
             "standstill": {
               "recall": 0.7368421052631579,
-              "precision": 0.11382113821138211,
-              "f1": 0.19718309859154928,
-              "fpr": 7.345825279882682e-05
+              "precision": 0.11570247933884298,
+              "f1": 0.2,
+              "fpr": 7.211039494930706e-05
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 41,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 70.91745169224913
+            },
+            "k1_w200": {
+              "episodes": 41,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 70.91745169224913
+            },
+            "k1_w1000": {
+              "episodes": 41,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 70.91745169224913
+            },
+            "k2_w50": {
+              "episodes": 41,
+              "episode_recall": 0.4634146341463415,
+              "median_latency_ms": 5.785226821899414,
+              "false_alarms_per_hour": 27.185023148695503
+            },
+            "k2_w200": {
+              "episodes": 41,
+              "episode_recall": 0.4634146341463415,
+              "median_latency_ms": 5.785226821899414,
+              "false_alarms_per_hour": 29.548938205103806
+            },
+            "k2_w1000": {
+              "episodes": 41,
+              "episode_recall": 0.4634146341463415,
+              "median_latency_ms": 5.785226821899414,
+              "false_alarms_per_hour": 32.50383202561419
+            },
+            "k3_w50": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 3.048062324523926,
+              "false_alarms_per_hour": 17.729362923062283
+            },
+            "k3_w200": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 38.70964050292969,
+              "false_alarms_per_hour": 22.457193035878895
+            },
+            "k3_w1000": {
+              "episodes": 41,
+              "episode_recall": 0.14634146341463414,
+              "median_latency_ms": 654.7315120697021,
+              "false_alarms_per_hour": 26.594044384593428
+            },
+            "k5_w50": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 5.212068557739258,
+              "false_alarms_per_hour": 15.36544786665398
+            },
+            "k5_w200": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 5.212068557739258,
+              "false_alarms_per_hour": 17.138384158960207
+            },
+            "k5_w1000": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 3.708004951477051,
+              "false_alarms_per_hour": 20.684256743572664
+            },
+            "k8_w50": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 8.611559867858887,
+              "false_alarms_per_hour": 11.819575282041523
+            },
+            "k8_w200": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 8.611559867858887,
+              "false_alarms_per_hour": 11.819575282041523
+            },
+            "k8_w1000": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 6.670594215393066,
+              "false_alarms_per_hour": 14.183490338449827
             }
           },
           "vehicle": "chevrolet_traverse"
@@ -578,36 +1590,128 @@
         "test_04_unknown_vehicle_unknown_attack": {
           "frames": 4789904,
           "attack_frames": 18008,
-          "precision": 0.8620159650949477,
-          "recall": 0.9654597956463794,
-          "f1": 0.910810173664772,
-          "fpr": 0.0005832063397861144,
-          "auc_pr": 0.9056078310616171,
-          "false_alarms_per_hour": 139.2798492548446,
+          "precision": 0.8637356093687971,
+          "recall": 0.9665704131497113,
+          "f1": 0.9122641509433962,
+          "fpr": 0.0005754526083552534,
+          "auc_pr": 0.9061259481234096,
+          "false_alarms_per_hour": 145.37969666746554,
           "per_attack": {
             "DoS": {
-              "recall": 0.9995138551288284,
-              "precision": 0.9465930018416207,
-              "f1": 0.9723338850792149,
-              "fpr": 0.0008725065867800208
+              "recall": 1.0,
+              "precision": 0.9438872500819403,
+              "f1": 0.9711337424967964,
+              "fpr": 0.000919785268822288
             },
             "force-neutral": {
-              "recall": 0.7198986058301647,
-              "precision": 0.5071428571428571,
-              "f1": 0.5950759559979046,
-              "fpr": 0.0008188762851499308
+              "recall": 0.7211660329531052,
+              "precision": 0.5121512151215122,
+              "f1": 0.5989473684210527,
+              "fpr": 0.0008040415698392436
             },
             "rpm": {
-              "recall": 0.9190871369294605,
-              "precision": 0.6562962962962963,
-              "f1": 0.7657735522904062,
-              "fpr": 0.0005230392790474673
+              "recall": 0.9183955739972337,
+              "precision": 0.6693548387096774,
+              "f1": 0.7743440233236152,
+              "fpr": 0.0004929795503665784
             },
             "standstill": {
-              "recall": 0.9042735042735043,
-              "precision": 0.7557142857142857,
-              "f1": 0.8233463035019455,
-              "fpr": 0.00014711309900195376
+              "recall": 0.9247863247863248,
+              "precision": 0.7829232995658466,
+              "f1": 0.8479623824451411,
+              "fpr": 0.00012904657807188928
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 18,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 139.2798492548446
+            },
+            "k1_w200": {
+              "episodes": 18,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 139.2798492548446
+            },
+            "k1_w1000": {
+              "episodes": 18,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 139.2798492548446
+            },
+            "k2_w50": {
+              "episodes": 18,
+              "episode_recall": 0.7777777777777778,
+              "median_latency_ms": 4.668951034545898,
+              "false_alarms_per_hour": 31.515878298541484
+            },
+            "k2_w200": {
+              "episodes": 18,
+              "episode_recall": 0.7777777777777778,
+              "median_latency_ms": 4.668951034545898,
+              "false_alarms_per_hour": 37.61572571116241
+            },
+            "k2_w1000": {
+              "episodes": 18,
+              "episode_recall": 0.7777777777777778,
+              "median_latency_ms": 4.668951034545898,
+              "false_alarms_per_hour": 42.69893188834653
+            },
+            "k3_w50": {
+              "episodes": 18,
+              "episode_recall": 0.6666666666666666,
+              "median_latency_ms": 10.543465614318848,
+              "false_alarms_per_hour": 25.416030885920552
+            },
+            "k3_w200": {
+              "episodes": 18,
+              "episode_recall": 0.7222222222222222,
+              "median_latency_ms": 14.199018478393555,
+              "false_alarms_per_hour": 26.432672121357374
+            },
+            "k3_w1000": {
+              "episodes": 18,
+              "episode_recall": 0.7222222222222222,
+              "median_latency_ms": 14.199018478393555,
+              "false_alarms_per_hour": 32.5325195339783
+            },
+            "k5_w50": {
+              "episodes": 18,
+              "episode_recall": 0.6666666666666666,
+              "median_latency_ms": 20.58851718902588,
+              "false_alarms_per_hour": 19.31618347329962
+            },
+            "k5_w200": {
+              "episodes": 18,
+              "episode_recall": 0.6666666666666666,
+              "median_latency_ms": 20.58851718902588,
+              "false_alarms_per_hour": 20.332824708736442
+            },
+            "k5_w1000": {
+              "episodes": 18,
+              "episode_recall": 0.7222222222222222,
+              "median_latency_ms": 28.069019317626953,
+              "false_alarms_per_hour": 25.416030885920552
+            },
+            "k8_w50": {
+              "episodes": 18,
+              "episode_recall": 0.3888888888888889,
+              "median_latency_ms": 16.268014907836914,
+              "false_alarms_per_hour": 10.166412354368221
+            },
+            "k8_w200": {
+              "episodes": 18,
+              "episode_recall": 0.6666666666666666,
+              "median_latency_ms": 41.7330265045166,
+              "false_alarms_per_hour": 17.282901002425973
+            },
+            "k8_w1000": {
+              "episodes": 18,
+              "episode_recall": 0.7222222222222222,
+              "median_latency_ms": 60.920000076293945,
+              "false_alarms_per_hour": 22.366107179610086
             }
           },
           "vehicle": "subaru_forester"
@@ -619,76 +1723,168 @@
         "n_estimators": 20,
         "max_depth": 10
       },
-      "threshold": 0.44999998807907104,
+      "threshold": 0.5,
       "selection": [
         {
           "n_estimators": 10,
           "max_depth": 8,
-          "threshold": 0.4000000059604645,
-          "val_f1": 0.9589574595566207,
-          "val_auc_pr": 0.9655345967613879
+          "threshold": 0.6000000238418579,
+          "val_f1": 0.9668972439828049,
+          "val_auc_pr": 0.9766336887746787
         },
         {
           "n_estimators": 20,
           "max_depth": 10,
-          "threshold": 0.44999998807907104,
-          "val_f1": 0.9717749820741803,
-          "val_auc_pr": 0.9838960377919845
+          "threshold": 0.5,
+          "val_f1": 0.9704260651629073,
+          "val_auc_pr": 0.9810513247053936
         },
         {
           "n_estimators": 30,
           "max_depth": 12,
-          "threshold": 0.36666667461395264,
-          "val_f1": 0.9648587203637544,
-          "val_auc_pr": 0.9794147436660938
+          "threshold": 0.30000001192092896,
+          "val_f1": 0.9669767741658252,
+          "val_auc_pr": 0.979484392972329
         }
       ],
       "splits": {
         "test_01_known_vehicle_known_attack": {
           "frames": 13220555,
           "attack_frames": 14244,
-          "precision": 0.860573199070488,
-          "recall": 0.8579752878404943,
-          "f1": 0.8592722798382844,
-          "fpr": 0.0001499283183623345,
-          "auc_pr": 0.8742336905137402,
-          "false_alarms_per_hour": 48.40878386474809,
+          "precision": 0.889230318993269,
+          "recall": 0.8532715529345689,
+          "f1": 0.8708799082831757,
+          "fpr": 0.0001146421585861487,
+          "auc_pr": 0.866222078236401,
+          "false_alarms_per_hour": 43.77390030322966,
           "per_attack": {
             "double": {
-              "recall": 0.43204653622422,
-              "precision": 0.6110695587135377,
-              "f1": 0.5061957868649318,
-              "fpr": 0.00021617549792076585
+              "recall": 0.4161819143310418,
+              "precision": 0.6624579124579124,
+              "f1": 0.5112049366677492,
+              "fpr": 0.00016670456666582136
             },
             "fuzzing": {
-              "recall": 0.9998416468725257,
-              "precision": 0.9556530952020584,
-              "f1": 0.9772481040086674,
-              "fpr": 0.00026437219273725375
+              "recall": 0.9992082343626286,
+              "precision": 0.9857834713326042,
+              "f1": 0.9924504561182762,
+              "fpr": 8.210876975798666e-05
             },
             "interval": {
               "recall": 1.0,
-              "precision": 0.8364779874213837,
-              "f1": 0.910958904109589,
-              "fpr": 1.486922516467667e-05
+              "precision": 0.869281045751634,
+              "f1": 0.9300699300699301,
+              "fpr": 1.1437865511289745e-05
             },
             "speed": {
               "recall": 0.9862714508580344,
-              "precision": 0.8364646731939667,
-              "f1": 0.9052119129438717,
-              "fpr": 0.00013670757718337265
+              "precision": 0.8545552852122196,
+              "f1": 0.9157010428736964,
+              "fpr": 0.00011901080343795224
             },
             "systematic": {
               "recall": 0.9989806320081549,
-              "precision": 0.9423076923076923,
-              "f1": 0.9698169223156853,
-              "fpr": 7.168398830595203e-05
+              "precision": 0.9107806691449815,
+              "f1": 0.9528439474963539,
+              "fpr": 0.00011469438128952327
             },
             "triple": {
-              "recall": 0.47469458987783597,
-              "precision": 0.6379984362783424,
-              "f1": 0.5443629086057371,
-              "fpr": 0.00017901406168986954
+              "recall": 0.45549738219895286,
+              "precision": 0.680278019113814,
+              "f1": 0.5456445993031359,
+              "fpr": 0.00014228331469086825
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 71,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 39.65400380410216
+            },
+            "k1_w200": {
+              "episodes": 71,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 39.65400380410216
+            },
+            "k1_w1000": {
+              "episodes": 71,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 38.62402967932029
+            },
+            "k2_w50": {
+              "episodes": 71,
+              "episode_recall": 0.14084507042253522,
+              "median_latency_ms": 4.0580034255981445,
+              "false_alarms_per_hour": 16.994573058900926
+            },
+            "k2_w200": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 8.487939834594727,
+              "false_alarms_per_hour": 18.539534246073735
+            },
+            "k2_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 8.487939834594727,
+              "false_alarms_per_hour": 20.08449543324655
+            },
+            "k3_w50": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 12.601017951965332,
+              "false_alarms_per_hour": 11.844702434991554
+            },
+            "k3_w200": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 20.28048038482666,
+              "false_alarms_per_hour": 12.874676559773429
+            },
+            "k3_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 20.28048038482666,
+              "false_alarms_per_hour": 14.934624809337176
+            },
+            "k5_w50": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 28.40399742126465,
+              "false_alarms_per_hour": 8.754780060645931
+            },
+            "k5_w200": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 28.40399742126465,
+              "false_alarms_per_hour": 9.269767123036868
+            },
+            "k5_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 40.56048393249512,
+              "false_alarms_per_hour": 11.844702434991554
+            },
+            "k8_w50": {
+              "episodes": 71,
+              "episode_recall": 0.07042253521126761,
+              "median_latency_ms": 29.686927795410156,
+              "false_alarms_per_hour": 5.664857686300309
+            },
+            "k8_w200": {
+              "episodes": 71,
+              "episode_recall": 0.11267605633802817,
+              "median_latency_ms": 48.15804958343506,
+              "false_alarms_per_hour": 5.664857686300309
+            },
+            "k8_w1000": {
+              "episodes": 71,
+              "episode_recall": 0.16901408450704225,
+              "median_latency_ms": 70.99997997283936,
+              "false_alarms_per_hour": 9.269767123036868
             }
           },
           "vehicle": "chevrolet_traverse"
@@ -696,48 +1892,140 @@
         "test_02_unknown_vehicle_known_attack": {
           "frames": 8445427,
           "attack_frames": 20049,
-          "precision": 0.8823929630169607,
-          "recall": 0.9056312035512993,
-          "f1": 0.893861074188943,
-          "fpr": 0.0002872274692007884,
-          "auc_pr": 0.8879725543856738,
-          "false_alarms_per_hour": 77.626790533967,
+          "precision": 0.8870501835985312,
+          "recall": 0.9036859693750312,
+          "f1": 0.8952908039729209,
+          "fpr": 0.0002738156080356276,
+          "auc_pr": 0.891677544523313,
+          "false_alarms_per_hour": 59.76575908367371,
           "per_attack": {
             "double": {
-              "recall": 0.5314895947426068,
-              "precision": 0.5472230053566394,
-              "f1": 0.5392415613279622,
-              "fpr": 0.001228221251133772
+              "recall": 0.53039430449069,
+              "precision": 0.5516946738820849,
+              "f1": 0.5408348457350273,
+              "fpr": 0.0012037485985582548
             },
             "fuzzing": {
-              "recall": 0.9987394957983193,
-              "precision": 0.9639091646390916,
-              "f1": 0.9810152703260421,
-              "fpr": 7.820621308820518e-05
+              "recall": 0.996218487394958,
+              "precision": 0.9634295002031694,
+              "f1": 0.9795496798182194,
+              "fpr": 7.908493458357828e-05
             },
             "interval": {
               "recall": 1.0,
-              "precision": 0.9259589652096343,
-              "f1": 0.9615562760537286,
-              "fpr": 6.384148850660913e-05
+              "precision": 0.9309417040358744,
+              "f1": 0.9642359498374361,
+              "fpr": 5.922644114468558e-05
             },
             "speed": {
-              "recall": 0.9940029985007496,
-              "precision": 0.8576972833117723,
-              "f1": 0.9208333333333333,
-              "fpr": 9.689179916620202e-05
+              "recall": 0.992503748125937,
+              "precision": 0.8897849462365591,
+              "f1": 0.9383416017009213,
+              "fpr": 7.222843210571423e-05
             },
             "systematic": {
-              "recall": 0.9994156440437432,
-              "precision": 0.9697067876235218,
-              "f1": 0.9843371017471737,
-              "fpr": 0.00016720202609513975
+              "recall": 0.9990817263544536,
+              "precision": 0.9709557033912056,
+              "f1": 0.9848179386957416,
+              "fpr": 0.0001600489982408022
             },
             "triple": {
-              "recall": 0.4984984984984985,
-              "precision": 0.5123456790123457,
-              "f1": 0.5053272450532724,
-              "fpr": 0.00012083372209161644
+              "recall": 0.4264264264264264,
+              "precision": 0.5298507462686567,
+              "f1": 0.47254575707154745,
+              "fpr": 9.636106951609918e-05
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 48.08739236617425
+            },
+            "k1_w200": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 48.08739236617425
+            },
+            "k1_w1000": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 47.400429618086044
+            },
+            "k2_w50": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.09100341796875,
+              "false_alarms_per_hour": 18.547994198381495
+            },
+            "k2_w200": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.09100341796875,
+              "false_alarms_per_hour": 19.234956946469698
+            },
+            "k2_w1000": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.09100341796875,
+              "false_alarms_per_hour": 20.608882442646106
+            },
+            "k3_w50": {
+              "episodes": 15,
+              "episode_recall": 0.9333333333333333,
+              "median_latency_ms": 2.4296045303344727,
+              "false_alarms_per_hour": 17.174068702205087
+            },
+            "k3_w200": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 2.607107162475586,
+              "false_alarms_per_hour": 17.174068702205087
+            },
+            "k3_w1000": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 2.607107162475586,
+              "false_alarms_per_hour": 17.174068702205087
+            },
+            "k5_w50": {
+              "episodes": 15,
+              "episode_recall": 0.7333333333333333,
+              "median_latency_ms": 4.476070404052734,
+              "false_alarms_per_hour": 7.556590228970239
+            },
+            "k5_w200": {
+              "episodes": 15,
+              "episode_recall": 0.9333333333333333,
+              "median_latency_ms": 12.40992546081543,
+              "false_alarms_per_hour": 16.487105954116885
+            },
+            "k5_w1000": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 13.356924057006836,
+              "false_alarms_per_hour": 16.487105954116885
+            },
+            "k8_w50": {
+              "episodes": 15,
+              "episode_recall": 0.7333333333333333,
+              "median_latency_ms": 7.880926132202148,
+              "false_alarms_per_hour": 6.182664732793832
+            },
+            "k8_w200": {
+              "episodes": 15,
+              "episode_recall": 0.8,
+              "median_latency_ms": 13.714432716369629,
+              "false_alarms_per_hour": 6.869627480882035
+            },
+            "k8_w1000": {
+              "episodes": 15,
+              "episode_recall": 1.0,
+              "median_latency_ms": 20.076990127563477,
+              "false_alarms_per_hour": 6.869627480882035
             }
           },
           "vehicle": "subaru_forester"
@@ -745,36 +2033,128 @@
         "test_03_known_vehicle_unknown_attack": {
           "frames": 12150056,
           "attack_frames": 28791,
-          "precision": 0.9401796250163892,
-          "recall": 0.9962488277586746,
-          "f1": 0.967402485708022,
-          "fpr": 0.00015056184317395916,
-          "auc_pr": 0.9608426061812922,
-          "false_alarms_per_hour": 57.91591888200346,
+          "precision": 0.9403171268178983,
+          "recall": 0.9948595047063319,
+          "f1": 0.9668196854114629,
+          "fpr": 0.00014998434569329192,
+          "auc_pr": 0.9624538780383046,
+          "false_alarms_per_hour": 50.23319494867647,
           "per_attack": {
             "DoS": {
-              "recall": 0.9974557367907431,
-              "precision": 0.9500082987551868,
-              "f1": 0.9731540200962306,
-              "fpr": 0.0010286309100173351
+              "recall": 0.9960267670430782,
+              "precision": 0.9497191851384135,
+              "f1": 0.9723219298096388,
+              "fpr": 0.0010334120629855433
             },
             "force-neutral": {
               "recall": 0.62,
-              "precision": 0.11567164179104478,
-              "f1": 0.1949685534591195,
-              "fpr": 3.4512912853438806e-05
+              "precision": 0.12601626016260162,
+              "f1": 0.20945945945945946,
+              "fpr": 3.130918254636853e-05
             },
             "rpm": {
               "recall": 0.6666666666666666,
-              "precision": 0.29411764705882354,
-              "f1": 0.40816326530612246,
-              "fpr": 2.0812087660513227e-05
+              "precision": 0.28169014084507044,
+              "f1": 0.39603960396039606,
+              "fpr": 2.2112843139295304e-05
             },
             "standstill": {
-              "recall": 0.6842105263157895,
-              "precision": 0.2765957446808511,
-              "f1": 0.3939393939393939,
-              "fpr": 2.291358344183589e-05
+              "recall": 0.7368421052631579,
+              "precision": 0.2641509433962264,
+              "f1": 0.3888888888888889,
+              "fpr": 2.6283228065635285e-05
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 41,
+              "episode_recall": 0.8780487804878049,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 36.640683374328724
+            },
+            "k1_w200": {
+              "episodes": 41,
+              "episode_recall": 0.8780487804878049,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 36.640683374328724
+            },
+            "k1_w1000": {
+              "episodes": 41,
+              "episode_recall": 0.8780487804878049,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 36.640683374328724
+            },
+            "k2_w50": {
+              "episodes": 41,
+              "episode_recall": 0.24390243902439024,
+              "median_latency_ms": 5.833029747009277,
+              "false_alarms_per_hour": 18.320341687164362
+            },
+            "k2_w200": {
+              "episodes": 41,
+              "episode_recall": 0.24390243902439024,
+              "median_latency_ms": 5.833029747009277,
+              "false_alarms_per_hour": 20.684256743572664
+            },
+            "k2_w1000": {
+              "episodes": 41,
+              "episode_recall": 0.2926829268292683,
+              "median_latency_ms": 5.996108055114746,
+              "false_alarms_per_hour": 20.684256743572664
+            },
+            "k3_w50": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 3.048062324523926,
+              "false_alarms_per_hour": 15.36544786665398
+            },
+            "k3_w200": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 38.70964050292969,
+              "false_alarms_per_hour": 16.54740539485813
+            },
+            "k3_w1000": {
+              "episodes": 41,
+              "episode_recall": 0.0975609756097561,
+              "median_latency_ms": 440.4146671295166,
+              "false_alarms_per_hour": 16.54740539485813
+            },
+            "k5_w50": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 5.212068557739258,
+              "false_alarms_per_hour": 12.410554046143599
+            },
+            "k5_w200": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 5.212068557739258,
+              "false_alarms_per_hour": 12.410554046143599
+            },
+            "k5_w1000": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 4.459500312805176,
+              "false_alarms_per_hour": 13.001532810245676
+            },
+            "k8_w50": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 9.275078773498535,
+              "false_alarms_per_hour": 5.9097876410207615
+            },
+            "k8_w200": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 9.275078773498535,
+              "false_alarms_per_hour": 5.9097876410207615
+            },
+            "k8_w1000": {
+              "episodes": 41,
+              "episode_recall": 0.04878048780487805,
+              "median_latency_ms": 8.14354419708252,
+              "false_alarms_per_hour": 6.500766405122838
             }
           },
           "vehicle": "chevrolet_traverse"
@@ -782,36 +2162,128 @@
         "test_04_unknown_vehicle_unknown_attack": {
           "frames": 4789904,
           "attack_frames": 18008,
-          "precision": 0.8984803060064096,
-          "recall": 0.965237672145713,
-          "f1": 0.9306633827702522,
-          "fpr": 0.0004115764467624609,
-          "auc_pr": 0.9132479924604682,
-          "false_alarms_per_hour": 102.68076477911903,
+          "precision": 0.9000466103889379,
+          "recall": 0.9650710795202132,
+          "f1": 0.9314253557359916,
+          "fpr": 0.0004044513962584264,
+          "auc_pr": 0.9518437237488215,
+          "false_alarms_per_hour": 83.36458130581941,
           "per_attack": {
             "DoS": {
-              "recall": 0.9994444058615182,
-              "precision": 0.9600400266844563,
-              "f1": 0.9793460138146926,
-              "fpr": 0.0006436347850754095
+              "recall": 0.9992360580595875,
+              "precision": 0.9622792937399679,
+              "f1": 0.980409526080883,
+              "fpr": 0.0006060267425417879
             },
             "force-neutral": {
-              "recall": 0.7167300380228137,
-              "precision": 0.5808936825885979,
-              "f1": 0.6417021276595745,
-              "fpr": 0.0006052563846760358
+              "recall": 0.720532319391635,
+              "precision": 0.5559902200488998,
+              "f1": 0.6276566381451836,
+              "fpr": 0.0006734960751051967
             },
             "rpm": {
-              "recall": 0.9156293222683264,
-              "precision": 0.7339246119733924,
-              "f1": 0.8147692307692308,
-              "fpr": 0.0003607167441706671
+              "recall": 0.9163208852005532,
+              "precision": 0.7672264041690793,
+              "f1": 0.8351717617396786,
+              "fpr": 0.00030210027324293373
             },
             "standstill": {
-              "recall": 0.9162393162393162,
-              "precision": 0.8859504132231405,
-              "f1": 0.9008403361344538,
-              "fpr": 5.9361425913069065e-05
+              "recall": 0.9042735042735043,
+              "precision": 0.9042735042735043,
+              "f1": 0.9042735042735043,
+              "fpr": 4.817738914683866e-05
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 18,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 69.13160400970389
+            },
+            "k1_w200": {
+              "episodes": 18,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 69.13160400970389
+            },
+            "k1_w1000": {
+              "episodes": 18,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 69.13160400970389
+            },
+            "k2_w50": {
+              "episodes": 18,
+              "episode_recall": 0.7777777777777778,
+              "median_latency_ms": 4.884481430053711,
+              "false_alarms_per_hour": 22.366107179610086
+            },
+            "k2_w200": {
+              "episodes": 18,
+              "episode_recall": 0.7777777777777778,
+              "median_latency_ms": 4.884481430053711,
+              "false_alarms_per_hour": 23.38274841504691
+            },
+            "k2_w1000": {
+              "episodes": 18,
+              "episode_recall": 0.7777777777777778,
+              "median_latency_ms": 4.884481430053711,
+              "false_alarms_per_hour": 23.38274841504691
+            },
+            "k3_w50": {
+              "episodes": 18,
+              "episode_recall": 0.6666666666666666,
+              "median_latency_ms": 10.568499565124512,
+              "false_alarms_per_hour": 17.282901002425973
+            },
+            "k3_w200": {
+              "episodes": 18,
+              "episode_recall": 0.7222222222222222,
+              "median_latency_ms": 14.199018478393555,
+              "false_alarms_per_hour": 17.282901002425973
+            },
+            "k3_w1000": {
+              "episodes": 18,
+              "episode_recall": 0.7222222222222222,
+              "median_latency_ms": 14.199018478393555,
+              "false_alarms_per_hour": 17.282901002425973
+            },
+            "k5_w50": {
+              "episodes": 18,
+              "episode_recall": 0.6111111111111112,
+              "median_latency_ms": 13.46898078918457,
+              "false_alarms_per_hour": 9.149771118931397
+            },
+            "k5_w200": {
+              "episodes": 18,
+              "episode_recall": 0.6666666666666666,
+              "median_latency_ms": 25.168538093566895,
+              "false_alarms_per_hour": 16.26625976698915
+            },
+            "k5_w1000": {
+              "episodes": 18,
+              "episode_recall": 0.7222222222222222,
+              "median_latency_ms": 36.86809539794922,
+              "false_alarms_per_hour": 16.26625976698915
+            },
+            "k8_w50": {
+              "episodes": 18,
+              "episode_recall": 0.3888888888888889,
+              "median_latency_ms": 19.415855407714844,
+              "false_alarms_per_hour": 7.1164886480577545
+            },
+            "k8_w200": {
+              "episodes": 18,
+              "episode_recall": 0.6111111111111112,
+              "median_latency_ms": 22.546052932739258,
+              "false_alarms_per_hour": 9.149771118931397
+            },
+            "k8_w1000": {
+              "episodes": 18,
+              "episode_recall": 0.7222222222222222,
+              "median_latency_ms": 63.94600868225098,
+              "false_alarms_per_hour": 9.149771118931397
             }
           },
           "vehicle": "subaru_forester"
@@ -822,73 +2294,165 @@
   "set_03": {
     "full": {
       "hyperparameters": {
-        "n_estimators": 10,
-        "max_depth": 8
+        "n_estimators": 30,
+        "max_depth": 12
       },
-      "threshold": 0.8999999761581421,
+      "threshold": 0.7333333492279053,
       "selection": [
         {
           "n_estimators": 10,
           "max_depth": 8,
           "threshold": 0.8999999761581421,
-          "val_f1": 0.8973434395466922,
-          "val_auc_pr": 0.87540457583445
+          "val_f1": 0.8934227001546734,
+          "val_auc_pr": 0.8943904239887952
         },
         {
           "n_estimators": 20,
           "max_depth": 10,
-          "threshold": 0.8999999761581421,
-          "val_f1": 0.8925448347413666,
-          "val_auc_pr": 0.9263440769275147
+          "threshold": 0.8500000238418579,
+          "val_f1": 0.8965567873137068,
+          "val_auc_pr": 0.9189319274544963
         },
         {
           "n_estimators": 30,
           "max_depth": 12,
           "threshold": 0.7333333492279053,
-          "val_f1": 0.8970255061024629,
-          "val_auc_pr": 0.9365798512342285
+          "val_f1": 0.8989190768331873,
+          "val_auc_pr": 0.945401995305246
         }
       ],
       "splits": {
         "test_01_known_vehicle_known_attack": {
           "frames": 8575791,
           "attack_frames": 162505,
-          "precision": 0.9848965655754167,
-          "recall": 0.905289068028676,
-          "f1": 0.9434164328657315,
-          "fpr": 0.0002681473089111674,
-          "auc_pr": 0.9880045021572427,
-          "false_alarms_per_hour": 28.613863648249943,
+          "precision": 0.9916861298370402,
+          "recall": 0.9197193932494385,
+          "f1": 0.9543479440771094,
+          "fpr": 0.00014893110729862267,
+          "auc_pr": 0.9974468873681541,
+          "false_alarms_per_hour": 33.01599651721147,
           "per_attack": {
             "DoS": {
-              "recall": 0.999234912473987,
-              "precision": 0.9998366830323878,
-              "f1": 0.9995357071791915,
-              "fpr": 2.6648456887793342e-05
+              "recall": 0.9996327579875137,
+              "precision": 0.999795943353875,
+              "f1": 0.9997143440114262,
+              "fpr": 3.3310571109741677e-05
             },
             "double": {
-              "recall": 0.0737134909596662,
-              "precision": 0.828125,
-              "f1": 0.13537675606641125,
-              "fpr": 3.543654603207329e-05
+              "recall": 0.19153586330220546,
+              "precision": 0.8992537313432836,
+              "f1": 0.3158067158067158,
+              "fpr": 4.9703207421609295e-05
             },
             "force-neutral": {
-              "recall": 0.09120521172638436,
-              "precision": 0.8442211055276382,
-              "f1": 0.164625183733464,
-              "fpr": 2.8533322779072004e-05
+              "recall": 0.20548317046688383,
+              "precision": 0.8505617977528089,
+              "f1": 0.3310013117621338,
+              "fpr": 6.120857950994478e-05
             },
             "fuzzing": {
-              "recall": 0.9374253548702888,
-              "precision": 0.9621018788305034,
-              "f1": 0.9496033320111067,
-              "fpr": 0.001046885598606521
+              "recall": 0.951443954968184,
+              "precision": 0.9847011144883485,
+              "f1": 0.9677869056509834,
+              "fpr": 0.0004190872889437557
             },
             "triple": {
-              "recall": 0.12273212379935966,
-              "precision": 0.7278481012658228,
-              "f1": 0.2100456621004566,
-              "fpr": 0.0001290867979629503
+              "recall": 0.2456776947705443,
+              "precision": 0.829250720461095,
+              "f1": 0.37905483286678743,
+              "fpr": 0.0001422956796149731
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 2.2341012954711914,
+              "false_alarms_per_hour": 11.005332172403824
+            },
+            "k1_w200": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 2.2341012954711914,
+              "false_alarms_per_hour": 11.005332172403824
+            },
+            "k1_w1000": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 2.2341012954711914,
+              "false_alarms_per_hour": 11.005332172403824
+            },
+            "k2_w50": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 4.422187805175781,
+              "false_alarms_per_hour": 2.2010664344807647
+            },
+            "k2_w200": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 6.205081939697266,
+              "false_alarms_per_hour": 2.2010664344807647
+            },
+            "k2_w1000": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 6.205081939697266,
+              "false_alarms_per_hour": 2.2010664344807647
+            },
+            "k3_w50": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 6.170988082885742,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 6.170988082885742,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 9.034991264343262,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 16,
+              "episode_recall": 0.625,
+              "median_latency_ms": 10.172486305236816,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 10.757923126220703,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 14.760017395019531,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 16,
+              "episode_recall": 0.625,
+              "median_latency_ms": 15.81108570098877,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 16.662120819091797,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 21.74198627471924,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "chevrolet_silverado"
@@ -896,42 +2460,134 @@
         "test_02_unknown_vehicle_known_attack": {
           "frames": 6854234,
           "attack_frames": 156189,
-          "precision": 0.9402254485966975,
-          "recall": 0.4710126833515805,
-          "f1": 0.6276164191901311,
-          "fpr": 0.0006982634485137081,
-          "auc_pr": 0.8848936335070756,
-          "false_alarms_per_hour": 31.83269191075416,
+          "precision": 0.8690640666324557,
+          "recall": 0.7047871489029317,
+          "f1": 0.7783520826999087,
+          "fpr": 0.0024760956368612037,
+          "auc_pr": 0.8937722322403936,
+          "false_alarms_per_hour": 39.41190427045753,
           "per_attack": {
             "DoS": {
-              "recall": 0.8092462365303885,
-              "precision": 0.9963129999670803,
-              "f1": 0.8930889990557129,
-              "fpr": 8.514216080161344e-05
+              "recall": 0.9955613786464879,
+              "precision": 0.9798931494591678,
+              "f1": 0.9876651281235079,
+              "fpr": 0.0005807911683252917
             },
             "double": {
-              "recall": 0.13159122725151656,
-              "precision": 0.7604006163328197,
-              "f1": 0.22435642439052111,
-              "fpr": 0.00032318370239665137
+              "recall": 0.46783547763482436,
+              "precision": 0.7897816790456899,
+              "f1": 0.5875999497634696,
+              "fpr": 0.0009705902830819047
             },
             "force-neutral": {
-              "recall": 0.05421103581800581,
-              "precision": 0.5753424657534246,
-              "f1": 0.09908581539368917,
-              "fpr": 0.0001239693795632479
+              "recall": 0.5443691513391417,
+              "precision": 0.649345650500385,
+              "f1": 0.5922415306301563,
+              "fpr": 0.0009107750385654743
             },
             "fuzzing": {
-              "recall": 0.8709834052155037,
-              "precision": 0.9937106918238994,
-              "f1": 0.9283083198879722,
-              "fpr": 0.0001513304138847615
+              "recall": 0.9264516866127789,
+              "precision": 0.9153403318658991,
+              "f1": 0.9208624923701506,
+              "fpr": 0.0023522862261880027
             },
             "triple": {
-              "recall": 0.16239589518719835,
-              "precision": 0.7462916316820599,
-              "f1": 0.26674669567718295,
-              "fpr": 0.0030666596752013287
+              "recall": 0.48274182006425187,
+              "precision": 0.7594615310913098,
+              "f1": 0.5902799110093365,
+              "fpr": 0.008492938901922709
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 236.4714256227452
+            },
+            "k1_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 236.4714256227452
+            },
+            "k1_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 235.71350438677487
+            },
+            "k2_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 3.0864477157592773,
+              "false_alarms_per_hour": 181.14317539691058
+            },
+            "k2_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 3.0864477157592773,
+              "false_alarms_per_hour": 210.70210359975374
+            },
+            "k2_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 3.0864477157592773,
+              "false_alarms_per_hour": 231.16597697095284
+            },
+            "k3_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.038022994995117,
+              "false_alarms_per_hour": 65.93914752941933
+            },
+            "k3_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.038022994995117,
+              "false_alarms_per_hour": 156.13177460988945
+            },
+            "k3_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.038022994995117,
+              "false_alarms_per_hour": 209.18626112781305
+            },
+            "k5_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.734060287475586,
+              "false_alarms_per_hour": 6.063369887762698
+            },
+            "k5_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.734060287475586,
+              "false_alarms_per_hour": 52.296565281953264
+            },
+            "k5_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.734060287475586,
+              "false_alarms_per_hour": 53.81240775389394
+            },
+            "k8_w50": {
+              "episodes": 22,
+              "episode_recall": 0.9545454545454546,
+              "median_latency_ms": 12.24207878112793,
+              "false_alarms_per_hour": 0.7579212359703372
+            },
+            "k8_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 14.017581939697266,
+              "false_alarms_per_hour": 6.063369887762698
+            },
+            "k8_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 14.017581939697266,
+              "false_alarms_per_hour": 51.53864404598293
             }
           },
           "vehicle": "subaru_forester"
@@ -939,54 +2595,146 @@
         "test_03_known_vehicle_unknown_attack": {
           "frames": 9447951,
           "attack_frames": 18152,
-          "precision": 0.969851904090268,
-          "recall": 0.30305200528867343,
-          "f1": 0.46180322364002685,
-          "fpr": 1.813400264417089e-05,
-          "auc_pr": 0.8831928700597997,
-          "false_alarms_per_hour": 28.47374949227618,
+          "precision": 0.9696777122106219,
+          "recall": 0.5884200088144557,
+          "f1": 0.7324030582507628,
+          "fpr": 3.541963089563203e-05,
+          "auc_pr": 0.9536491337091682,
+          "false_alarms_per_hour": 31.419309784580612,
           "per_attack": {
             "interval": {
-              "recall": 0.49799247176913425,
-              "precision": 0.9994963485268195,
-              "f1": 0.6647684448538649,
+              "recall": 0.9996235884567126,
+              "precision": 0.9997490274814907,
+              "f1": 0.9996863040341302,
               "fpr": 1.0246783534648473e-06
             },
             "rpm": {
-              "recall": 0.22667429879793932,
-              "precision": 0.9020501138952164,
-              "f1": 0.36230558096980786,
-              "fpr": 2.5817359592590056e-05
+              "recall": 0.31368059530623926,
+              "precision": 0.848297213622291,
+              "f1": 0.45800250731299624,
+              "fpr": 5.8839563722647105e-05
             },
             "rpm-accessory": {
-              "recall": 0.39655172413793105,
-              "precision": 0.92,
-              "f1": 0.5542168674698795,
-              "fpr": 6.332239966565773e-06
+              "recall": 0.4482758620689655,
+              "precision": 0.8666666666666667,
+              "f1": 0.5909090909090909,
+              "fpr": 1.2664479933131545e-05
             },
             "speed": {
-              "recall": 0.05056179775280899,
-              "precision": 0.7422680412371134,
-              "f1": 0.09467455621301775,
-              "fpr": 1.1505372088335486e-05
+              "recall": 0.0877808988764045,
+              "precision": 0.8169934640522876,
+              "f1": 0.15852885225110971,
+              "fpr": 1.2886016738935745e-05
             },
             "speed-accessory": {
-              "recall": 0.0,
-              "precision": 0.0,
-              "f1": 0.0,
-              "fpr": 3.1661199832828864e-06
+              "recall": 0.15212091662603608,
+              "precision": 0.9258160237388724,
+              "f1": 0.2613065326633166,
+              "fpr": 0.00015830599916414432
             },
             "standstill": {
-              "recall": 0.20161673799334284,
-              "precision": 0.8297455968688845,
-              "f1": 0.324407039020658,
-              "fpr": 5.2235122896635696e-05
+              "recall": 0.33143128863528293,
+              "precision": 0.8327359617682198,
+              "f1": 0.4741496598639456,
+              "fpr": 8.405651960378159e-05
             },
             "systematic": {
-              "recall": 0.8248663101604278,
-              "precision": 0.982484076433121,
-              "f1": 0.8968023255813954,
-              "fpr": 8.19495652575563e-06
+              "recall": 0.9278074866310161,
+              "precision": 0.9830028328611898,
+              "f1": 0.9546079779917469,
+              "fpr": 8.939952573551597e-06
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 75,
+              "episode_recall": 0.6266666666666667,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 5.891120584608864
+            },
+            "k1_w200": {
+              "episodes": 75,
+              "episode_recall": 0.6266666666666667,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 5.891120584608864
+            },
+            "k1_w1000": {
+              "episodes": 75,
+              "episode_recall": 0.6266666666666667,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 5.891120584608864
+            },
+            "k2_w50": {
+              "episodes": 75,
+              "episode_recall": 0.2,
+              "median_latency_ms": 5.227804183959961,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w200": {
+              "episodes": 75,
+              "episode_recall": 0.22666666666666666,
+              "median_latency_ms": 6.544828414916992,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w1000": {
+              "episodes": 75,
+              "episode_recall": 0.22666666666666666,
+              "median_latency_ms": 6.544828414916992,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w50": {
+              "episodes": 75,
+              "episode_recall": 0.10666666666666667,
+              "median_latency_ms": 24.816036224365234,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 75,
+              "episode_recall": 0.2,
+              "median_latency_ms": 99.26795959472656,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 75,
+              "episode_recall": 0.22666666666666666,
+              "median_latency_ms": 99.84183311462402,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 75,
+              "episode_recall": 0.09333333333333334,
+              "median_latency_ms": 48.69413375854492,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 75,
+              "episode_recall": 0.18666666666666668,
+              "median_latency_ms": 129.75454330444336,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 75,
+              "episode_recall": 0.21333333333333335,
+              "median_latency_ms": 199.70440864562988,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 75,
+              "episode_recall": 0.04,
+              "median_latency_ms": 22.301912307739258,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 75,
+              "episode_recall": 0.10666666666666667,
+              "median_latency_ms": 86.96210384368896,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 75,
+              "episode_recall": 0.21333333333333335,
+              "median_latency_ms": 299.56936836242676,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "chevrolet_silverado"
@@ -994,54 +2742,146 @@
         "test_04_unknown_vehicle_unknown_attack": {
           "frames": 6896019,
           "attack_frames": 149948,
-          "precision": 0.9827187034893335,
-          "recall": 0.3170432416571078,
-          "f1": 0.47941751880760775,
-          "fpr": 0.00012392398479055437,
-          "auc_pr": 0.9660940099418478,
-          "false_alarms_per_hour": 49.94078994354439,
+          "precision": 0.9825110978182162,
+          "recall": 0.8324885960466295,
+          "f1": 0.9012996389891696,
+          "fpr": 0.00032937690694331557,
+          "auc_pr": 0.9688808719868099,
+          "false_alarms_per_hour": 64.57860768561774,
           "per_attack": {
             "interval": {
-              "recall": 0.3453398685360386,
-              "precision": 0.9998349925746659,
-              "f1": 0.5133650573998503,
-              "fpr": 4.930062948687083e-06
+              "recall": 0.9999430069531517,
+              "precision": 0.9999145128658137,
+              "f1": 0.99992875970649,
+              "fpr": 7.395094423030625e-06
             },
             "rpm": {
-              "recall": 0.1328803322008305,
-              "precision": 0.6180860403863038,
-              "f1": 0.21873543576200094,
-              "fpr": 0.00041305912537816273
+              "recall": 0.5607776519441299,
+              "precision": 0.7405284147557328,
+              "f1": 0.6382384532760472,
+              "fpr": 0.000988493217284293
             },
             "rpm-accessory": {
-              "recall": 0.12156110044785669,
-              "precision": 0.5671641791044776,
-              "f1": 0.20021074815595363,
-              "fpr": 0.0005438145779811353
+              "recall": 0.5879718490083173,
+              "precision": 0.6640173410404624,
+              "f1": 0.6236851034950798,
+              "fpr": 0.00174395709490502
             },
             "speed": {
-              "recall": 0.053467294316026134,
-              "precision": 0.8262757871878393,
-              "f1": 0.10043552857331398,
-              "fpr": 0.00010976248085159221
+              "recall": 0.1594182533548795,
+              "precision": 0.815893563466379,
+              "f1": 0.2667215234512754,
+              "fpr": 0.00035123993872509504
             },
             "speed-accessory": {
-              "recall": 0.025657894736842105,
-              "precision": 0.75,
-              "f1": 0.04961832061068702,
-              "fpr": 3.056723380642006e-05
+              "recall": 0.29539473684210527,
+              "precision": 0.7863397548161121,
+              "f1": 0.4294595887135342,
+              "fpr": 0.00028686173264486515
             },
             "standstill": {
-              "recall": 0.00029345593270077276,
-              "precision": 0.5,
-              "f1": 0.0005865676019161209,
-              "fpr": 2.5246298682227365e-06
+              "recall": 0.1571945612833806,
+              "precision": 0.9925880172946263,
+              "f1": 0.27140685694983957,
+              "fpr": 1.0098519472890946e-05
             },
             "systematic": {
-              "recall": 0.8016054076890579,
-              "precision": 0.9922602238259596,
-              "f1": 0.8868012712656571,
-              "fpr": 6.502539065760881e-05
+              "recall": 0.9585973806506126,
+              "precision": 0.994651937576714,
+              "f1": 0.9762918979389872,
+              "fpr": 5.360201121775861e-05
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 12.054673434648645
+            },
+            "k1_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 12.054673434648645
+            },
+            "k1_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 12.054673434648645
+            },
+            "k2_w50": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 6.789922714233398,
+              "false_alarms_per_hour": 8.610481024749031
+            },
+            "k2_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 6.789922714233398,
+              "false_alarms_per_hour": 8.610481024749031
+            },
+            "k2_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 6.789922714233398,
+              "false_alarms_per_hour": 8.610481024749031
+            },
+            "k3_w50": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 10.123014450073242,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 10.166168212890625,
+              "false_alarms_per_hour": 7.749432922274129
+            },
+            "k3_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 10.166168212890625,
+              "false_alarms_per_hour": 7.749432922274129
+            },
+            "k5_w50": {
+              "episodes": 27,
+              "episode_recall": 0.8888888888888888,
+              "median_latency_ms": 18.056392669677734,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 19.058942794799805,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 19.369125366210938,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 27,
+              "episode_recall": 0.8148148148148148,
+              "median_latency_ms": 26.14903450012207,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 28.458833694458008,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 28.690814971923828,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "subaru_forester"
@@ -1053,70 +2893,162 @@
         "n_estimators": 30,
         "max_depth": 12
       },
-      "threshold": 0.8999999761581421,
+      "threshold": 0.800000011920929,
       "selection": [
         {
           "n_estimators": 10,
           "max_depth": 8,
-          "threshold": 0.800000011920929,
-          "val_f1": 0.8978494623655914,
-          "val_auc_pr": 0.9015503878413207
+          "threshold": 0.8999999761581421,
+          "val_f1": 0.9002628504672897,
+          "val_auc_pr": 0.9021534772643182
         },
         {
           "n_estimators": 20,
           "max_depth": 10,
           "threshold": 0.8500000238418579,
-          "val_f1": 0.8971432725158102,
-          "val_auc_pr": 0.9243805373934724
+          "val_f1": 0.9016345592527729,
+          "val_auc_pr": 0.916219523374689
         },
         {
           "n_estimators": 30,
           "max_depth": 12,
-          "threshold": 0.8999999761581421,
-          "val_f1": 0.899905088705556,
-          "val_auc_pr": 0.9355656763857729
+          "threshold": 0.800000011920929,
+          "val_f1": 0.9038741625400525,
+          "val_auc_pr": 0.9342832956003032
         }
       ],
       "splits": {
         "test_01_known_vehicle_known_attack": {
           "frames": 8575791,
           "attack_frames": 162505,
-          "precision": 0.9839497695791684,
-          "recall": 0.917085628134519,
-          "f1": 0.9493418098080372,
-          "fpr": 0.00028894774289142195,
-          "auc_pr": 0.9923204353710408,
-          "false_alarms_per_hour": 20.910131127567265,
+          "precision": 0.9930308577405857,
+          "recall": 0.9347035475831513,
+          "f1": 0.9629848002155548,
+          "fpr": 0.00012670435784543636,
+          "auc_pr": 0.997736595224412,
+          "false_alarms_per_hour": 24.211730779288413,
           "per_attack": {
             "DoS": {
-              "recall": 0.9904415065083445,
-              "precision": 0.9998661229197562,
-              "f1": 0.9951315007277125,
-              "fpr": 2.165187122133209e-05
+              "recall": 0.9996123556534867,
+              "precision": 0.9998265430020304,
+              "f1": 0.999719437855485,
+              "fpr": 2.8313985443280425e-05
             },
             "double": {
-              "recall": 0.17663421418636996,
-              "precision": 0.9397463002114165,
-              "f1": 0.2973741428332497,
-              "fpr": 2.6232248361404907e-05
+              "recall": 0.3719451619312537,
+              "precision": 0.9369369369369369,
+              "f1": 0.5324989332954061,
+              "fpr": 5.798707532521085e-05
             },
             "force-neutral": {
-              "recall": 0.5909337676438654,
-              "precision": 0.9477579451458424,
-              "f1": 0.7279719110516636,
-              "fpr": 5.522578602401033e-05
+              "recall": 0.8333333333333334,
+              "precision": 0.960275258054426,
+              "f1": 0.8923121639296614,
+              "fpr": 5.844729020874427e-05
             },
             "fuzzing": {
-              "recall": 0.9427116984826236,
-              "precision": 0.9584560872680946,
-              "f1": 0.9505186998450317,
-              "fpr": 0.001158457181490885
+              "recall": 0.9215663240332844,
+              "precision": 0.9911975909196201,
+              "f1": 0.9551145471885717,
+              "fpr": 0.00023202448579932435
             },
             "triple": {
-              "recall": 0.15474919957310565,
-              "precision": 0.8248009101251422,
-              "f1": 0.2606038820992092,
-              "fpr": 9.246217156415974e-05
+              "recall": 0.4040554962646745,
+              "precision": 0.8335535006605019,
+              "f1": 0.5442783208740656,
+              "fpr": 0.00022695260293021028
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.4495849609375,
+              "false_alarms_per_hour": 2.2010664344807647
+            },
+            "k1_w200": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.4495849609375,
+              "false_alarms_per_hour": 2.2010664344807647
+            },
+            "k1_w1000": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.4495849609375,
+              "false_alarms_per_hour": 2.2010664344807647
+            },
+            "k2_w50": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 4.422187805175781,
+              "false_alarms_per_hour": 1.1005332172403823
+            },
+            "k2_w200": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.526040077209473,
+              "false_alarms_per_hour": 1.1005332172403823
+            },
+            "k2_w1000": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.526040077209473,
+              "false_alarms_per_hour": 1.1005332172403823
+            },
+            "k3_w50": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 9.721994400024414,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 9.721994400024414,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 17.422080039978027,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 18.54109764099121,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 18.54109764099121,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 26.21304988861084,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 16,
+              "episode_recall": 0.625,
+              "median_latency_ms": 23.204565048217773,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 16,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 26.46613121032715,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 16,
+              "episode_recall": 1.0,
+              "median_latency_ms": 50.162553787231445,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "chevrolet_silverado"
@@ -1124,42 +3056,134 @@
         "test_02_unknown_vehicle_known_attack": {
           "frames": 6854234,
           "attack_frames": 156189,
-          "precision": 0.8645067410404242,
-          "recall": 0.5020968185979806,
-          "f1": 0.6352479931308779,
-          "fpr": 0.0018350130523160117,
-          "auc_pr": 0.8866112095359104,
-          "false_alarms_per_hour": 26.5272432589618,
+          "precision": 0.8812686463735767,
+          "recall": 0.7735115789204106,
+          "f1": 0.8238816148390616,
+          "fpr": 0.0024301120700144594,
+          "auc_pr": 0.9084166505122547,
+          "false_alarms_per_hour": 77.3079660689744,
           "per_attack": {
             "DoS": {
-              "recall": 0.9466563277092971,
-              "precision": 0.9832259497889357,
-              "f1": 0.964594657185282,
-              "fpr": 0.0004591595100372725
+              "recall": 0.9991176234658681,
+              "precision": 0.9684325108853411,
+              "f1": 0.9835357909005962,
+              "fpr": 0.0009259209987175462
             },
             "double": {
-              "recall": 0.25231651223251783,
-              "precision": 0.6925892040256175,
-              "f1": 0.3698817551060295,
-              "fpr": 0.0008729077492385438
+              "recall": 0.7635490967268849,
+              "precision": 0.8613325312077004,
+              "f1": 0.8094985688540232,
+              "fpr": 0.0009581201723784969
             },
             "force-neutral": {
-              "recall": 0.4988706034204582,
-              "precision": 0.6349075975359343,
-              "f1": 0.5587278641127575,
-              "fpr": 0.0008887804712236078
+              "recall": 0.8225233946434334,
+              "precision": 0.7104236343366778,
+              "f1": 0.762374756991177,
+              "fpr": 0.001038743430372698
             },
             "fuzzing": {
-              "recall": 0.46259746936677043,
-              "precision": 0.9929495432530194,
-              "f1": 0.6311523323331125,
-              "fpr": 9.017097200387343e-05
+              "recall": 0.4771357573334095,
+              "precision": 0.8799051883065578,
+              "f1": 0.6187495370027409,
+              "fpr": 0.001787737531902882
             },
             "triple": {
-              "recall": 0.3272126554911007,
-              "precision": 0.7047615924444153,
-              "f1": 0.4469237727844613,
-              "fpr": 0.007614213197969543
+              "recall": 0.8029963915406751,
+              "precision": 0.8420077910466824,
+              "f1": 0.8220395121380977,
+              "fpr": 0.008369460602810908
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 206.91249741990205
+            },
+            "k1_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 206.91249741990205
+            },
+            "k1_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 206.1545761839317
+            },
+            "k2_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 3.907442092895508,
+              "false_alarms_per_hour": 131.87829505883866
+            },
+            "k2_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 3.907442092895508,
+              "false_alarms_per_hour": 147.0367197782454
+            },
+            "k2_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 3.907442092895508,
+              "false_alarms_per_hour": 181.90109663288092
+            },
+            "k3_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.601644515991211,
+              "false_alarms_per_hour": 18.94803089925843
+            },
+            "k3_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.601644515991211,
+              "false_alarms_per_hour": 75.03420236106338
+            },
+            "k3_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.601644515991211,
+              "false_alarms_per_hour": 118.2357128113726
+            },
+            "k5_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 9.499073028564453,
+              "false_alarms_per_hour": 1.5158424719406745
+            },
+            "k5_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 9.499073028564453,
+              "false_alarms_per_hour": 40.16982550642787
+            },
+            "k5_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 9.499073028564453,
+              "false_alarms_per_hour": 52.296565281953264
+            },
+            "k8_w50": {
+              "episodes": 22,
+              "episode_recall": 0.9545454545454546,
+              "median_latency_ms": 16.67189598083496,
+              "false_alarms_per_hour": 0.7579212359703372
+            },
+            "k8_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 20.37835121154785,
+              "false_alarms_per_hour": 0.7579212359703372
+            },
+            "k8_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 20.37835121154785,
+              "false_alarms_per_hour": 50.78072281001259
             }
           },
           "vehicle": "subaru_forester"
@@ -1167,54 +3191,146 @@
         "test_03_known_vehicle_unknown_attack": {
           "frames": 9447951,
           "attack_frames": 18152,
-          "precision": 0.9743388134381701,
-          "recall": 0.750936535918907,
-          "f1": 0.8481737290772199,
-          "fpr": 3.807080087284999e-05,
-          "auc_pr": 0.94068849434275,
-          "false_alarms_per_hour": 18.655215184594738,
+          "precision": 0.9748423860329777,
+          "recall": 0.8859078889378581,
+          "f1": 0.9282498268298315,
+          "fpr": 4.400942162181824e-05,
+          "auc_pr": 0.9652920566795329,
+          "false_alarms_per_hour": 22.582628907667313,
           "per_attack": {
             "interval": {
-              "recall": 0.9934755332496863,
+              "recall": 0.9996235884567126,
               "precision": 1.0,
-              "f1": 0.9967270896273918,
+              "f1": 0.9998117588002761,
               "fpr": 0.0
             },
             "rpm": {
-              "recall": 0.6479679450486548,
-              "precision": 0.9263502454991817,
-              "f1": 0.762546311889525,
-              "fpr": 5.4036334031002445e-05
+              "recall": 0.9204350314825415,
+              "precision": 0.9387040280210157,
+              "f1": 0.9294797687861271,
+              "fpr": 6.304238970283619e-05
             },
             "rpm-accessory": {
-              "recall": 0.2413793103448276,
-              "precision": 0.9333333333333333,
-              "f1": 0.3835616438356164,
-              "fpr": 3.1661199832828864e-06
+              "recall": 0.41379310344827586,
+              "precision": 0.9230769230769231,
+              "f1": 0.5714285714285714,
+              "fpr": 6.332239966565773e-06
             },
             "speed": {
-              "recall": 0.05547752808988764,
-              "precision": 0.7523809523809524,
-              "f1": 0.10333551340745585,
-              "fpr": 1.1965586971868905e-05
+              "recall": 0.0800561797752809,
+              "precision": 0.8085106382978723,
+              "f1": 0.14568690095846645,
+              "fpr": 1.2425801855402324e-05
             },
             "speed-accessory": {
-              "recall": 0.6409068746952706,
-              "precision": 0.9640630729739641,
-              "f1": 0.7699516766730121,
-              "fpr": 0.00031027975836172287
+              "recall": 0.9485616772306192,
+              "precision": 0.9708083832335329,
+              "f1": 0.9595561035758323,
+              "fpr": 0.00037043603804409774
             },
             "standstill": {
-              "recall": 0.6348074179743224,
-              "precision": 0.9075458871515976,
-              "f1": 0.7470621152770005,
-              "fpr": 8.165490475795925e-05
+              "recall": 0.8820732287208749,
+              "precision": 0.9224266534062655,
+              "f1": 0.9017987360233349,
+              "fpr": 9.36629789870709e-05
             },
             "systematic": {
-              "recall": 0.7005347593582888,
-              "precision": 0.9849624060150376,
-              "f1": 0.81875,
+              "recall": 0.8315508021390374,
+              "precision": 0.9873015873015873,
+              "f1": 0.9027576197387518,
               "fpr": 5.959968382367731e-06
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 75,
+              "episode_recall": 0.5733333333333334,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 0.9818534307681441
+            },
+            "k1_w200": {
+              "episodes": 75,
+              "episode_recall": 0.5733333333333334,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 0.9818534307681441
+            },
+            "k1_w1000": {
+              "episodes": 75,
+              "episode_recall": 0.5733333333333334,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 0.9818534307681441
+            },
+            "k2_w50": {
+              "episodes": 75,
+              "episode_recall": 0.2,
+              "median_latency_ms": 5.227804183959961,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w200": {
+              "episodes": 75,
+              "episode_recall": 0.21333333333333335,
+              "median_latency_ms": 5.886316299438477,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w1000": {
+              "episodes": 75,
+              "episode_recall": 0.22666666666666666,
+              "median_latency_ms": 6.544828414916992,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w50": {
+              "episodes": 75,
+              "episode_recall": 0.10666666666666667,
+              "median_latency_ms": 30.880093574523926,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 75,
+              "episode_recall": 0.2,
+              "median_latency_ms": 99.26795959472656,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 75,
+              "episode_recall": 0.22666666666666666,
+              "median_latency_ms": 99.84183311462402,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 75,
+              "episode_recall": 0.06666666666666667,
+              "median_latency_ms": 15.126943588256836,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 75,
+              "episode_recall": 0.18666666666666668,
+              "median_latency_ms": 171.02205753326416,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 75,
+              "episode_recall": 0.21333333333333335,
+              "median_latency_ms": 199.70440864562988,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 75,
+              "episode_recall": 0.05333333333333334,
+              "median_latency_ms": 23.000359535217285,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 75,
+              "episode_recall": 0.09333333333333334,
+              "median_latency_ms": 88.72199058532715,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 75,
+              "episode_recall": 0.2,
+              "median_latency_ms": 299.49474334716797,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "chevrolet_silverado"
@@ -1222,54 +3338,146 @@
         "test_04_unknown_vehicle_unknown_attack": {
           "frames": 6896019,
           "attack_frames": 149948,
-          "precision": 0.961235348241789,
-          "recall": 0.32048443460399606,
-          "f1": 0.4806994028268198,
-          "fpr": 0.0002872783283781033,
-          "auc_pr": 0.9628970991445092,
-          "false_alarms_per_hour": 61.99546337819303,
+          "precision": 0.9847420700331102,
+          "recall": 0.9163510016805826,
+          "f1": 0.9493163650935118,
+          "fpr": 0.00031559110480752425,
+          "auc_pr": 0.98517732590182,
+          "false_alarms_per_hour": 59.41231907076832,
           "per_attack": {
             "interval": {
-              "recall": 0.33845320870853757,
-              "precision": 0.9999438722532484,
-              "f1": 0.5057306488584832,
-              "fpr": 1.6433543162290276e-06
+              "recall": 0.9999715034765758,
+              "precision": 0.9999525066965558,
+              "f1": 0.999962004996343,
+              "fpr": 4.1083857905725695e-06
             },
             "rpm": {
-              "recall": 0.38882597206493014,
-              "precision": 0.6760748276993764,
-              "f1": 0.493708807669263,
-              "fpr": 0.0009372169120649348
+              "recall": 0.8888259720649302,
+              "precision": 0.8225327510917031,
+              "f1": 0.8543953551664701,
+              "fpr": 0.0009647541870901456
             },
             "rpm-accessory": {
-              "recall": 0.3525271912987844,
-              "precision": 0.5521042084168337,
-              "f1": 0.43030066380320187,
-              "fpr": 0.0016764490783280515
+              "recall": 0.8528470889315419,
+              "precision": 0.7438616071428571,
+              "f1": 0.7946348733233979,
+              "fpr": 0.0017214544227126972
             },
             "speed": {
-              "recall": 0.27267617508606756,
-              "precision": 0.9164108618654073,
-              "f1": 0.42029456356941736,
-              "fpr": 0.00024284948888414777
+              "recall": 0.8993887444670835,
+              "precision": 0.9625535754568013,
+              "f1": 0.9298997530146739,
+              "fpr": 0.00034163572165058073
             },
             "speed-accessory": {
-              "recall": 0.2980263157894737,
-              "precision": 0.8017699115044248,
-              "f1": 0.43453237410071943,
-              "fpr": 0.0002633484758706959
+              "recall": 0.2769736842105263,
+              "precision": 0.8174757281553398,
+              "f1": 0.41375921375921376,
+              "fpr": 0.0002210246136771912
             },
             "standstill": {
-              "recall": 0.2514917343245623,
-              "precision": 0.9980590062111802,
-              "f1": 0.401750136729432,
-              "fpr": 4.207716447037894e-06
+              "recall": 0.6900127164237504,
+              "precision": 0.9994332672145083,
+              "f1": 0.8163879405127018,
+              "fpr": 3.366173157630315e-06
             },
             "systematic": {
-              "recall": 0.24579636670891425,
-              "precision": 0.9894557823129252,
-              "f1": 0.3937732656514382,
-              "fpr": 2.7240366356565852e-05
+              "recall": 0.49125475285171105,
+              "precision": 0.9909664223623658,
+              "f1": 0.65687492938651,
+              "fpr": 4.657223925477387e-05
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.1548995971679688,
+              "false_alarms_per_hour": 7.749432922274129
+            },
+            "k1_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.1548995971679688,
+              "false_alarms_per_hour": 7.749432922274129
+            },
+            "k1_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.1548995971679688,
+              "false_alarms_per_hour": 7.749432922274129
+            },
+            "k2_w50": {
+              "episodes": 27,
+              "episode_recall": 0.9629629629629629,
+              "median_latency_ms": 10.02955436706543,
+              "false_alarms_per_hour": 4.305240512374516
+            },
+            "k2_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 10.090112686157227,
+              "false_alarms_per_hour": 7.749432922274129
+            },
+            "k2_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 10.090112686157227,
+              "false_alarms_per_hour": 7.749432922274129
+            },
+            "k3_w50": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 14.237165451049805,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 27,
+              "episode_recall": 0.9629629629629629,
+              "median_latency_ms": 15.023112297058105,
+              "false_alarms_per_hour": 4.305240512374516
+            },
+            "k3_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 15.809059143066406,
+              "false_alarms_per_hour": 4.305240512374516
+            },
+            "k5_w50": {
+              "episodes": 27,
+              "episode_recall": 0.8518518518518519,
+              "median_latency_ms": 23.13685417175293,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 23.888111114501953,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 24.010181427001953,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 27,
+              "episode_recall": 0.8148148148148148,
+              "median_latency_ms": 34.2179536819458,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 35.63499450683594,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 36.81182861328125,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "subaru_forester"
@@ -1280,8 +3488,8 @@
   "set_04": {
     "full": {
       "hyperparameters": {
-        "n_estimators": 10,
-        "max_depth": 8
+        "n_estimators": 30,
+        "max_depth": 12
       },
       "threshold": 0.800000011920929,
       "selection": [
@@ -1289,76 +3497,168 @@
           "n_estimators": 10,
           "max_depth": 8,
           "threshold": 0.800000011920929,
-          "val_f1": 0.9478576615831518,
-          "val_auc_pr": 0.9511542670773026
+          "val_f1": 0.9321315713875323,
+          "val_auc_pr": 0.9389633115309084
         },
         {
           "n_estimators": 20,
           "max_depth": 10,
-          "threshold": 0.800000011920929,
-          "val_f1": 0.9274833274833275,
-          "val_auc_pr": 0.9298390846202375
+          "threshold": 0.75,
+          "val_f1": 0.9160358118151336,
+          "val_auc_pr": 0.9156488061619232
         },
         {
           "n_estimators": 30,
           "max_depth": 12,
           "threshold": 0.800000011920929,
-          "val_f1": 0.9391887023560775,
-          "val_auc_pr": 0.958400272460122
+          "val_f1": 0.9459844417661882,
+          "val_auc_pr": 0.9588632191846489
         }
       ],
       "splits": {
         "test_01_known_vehicle_known_attack": {
           "frames": 6896019,
           "attack_frames": 149948,
-          "precision": 0.9825713694662805,
-          "recall": 0.8869274681889722,
-          "f1": 0.9323028391167193,
-          "fpr": 0.0003496850240680835,
-          "auc_pr": 0.9820444780673518,
-          "false_alarms_per_hour": 45.63554943116987,
+          "precision": 0.9854288515500862,
+          "recall": 0.9719369381385548,
+          "f1": 0.978636395684975,
+          "fpr": 0.0003194452000282831,
+          "auc_pr": 0.9898930124943637,
+          "false_alarms_per_hour": 55.10707855839381,
           "per_attack": {
             "interval": {
-              "recall": 1.0,
-              "precision": 0.9999905012490857,
-              "f1": 0.9999952506019862,
-              "fpr": 8.216771581145138e-07
+              "recall": 0.9999715034765758,
+              "precision": 1.0,
+              "f1": 0.999985751535272,
+              "fpr": 0.0
             },
             "rpm": {
-              "recall": 0.877123442808607,
-              "precision": 0.8233522324592487,
-              "f1": 0.8493876804971668,
-              "fpr": 0.0009467125241425937
+              "recall": 0.9509248773121933,
+              "precision": 0.8378513221353734,
+              "f1": 0.8908142516134736,
+              "fpr": 0.0009258221775717441
             },
             "rpm-accessory": {
-              "recall": 0.9219449776071658,
-              "precision": 0.7556371263765076,
-              "f1": 0.8305475504322767,
-              "fpr": 0.001747707540270407
+              "recall": 0.9475367882277671,
+              "precision": 0.7677553136340073,
+              "f1": 0.8482245131729668,
+              "fpr": 0.0016801995236934385
             },
             "speed": {
-              "recall": 0.5856811634932902,
-              "precision": 0.9463049154274038,
-              "f1": 0.7235483030986893,
-              "fpr": 0.0003244853340175195
+              "recall": 0.9947305557507201,
+              "precision": 0.9678698386655729,
+              "f1": 0.9811163854336301,
+              "fpr": 0.0003224272875015521
             },
             "speed-accessory": {
-              "recall": 0.3131578947368421,
-              "precision": 0.7854785478547854,
-              "f1": 0.4477892756349953,
-              "fpr": 0.0003056723380642006
+              "recall": 0.33092105263157895,
+              "precision": 0.8205546492659054,
+              "f1": 0.4716361931551805,
+              "fpr": 0.00025864582451586205
             },
             "standstill": {
-              "recall": 0.2705663699501125,
-              "precision": 0.9620869565217391,
-              "f1": 0.42235455794777826,
-              "fpr": 9.172821854542609e-05
+              "recall": 0.9574488897583879,
+              "precision": 0.9908888438955255,
+              "f1": 0.9738818964230636,
+              "fpr": 7.573889604668208e-05
             },
             "systematic": {
-              "recall": 0.8492606675116181,
-              "precision": 0.9821184287668556,
-              "f1": 0.9108704517649191,
-              "fpr": 0.00016080603365327582
+              "recall": 0.8026193493874102,
+              "precision": 0.9935153226649932,
+              "f1": 0.8879229762572444,
+              "fpr": 5.4480732713131705e-05
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.062154769897461,
+              "false_alarms_per_hour": 0.0
+            },
+            "k1_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.062154769897461,
+              "false_alarms_per_hour": 0.0
+            },
+            "k1_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.062154769897461,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w50": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 6.23011589050293,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 6.23011589050293,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 6.23011589050293,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w50": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 9.504079818725586,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 9.839057922363281,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 9.839057922363281,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 27,
+              "episode_recall": 0.8518518518518519,
+              "median_latency_ms": 16.422033309936523,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 16.469955444335938,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 16.511917114257812,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 27,
+              "episode_recall": 0.8148148148148148,
+              "median_latency_ms": 24.1396427154541,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 24.282217025756836,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 25.068044662475586,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "subaru_forester"
@@ -1366,54 +3666,146 @@
         "test_02_unknown_vehicle_known_attack": {
           "frames": 17408094,
           "attack_frames": 57239,
-          "precision": 0.9562367420261051,
-          "recall": 0.8741766977061095,
-          "f1": 0.9133672854717705,
-          "fpr": 0.00013198196861192142,
-          "auc_pr": 0.9385547945124637,
-          "false_alarms_per_hour": 67.15149829112393,
+          "precision": 0.9840410431114897,
+          "recall": 0.8477960830902007,
+          "f1": 0.9108518765309283,
+          "fpr": 4.535799532645509e-05,
+          "auc_pr": 0.9504655899317911,
+          "false_alarms_per_hour": 29.800960780084583,
           "per_attack": {
             "interval": {
-              "recall": 0.6955961727183513,
-              "precision": 0.9937784787942516,
-              "f1": 0.8183720594602396,
-              "fpr": 3.125375540282789e-05
+              "recall": 0.6617394504416094,
+              "precision": 0.9999073215940686,
+              "f1": 0.7964124898501513,
+              "fpr": 4.4019373806799846e-07
             },
             "rpm": {
-              "recall": 0.4792079207920792,
-              "precision": 0.5353982300884956,
-              "f1": 0.5057471264367817,
-              "fpr": 3.9837402692401375e-05
+              "recall": 0.4316831683168317,
+              "precision": 0.5782493368700266,
+              "f1": 0.4943310657596372,
+              "fpr": 3.0162604895675328e-05
             },
             "rpm-accessory": {
-              "recall": 0.5872093023255814,
-              "precision": 0.6158536585365854,
-              "f1": 0.6011904761904762,
-              "fpr": 0.00015064076123798013
+              "recall": 0.563953488372093,
+              "precision": 0.627831715210356,
+              "f1": 0.5941807044410413,
+              "fpr": 0.00013748958366958502
             },
             "speed": {
-              "recall": 0.5384615384615384,
-              "precision": 0.2153846153846154,
-              "f1": 0.3076923076923077,
-              "fpr": 1.9050685656589352e-05
+              "recall": 0.09615384615384616,
+              "precision": 0.13157894736842105,
+              "f1": 0.1111111111111111,
+              "fpr": 6.1634571241906725e-06
             },
             "speed-accessory": {
-              "recall": 0.0,
-              "precision": 0.0,
-              "f1": 0.0,
-              "fpr": 2.391123194253653e-06
+              "recall": 0.016666666666666666,
+              "precision": 1.0,
+              "f1": 0.03278688524590164,
+              "fpr": 0.0
             },
             "standstill": {
-              "recall": 0.6932203389830508,
-              "precision": 0.5704323570432357,
-              "f1": 0.6258607498087223,
-              "fpr": 0.0001689816605520543
+              "recall": 0.5728813559322034,
+              "precision": 0.5909090909090909,
+              "f1": 0.5817555938037866,
+              "fpr": 0.00012838217067915814
             },
             "systematic": {
-              "recall": 0.9601614868982328,
-              "precision": 0.9625566359517386,
-              "f1": 0.9613575695945087,
-              "fpr": 0.0015354505362594922
+              "recall": 0.9390107657932155,
+              "precision": 0.9934187552045558,
+              "f1": 0.9654488258866221,
+              "fpr": 0.00025573445369379713
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 48,
+              "episode_recall": 0.7083333333333334,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 11.523038168299372
+            },
+            "k1_w200": {
+              "episodes": 48,
+              "episode_recall": 0.7083333333333334,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 11.523038168299372
+            },
+            "k1_w1000": {
+              "episodes": 48,
+              "episode_recall": 0.7083333333333334,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 11.523038168299372
+            },
+            "k2_w50": {
+              "episodes": 48,
+              "episode_recall": 0.25,
+              "median_latency_ms": 22.892117500305176,
+              "false_alarms_per_hour": 3.57611529361015
+            },
+            "k2_w200": {
+              "episodes": 48,
+              "episode_recall": 0.25,
+              "median_latency_ms": 22.892117500305176,
+              "false_alarms_per_hour": 3.57611529361015
+            },
+            "k2_w1000": {
+              "episodes": 48,
+              "episode_recall": 0.3125,
+              "median_latency_ms": 37.986040115356445,
+              "false_alarms_per_hour": 3.57611529361015
+            },
+            "k3_w50": {
+              "episodes": 48,
+              "episode_recall": 0.125,
+              "median_latency_ms": 33.97560119628906,
+              "false_alarms_per_hour": 1.1920384312033834
+            },
+            "k3_w200": {
+              "episodes": 48,
+              "episode_recall": 0.1875,
+              "median_latency_ms": 62.255859375,
+              "false_alarms_per_hour": 1.5893845749378446
+            },
+            "k3_w1000": {
+              "episodes": 48,
+              "episode_recall": 0.20833333333333334,
+              "median_latency_ms": 70.64497470855713,
+              "false_alarms_per_hour": 2.3840768624067668
+            },
+            "k5_w50": {
+              "episodes": 48,
+              "episode_recall": 0.10416666666666667,
+              "median_latency_ms": 54.78215217590332,
+              "false_alarms_per_hour": 0.39734614373446114
+            },
+            "k5_w200": {
+              "episodes": 48,
+              "episode_recall": 0.125,
+              "median_latency_ms": 52.89614200592041,
+              "false_alarms_per_hour": 0.39734614373446114
+            },
+            "k5_w1000": {
+              "episodes": 48,
+              "episode_recall": 0.1875,
+              "median_latency_ms": 87.10193634033203,
+              "false_alarms_per_hour": 0.7946922874689223
+            },
+            "k8_w50": {
+              "episodes": 48,
+              "episode_recall": 0.041666666666666664,
+              "median_latency_ms": 2524.3260860443115,
+              "false_alarms_per_hour": 0.39734614373446114
+            },
+            "k8_w200": {
+              "episodes": 48,
+              "episode_recall": 0.125,
+              "median_latency_ms": 94.39551830291748,
+              "false_alarms_per_hour": 0.39734614373446114
+            },
+            "k8_w1000": {
+              "episodes": 48,
+              "episode_recall": 0.1875,
+              "median_latency_ms": 124.78899955749512,
+              "false_alarms_per_hour": 0.39734614373446114
             }
           },
           "vehicle": "chevrolet_traverse"
@@ -1421,42 +3813,134 @@
         "test_03_known_vehicle_unknown_attack": {
           "frames": 6854234,
           "attack_frames": 156189,
-          "precision": 0.8978079654214264,
-          "recall": 0.9123049638578902,
-          "f1": 0.9049984121943474,
-          "fpr": 0.002421452826906956,
-          "auc_pr": 0.9086850995659723,
-          "false_alarms_per_hour": 29.55892820284315,
+          "precision": 0.9228131601982322,
+          "recall": 0.8977264724148307,
+          "f1": 0.9100969714278296,
+          "fpr": 0.0017509586752552423,
+          "auc_pr": 0.9425120274829663,
+          "false_alarms_per_hour": 21.97971584313978,
           "per_attack": {
             "DoS": {
-              "recall": 0.9854541565282494,
-              "precision": 0.9595407326407873,
-              "f1": 0.9723248205994091,
-              "fpr": 0.0011813474811223866
+              "recall": 0.9450252680552956,
+              "precision": 0.9968691826028093,
+              "f1": 0.9702551713724898,
+              "fpr": 8.438196293731332e-05
             },
             "double": {
-              "recall": 0.8852743150456637,
-              "precision": 0.8707054812483609,
-              "f1": 0.8779294615410042,
-              "fpr": 0.0010246274294633383
+              "recall": 0.975001666555563,
+              "precision": 0.8929727089565908,
+              "f1": 0.9321861057998725,
+              "fpr": 0.0009108376692947425
             },
             "force-neutral": {
-              "recall": 0.5208131655372701,
-              "precision": 0.7319727891156462,
-              "f1": 0.6085972850678733,
-              "fpr": 0.0005908540590474153
+              "recall": 0.6834462729912875,
+              "precision": 0.7343966712898752,
+              "f1": 0.7080060170483036,
+              "fpr": 0.0007658108447213539
             },
             "fuzzing": {
-              "recall": 0.8251692325269201,
-              "precision": 0.9843270868824532,
-              "f1": 0.8977486365966968,
-              "fpr": 0.0003606838880154937
+              "recall": 0.7427379966296307,
+              "precision": 0.9946450428396573,
+              "f1": 0.850429237184204,
+              "fpr": 0.00010977335722210679
             },
             "triple": {
-              "recall": 0.9417469815313875,
-              "precision": 0.8415946663038302,
-              "f1": 0.8888585511661661,
-              "fpr": 0.0098461257415041
+              "recall": 0.9458731101265244,
+              "precision": 0.873976534143665,
+              "f1": 0.9085046175444754,
+              "fpr": 0.007576154818106317
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.0304450988769531,
+              "false_alarms_per_hour": 0.7579212359703372
+            },
+            "k1_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.0304450988769531,
+              "false_alarms_per_hour": 0.7579212359703372
+            },
+            "k1_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 1.0304450988769531,
+              "false_alarms_per_hour": 0.7579212359703372
+            },
+            "k2_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 4.290580749511719,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 4.290580749511719,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 4.290580749511719,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w50": {
+              "episodes": 22,
+              "episode_recall": 0.9545454545454546,
+              "median_latency_ms": 6.183147430419922,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 6.268978118896484,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 6.268978118896484,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 22,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 8.239030838012695,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 22,
+              "episode_recall": 0.9545454545454546,
+              "median_latency_ms": 8.427143096923828,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 8.965611457824707,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 22,
+              "episode_recall": 0.8636363636363636,
+              "median_latency_ms": 12.188911437988281,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 22,
+              "episode_recall": 0.9545454545454546,
+              "median_latency_ms": 12.24207878112793,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 22,
+              "episode_recall": 0.9545454545454546,
+              "median_latency_ms": 12.24207878112793,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "subaru_forester"
@@ -1464,42 +3948,134 @@
         "test_04_unknown_vehicle_unknown_attack": {
           "frames": 8183626,
           "attack_frames": 220971,
-          "precision": 0.9433578580204199,
-          "recall": 0.90693348900987,
-          "f1": 0.9247871530421541,
-          "fpr": 0.0015111793742162633,
-          "auc_pr": 0.9405734081446312,
-          "false_alarms_per_hour": 76.33506045803888,
+          "precision": 0.971141610394676,
+          "recall": 0.901412402532459,
+          "f1": 0.9349787361879102,
+          "fpr": 0.0007433450275065289,
+          "auc_pr": 0.9699939677160465,
+          "false_alarms_per_hour": 26.941786044013725,
           "per_attack": {
             "DoS": {
-              "recall": 0.9832643336978597,
-              "precision": 0.9663742970654281,
-              "f1": 0.974746154814105,
-              "fpr": 0.0022822633487003994
+              "recall": 0.9957428526792689,
+              "precision": 0.9671300950249416,
+              "f1": 0.9812279300689881,
+              "fpr": 0.0022575127758549043
             },
             "double": {
-              "recall": 0.9697582100324792,
-              "precision": 0.9331203555802486,
-              "f1": 0.9510865718128406,
-              "fpr": 0.000624623798750493
+              "recall": 0.9434861060988813,
+              "precision": 0.957094743007761,
+              "f1": 0.9502417039217824,
+              "fpr": 0.00038009298657091264
             },
             "force-neutral": {
-              "recall": 0.20668953687821612,
-              "precision": 0.7980132450331126,
-              "f1": 0.32833787465940056,
-              "fpr": 6.340119339754524e-05
+              "recall": 0.19382504288164665,
+              "precision": 0.837037037037037,
+              "f1": 0.3147632311977716,
+              "fpr": 4.573200835232771e-05
             },
             "fuzzing": {
-              "recall": 0.8639604771498073,
-              "precision": 0.9620586620000187,
-              "f1": 0.9103745331548164,
-              "fpr": 0.0017844837474508938
+              "recall": 0.8605665944978976,
+              "precision": 0.9937832437180836,
+              "f1": 0.9223897714342033,
+              "fpr": 0.0002819449296757546
             },
             "triple": {
-              "recall": 0.9404812758080592,
-              "precision": 0.8643930272732031,
-              "f1": 0.9008333219677855,
-              "fpr": 0.002152465697025393
+              "recall": 0.9098960558166026,
+              "precision": 0.9164730516593523,
+              "f1": 0.9131727114235902,
+              "fpr": 0.00120980121786102
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 2.2611618041992188,
+              "false_alarms_per_hour": 4.490297674002288
+            },
+            "k1_w200": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 2.2611618041992188,
+              "false_alarms_per_hour": 4.490297674002288
+            },
+            "k1_w1000": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 2.2611618041992188,
+              "false_alarms_per_hour": 4.490297674002288
+            },
+            "k2_w50": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.198955535888672,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w200": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.198955535888672,
+              "false_alarms_per_hour": 1.796119069600915
+            },
+            "k2_w1000": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.198955535888672,
+              "false_alarms_per_hour": 1.796119069600915
+            },
+            "k3_w50": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.644891738891602,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.644891738891602,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.644891738891602,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 9,
+              "episode_recall": 0.7777777777777778,
+              "median_latency_ms": 10.789871215820312,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 11.806011199951172,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 11.806011199951172,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 9,
+              "episode_recall": 0.7777777777777778,
+              "median_latency_ms": 15.362024307250977,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 9,
+              "episode_recall": 0.8888888888888888,
+              "median_latency_ms": 16.017913818359375,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 16.673803329467773,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "chevrolet_traverse"
@@ -1508,85 +4084,177 @@
     },
     "no_can_id": {
       "hyperparameters": {
-        "n_estimators": 30,
-        "max_depth": 12
+        "n_estimators": 20,
+        "max_depth": 10
       },
-      "threshold": 0.7666666507720947,
+      "threshold": 0.800000011920929,
       "selection": [
         {
           "n_estimators": 10,
           "max_depth": 8,
-          "threshold": 0.6000000238418579,
-          "val_f1": 0.9020395860544559,
-          "val_auc_pr": 0.9215944461854042
+          "threshold": 0.8999999761581421,
+          "val_f1": 0.9103836575594615,
+          "val_auc_pr": 0.9231396730262694
         },
         {
           "n_estimators": 20,
           "max_depth": 10,
-          "threshold": 0.699999988079071,
-          "val_f1": 0.9316888716118317,
-          "val_auc_pr": 0.9449968381591625
+          "threshold": 0.800000011920929,
+          "val_f1": 0.929903900508762,
+          "val_auc_pr": 0.936082730595786
         },
         {
           "n_estimators": 30,
           "max_depth": 12,
           "threshold": 0.7666666507720947,
-          "val_f1": 0.9567698363971252,
-          "val_auc_pr": 0.9538986639764262
+          "val_f1": 0.9261351747227453,
+          "val_auc_pr": 0.9456124976171993
         }
       ],
       "splits": {
         "test_01_known_vehicle_known_attack": {
           "frames": 6896019,
           "attack_frames": 149948,
-          "precision": 0.9838817908524802,
-          "recall": 0.9778189772454451,
-          "f1": 0.9808410152121269,
-          "fpr": 0.0003560591046254924,
-          "auc_pr": 0.9881464329493821,
-          "false_alarms_per_hour": 45.63554943116987,
+          "precision": 0.9852765991621046,
+          "recall": 0.9818203643929896,
+          "f1": 0.9835454454354143,
+          "fpr": 0.0003261157494488273,
+          "auc_pr": 0.9816192830160777,
+          "false_alarms_per_hour": 55.10707855839381,
           "per_attack": {
             "interval": {
-              "recall": 0.9999810023177172,
+              "recall": 1.0,
               "precision": 1.0,
-              "f1": 0.9999905010686297,
+              "f1": 1.0,
               "fpr": 0.0
             },
             "rpm": {
-              "recall": 0.9813137032842583,
-              "precision": 0.8294511805998723,
-              "f1": 0.8990143524122428,
-              "fpr": 0.0010150809311017378
+              "recall": 0.9622499056247641,
+              "precision": 0.8317833251753957,
+              "f1": 0.8922726874945305,
+              "fpr": 0.000978997605206634
             },
             "rpm-accessory": {
-              "recall": 0.9609724888035829,
-              "precision": 0.7682864450127878,
-              "f1": 0.8538942581011939,
-              "fpr": 0.0016989517505203743
+              "recall": 0.9475367882277671,
+              "precision": 0.7669601242879337,
+              "f1": 0.8477389811104751,
+              "fpr": 0.001687700414424213
             },
             "speed": {
-              "recall": 0.9950818520340055,
-              "precision": 0.9678808173306909,
-              "f1": 0.9812928705050925,
-              "fpr": 0.0003224272875015521
+              "recall": 0.9941684816974636,
+              "precision": 0.9685810117051132,
+              "f1": 0.981207960612995,
+              "fpr": 0.0003148811169430051
             },
             "speed-accessory": {
-              "recall": 0.3414473684210526,
-              "precision": 0.7911585365853658,
-              "f1": 0.47702205882352944,
-              "fpr": 0.0003221316178061191
+              "recall": 0.3190789473684211,
+              "precision": 0.8262350936967632,
+              "f1": 0.4603701945894637,
+              "fpr": 0.00023983521909652663
             },
             "standstill": {
-              "recall": 0.9881639440477354,
-              "precision": 0.9893252374889825,
-              "f1": 0.9887442497797788,
-              "fpr": 9.172821854542609e-05
+              "recall": 0.9810231830186834,
+              "precision": 0.9909099891315087,
+              "f1": 0.9859418010224145,
+              "fpr": 7.742198262549725e-05
             },
             "systematic": {
-              "recall": 0.833375580904098,
-              "precision": 0.983644160765932,
-              "f1": 0.9022962217546427,
-              "fpr": 0.0001441103252411871
+              "recall": 0.9043514997887622,
+              "precision": 0.9938712972420838,
+              "f1": 0.9470005308794903,
+              "fpr": 5.799561869462407e-05
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 2.5831443074247096
+            },
+            "k1_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 2.5831443074247096
+            },
+            "k1_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.0,
+              "false_alarms_per_hour": 2.5831443074247096
+            },
+            "k2_w50": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.784034729003906,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.784034729003906,
+              "false_alarms_per_hour": 0.0
+            },
+            "k2_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 5.784034729003906,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w50": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 8.537054061889648,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w200": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 9.504079818725586,
+              "false_alarms_per_hour": 0.0
+            },
+            "k3_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 9.504079818725586,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w50": {
+              "episodes": 27,
+              "episode_recall": 0.8518518518518519,
+              "median_latency_ms": 16.422033309936523,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w200": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 16.469955444335938,
+              "false_alarms_per_hour": 0.0
+            },
+            "k5_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 16.511917114257812,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w50": {
+              "episodes": 27,
+              "episode_recall": 0.8148148148148148,
+              "median_latency_ms": 24.275660514831543,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 27,
+              "episode_recall": 0.9259259259259259,
+              "median_latency_ms": 24.529695510864258,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w1000": {
+              "episodes": 27,
+              "episode_recall": 1.0,
+              "median_latency_ms": 25.068044662475586,
+              "false_alarms_per_hour": 0.0
             }
           },
           "vehicle": "subaru_forester"
@@ -1594,54 +4262,146 @@
         "test_02_unknown_vehicle_known_attack": {
           "frames": 17408094,
           "attack_frames": 57239,
-          "precision": 0.7210272137114687,
-          "recall": 0.8790160554866437,
-          "f1": 0.7922216973704929,
-          "fpr": 0.0011219620012961897,
-          "auc_pr": 0.8813030105705475,
-          "false_alarms_per_hour": 558.6686780906523,
+          "precision": 0.6136371678284562,
+          "recall": 0.9089257324551442,
+          "f1": 0.732647054681669,
+          "fpr": 0.0018879184916247643,
+          "auc_pr": 0.8892176730752142,
+          "false_alarms_per_hour": 309.5326459691452,
           "per_attack": {
             "interval": {
-              "recall": 0.742639842983317,
-              "precision": 0.7830304598072819,
-              "f1": 0.7623005005194069,
-              "fpr": 0.0014768499912181348
+              "recall": 0.810905299313052,
+              "precision": 0.6852389343837463,
+              "f1": 0.742794539019046,
+              "fpr": 0.0026732965712869547
             },
             "rpm": {
-              "recall": 0.5603960396039604,
-              "precision": 0.05314553990610329,
-              "f1": 0.09708404802744425,
-              "fpr": 0.0009564770684527987
+              "recall": 0.5861386138613861,
+              "precision": 0.03098827470686767,
+              "f1": 0.05886447250671174,
+              "fpr": 0.0017558809491469863
             },
             "rpm-accessory": {
-              "recall": 0.6046511627906976,
-              "precision": 0.6283987915407855,
-              "f1": 0.6162962962962963,
-              "fpr": 0.00014705407644659965
+              "recall": 0.5726744186046512,
+              "precision": 0.6566666666666666,
+              "f1": 0.6118012422360248,
+              "fpr": 0.0001231428445040631
             },
             "speed": {
-              "recall": 0.09615384615384616,
-              "precision": 0.0007540340823405218,
-              "f1": 0.0014963339817447255,
-              "fpr": 0.0012375474819662847
+              "recall": 0.19230769230769232,
+              "precision": 0.0008493290300662477,
+              "f1": 0.0016911889058007779,
+              "fpr": 0.0021971790790599717
             },
             "speed-accessory": {
-              "recall": 0.0,
-              "precision": 0.0,
-              "f1": 0.0,
-              "fpr": 0.0
+              "recall": 0.03333333333333333,
+              "precision": 0.4,
+              "f1": 0.06153846153846154,
+              "fpr": 3.586684791380479e-06
             },
             "standstill": {
-              "recall": 0.588135593220339,
-              "precision": 0.16820164808531265,
-              "f1": 0.26159065209197135,
-              "fpr": 0.0009414692516471597
+              "recall": 0.6033898305084746,
+              "precision": 0.10677864427114576,
+              "f1": 0.18144750254842,
+              "fpr": 0.001633855146506551
             },
             "systematic": {
-              "recall": 0.9486847450741418,
-              "precision": 0.9348228582866293,
-              "f1": 0.9417027926202238,
-              "fpr": 0.0027191357219279247
+              "recall": 0.9634369287020109,
+              "precision": 0.936334024281907,
+              "f1": 0.949692145967863,
+              "fpr": 0.00269304036951019
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 48,
+              "episode_recall": 0.375,
+              "median_latency_ms": 63.89570236206055,
+              "false_alarms_per_hour": 1741.1708018444087
+            },
+            "k1_w200": {
+              "episodes": 48,
+              "episode_recall": 0.4166666666666667,
+              "median_latency_ms": 95.05760669708252,
+              "false_alarms_per_hour": 1739.1840711257364
+            },
+            "k1_w1000": {
+              "episodes": 48,
+              "episode_recall": 0.6458333333333334,
+              "median_latency_ms": 308.34388732910156,
+              "false_alarms_per_hour": 1732.4291866822505
+            },
+            "k2_w50": {
+              "episodes": 48,
+              "episode_recall": 0.20833333333333334,
+              "median_latency_ms": 557.2824478149414,
+              "false_alarms_per_hour": 950.8493219565655
+            },
+            "k2_w200": {
+              "episodes": 48,
+              "episode_recall": 0.3333333333333333,
+              "median_latency_ms": 177.83498764038086,
+              "false_alarms_per_hour": 1389.9168107831451
+            },
+            "k2_w1000": {
+              "episodes": 48,
+              "episode_recall": 0.6875,
+              "median_latency_ms": 402.6000499725342,
+              "false_alarms_per_hour": 1634.2846891798386
+            },
+            "k3_w50": {
+              "episodes": 48,
+              "episode_recall": 0.1875,
+              "median_latency_ms": 42.05894470214844,
+              "false_alarms_per_hour": 276.15556989545047
+            },
+            "k3_w200": {
+              "episodes": 48,
+              "episode_recall": 0.2916666666666667,
+              "median_latency_ms": 151.97205543518066,
+              "false_alarms_per_hour": 949.2599373816277
+            },
+            "k3_w1000": {
+              "episodes": 48,
+              "episode_recall": 0.625,
+              "median_latency_ms": 377.71403789520264,
+              "false_alarms_per_hour": 1505.9418847536076
+            },
+            "k5_w50": {
+              "episodes": 48,
+              "episode_recall": 0.125,
+              "median_latency_ms": 37.154555320739746,
+              "false_alarms_per_hour": 5.5628460122824555
+            },
+            "k5_w200": {
+              "episodes": 48,
+              "episode_recall": 0.14583333333333334,
+              "median_latency_ms": 119.34113502502441,
+              "false_alarms_per_hour": 274.56618532051266
+            },
+            "k5_w1000": {
+              "episodes": 48,
+              "episode_recall": 0.4583333333333333,
+              "median_latency_ms": 500.5384683609009,
+              "false_alarms_per_hour": 1208.7269692402308
+            },
+            "k8_w50": {
+              "episodes": 48,
+              "episode_recall": 0.08333333333333333,
+              "median_latency_ms": 179.21316623687744,
+              "false_alarms_per_hour": 0.39734614373446114
+            },
+            "k8_w200": {
+              "episodes": 48,
+              "episode_recall": 0.125,
+              "median_latency_ms": 33.797621726989746,
+              "false_alarms_per_hour": 17.08588418058183
+            },
+            "k8_w1000": {
+              "episodes": 48,
+              "episode_recall": 0.375,
+              "median_latency_ms": 525.4194736480713,
+              "false_alarms_per_hour": 760.917865251493
             }
           },
           "vehicle": "chevrolet_traverse"
@@ -1649,42 +4409,134 @@
         "test_03_known_vehicle_unknown_attack": {
           "frames": 6854234,
           "attack_frames": 156189,
-          "precision": 0.9079537130157311,
-          "recall": 0.9363975696111762,
-          "f1": 0.9219563086446603,
-          "fpr": 0.0022136309923268655,
-          "auc_pr": 0.933567412489468,
-          "false_alarms_per_hour": 22.737637079110115,
+          "precision": 0.9073872779717626,
+          "recall": 0.956687090640186,
+          "f1": 0.9313852597985439,
+          "fpr": 0.002276933045388617,
+          "auc_pr": 0.9026590679627123,
+          "false_alarms_per_hour": 77.3079660689744,
           "per_attack": {
             "DoS": {
-              "recall": 0.9962298457177999,
-              "precision": 0.9614967741935484,
-              "f1": 0.9785552009875376,
-              "fpr": 0.0011342152135357792
+              "recall": 0.990748415733041,
+              "precision": 0.9602705644534287,
+              "f1": 0.9752714351516747,
+              "fpr": 0.001165383325972084
             },
             "double": {
-              "recall": 0.9867342177188188,
-              "precision": 0.8877293990644116,
-              "f1": 0.9346172059984215,
-              "fpr": 0.000972668634865806
+              "recall": 0.9902006532897807,
+              "precision": 0.8891948518407662,
+              "f1": 0.9369835362391976,
+              "fpr": 0.0009617572880003243
             },
             "force-neutral": {
-              "recall": 0.7454017424975798,
-              "precision": 0.7187305538270068,
-              "f1": 0.731823221923016,
-              "fpr": 0.0009037767671385168
+              "recall": 0.7202323330106486,
+              "precision": 0.7628161312371838,
+              "f1": 0.7409128630705394,
+              "fpr": 0.0006938286243297905
             },
             "fuzzing": {
-              "recall": 0.7879237953785952,
-              "precision": 0.9839141134928844,
-              "f1": 0.8750793046567694,
-              "fpr": 0.0003536270293369297
+              "recall": 0.88112307560481,
+              "precision": 0.9695760128233334,
+              "f1": 0.9232357694379602,
+              "fpr": 0.0007590043556499955
             },
             "triple": {
-              "recall": 0.9789887178550222,
-              "precision": 0.864152566290806,
-              "f1": 0.9179932327284668,
-              "fpr": 0.008548757859055442
+              "recall": 0.9810746205027482,
+              "precision": 0.8632788949772913,
+              "f1": 0.9184150513112885,
+              "fpr": 0.008630794811205064
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.9784698486328125,
+              "false_alarms_per_hour": 125.81492517107597
+            },
+            "k1_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.9784698486328125,
+              "false_alarms_per_hour": 125.81492517107597
+            },
+            "k1_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 0.9784698486328125,
+              "false_alarms_per_hour": 125.05700393510564
+            },
+            "k2_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 3.4710168838500977,
+              "false_alarms_per_hour": 36.38021932657618
+            },
+            "k2_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 3.4710168838500977,
+              "false_alarms_per_hour": 57.602013933745624
+            },
+            "k2_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 3.4710168838500977,
+              "false_alarms_per_hour": 83.37133595673708
+            },
+            "k3_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 4.841446876525879,
+              "false_alarms_per_hour": 6.821291123733035
+            },
+            "k3_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 4.841446876525879,
+              "false_alarms_per_hour": 26.5272432589618
+            },
+            "k3_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 4.841446876525879,
+              "false_alarms_per_hour": 43.20151045030922
+            },
+            "k5_w50": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.559537887573242,
+              "false_alarms_per_hour": 0.7579212359703372
+            },
+            "k5_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.559537887573242,
+              "false_alarms_per_hour": 3.031684943881349
+            },
+            "k5_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.559537887573242,
+              "false_alarms_per_hour": 28.043085730902476
+            },
+            "k8_w50": {
+              "episodes": 22,
+              "episode_recall": 0.9090909090909091,
+              "median_latency_ms": 11.355996131896973,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 11.920452117919922,
+              "false_alarms_per_hour": 0.7579212359703372
+            },
+            "k8_w1000": {
+              "episodes": 22,
+              "episode_recall": 1.0,
+              "median_latency_ms": 11.920452117919922,
+              "false_alarms_per_hour": 18.94803089925843
             }
           },
           "vehicle": "subaru_forester"
@@ -1692,42 +4544,134 @@
         "test_04_unknown_vehicle_unknown_attack": {
           "frames": 8183626,
           "attack_frames": 220971,
-          "precision": 0.8987027445454823,
-          "recall": 0.9352086925433655,
-          "f1": 0.9165923737797116,
-          "fpr": 0.002925280575385974,
-          "auc_pr": 0.9476207863955064,
-          "false_alarms_per_hour": 533.4473636714717,
+          "precision": 0.863263819705481,
+          "recall": 0.9332989396798675,
+          "f1": 0.8969162957276964,
+          "fpr": 0.00410240051842005,
+          "auc_pr": 0.9249263045709917,
+          "false_alarms_per_hour": 263.13144369653406,
           "per_attack": {
             "DoS": {
-              "recall": 0.9974613341665365,
-              "precision": 0.93864049837367,
-              "f1": 0.9671573964497041,
-              "fpr": 0.004349587512163604
+              "recall": 0.9893376034994532,
+              "precision": 0.9131908143768701,
+              "f1": 0.9497403595598298,
+              "fpr": 0.006273618885468678
             },
             "double": {
-              "recall": 0.986647419704078,
-              "precision": 0.7971775134126429,
-              "f1": 0.8818501435344966,
-              "fpr": 0.0022559102513543244
+              "recall": 0.9882352941176471,
+              "precision": 0.6922493553769149,
+              "f1": 0.8141761312957126,
+              "fpr": 0.003948167251292056
             },
             "force-neutral": {
-              "recall": 0.22469982847341338,
-              "precision": 0.21231766612641814,
-              "f1": 0.21833333333333332,
-              "fpr": 0.0010102616390559667
+              "recall": 0.2358490566037736,
+              "precision": 0.1176218990590248,
+              "f1": 0.1569634703196347,
+              "fpr": 0.0021442075734284557
             },
             "fuzzing": {
-              "recall": 0.901334982905197,
-              "precision": 0.9353145791587513,
-              "f1": 0.9180104551569125,
-              "fpr": 0.0032646946282486053
+              "recall": 0.8949735427620855,
+              "precision": 0.941651934527736,
+              "f1": 0.9177195659254942,
+              "fpr": 0.0029043830178089374
             },
             "triple": {
-              "recall": 0.9631211732877688,
-              "precision": 0.8077961162729597,
-              "f1": 0.8786469564313736,
-              "fpr": 0.0033431560439998722
+              "recall": 0.9836252313826,
+              "precision": 0.7255387976305507,
+              "f1": 0.8350962875207021,
+              "fpr": 0.005428318239207447
+            }
+          },
+          "alarm": {
+            "k1_w50": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 205.75904846191406,
+              "false_alarms_per_hour": 2163.425419334302
+            },
+            "k1_w200": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 205.75904846191406,
+              "false_alarms_per_hour": 2163.425419334302
+            },
+            "k1_w1000": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 205.75904846191406,
+              "false_alarms_per_hour": 2158.0370621254992
+            },
+            "k2_w50": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 14.578104019165039,
+              "false_alarms_per_hour": 1277.938718021051
+            },
+            "k2_w200": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 71.24209403991699,
+              "false_alarms_per_hour": 1788.0365337877108
+            },
+            "k2_w1000": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 71.24209403991699,
+              "false_alarms_per_hour": 2077.2117039934583
+            },
+            "k3_w50": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 7.644891738891602,
+              "false_alarms_per_hour": 434.6608148434214
+            },
+            "k3_w200": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 10.949850082397461,
+              "false_alarms_per_hour": 1317.4533375522713
+            },
+            "k3_w1000": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 15.748977661132812,
+              "false_alarms_per_hour": 1968.546500282603
+            },
+            "k5_w50": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 11.806011199951172,
+              "false_alarms_per_hour": 8.082535813204117
+            },
+            "k5_w200": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 16.16978645324707,
+              "false_alarms_per_hour": 458.90842228303376
+            },
+            "k5_w1000": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 17.96412467956543,
+              "false_alarms_per_hour": 1619.201341245225
+            },
+            "k8_w50": {
+              "episodes": 9,
+              "episode_recall": 0.8888888888888888,
+              "median_latency_ms": 17.50338077545166,
+              "false_alarms_per_hour": 0.0
+            },
+            "k8_w200": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 16.673803329467773,
+              "false_alarms_per_hour": 44.00491720522242
+            },
+            "k8_w1000": {
+              "episodes": 9,
+              "episode_recall": 1.0,
+              "median_latency_ms": 18.033981323242188,
+              "false_alarms_per_hour": 1101.020989665361
             }
           },
           "vehicle": "chevrolet_traverse"
