@@ -6,7 +6,8 @@ MFCC parameters follow the MLPerf Tiny keyword-spotting reference:
 """
 from __future__ import annotations
 
-import wave
+import struct
+from pathlib import Path
 
 import numpy as np
 
@@ -20,18 +21,46 @@ FMIN, FMAX = 20.0, 4000.0
 
 
 def read_wav(path, length: int = SR, channel: int | None = None) -> np.ndarray:
-    """16-bit PCM wav -> mono float32 in [-1, 1], padded/cropped to `length`.
-    Multi-channel files are averaged, or reduced to `channel` if given."""
-    with wave.open(str(path), "rb") as w:
-        if w.getsampwidth() != 2:
-            raise ValueError(f"{path}: expected 16-bit PCM")
-        x = np.frombuffer(w.readframes(w.getnframes()), dtype="<i2").astype(np.float32) / 32768.0
-        if w.getnchannels() > 1:
-            x = x.reshape(-1, w.getnchannels())
-            x = x.mean(axis=1) if channel is None else x[:, channel]
+    """PCM wav (16/24/32 bit, plain or WAVE_FORMAT_EXTENSIBLE) -> mono float32 in [-1, 1],
+    padded/cropped to `length` (0 = keep). Multi-channel files are averaged, or reduced to
+    `channel` if given. Own RIFF parser: Python's `wave` rejects EXTENSIBLE before 3.12."""
+    raw = Path(path).read_bytes()
+    if raw[:4] != b"RIFF" or raw[8:12] != b"WAVE":
+        raise ValueError(f"{path}: not a RIFF/WAVE file")
+    fmt = data = None
+    pos = 12
+    while pos + 8 <= len(raw):
+        cid, size = raw[pos:pos + 4], struct.unpack_from("<I", raw, pos + 4)[0]
+        body = raw[pos + 8:pos + 8 + size]
+        if cid == b"fmt ":
+            fmt = body
+        elif cid == b"data":
+            data = body
+            break
+        pos += 8 + size + (size & 1)
+    if fmt is None or data is None:
+        raise ValueError(f"{path}: missing fmt or data chunk")
+    tag, n_ch, _sr, _rate, _align, bits = struct.unpack_from("<HHIIHH", fmt)
+    if tag == 0xFFFE and len(fmt) >= 26:  # EXTENSIBLE: sub-format GUID starts with the real tag
+        tag = struct.unpack_from("<H", fmt, 24)[0]
+    if tag != 1 or bits not in (16, 24, 32):
+        raise ValueError(f"{path}: unsupported wav format (tag {tag}, {bits} bit)")
+    width = bits // 8
+    n = len(data) // (width * n_ch) * n_ch
+    if width == 3:
+        b = np.frombuffer(data[:n * 3], dtype=np.uint8).reshape(-1, 3)
+        hi = b[:, 2].astype(np.int8).astype(np.int32)  # sign-extend the top byte
+        x = b[:, 0].astype(np.int32) | (b[:, 1].astype(np.int32) << 8) | (hi << 16)
+        x = x.astype(np.float32) / float(1 << 23)
+    else:
+        x = np.frombuffer(data[:n * width], dtype="<i2" if width == 2 else "<i4").astype(np.float32)
+        x /= float(1 << (bits - 1))
+    if n_ch > 1:
+        x = x.reshape(-1, n_ch)
+        x = x.mean(axis=1) if channel is None else x[:, channel]
     if length:
         x = x[:length] if len(x) >= length else np.pad(x, (0, length - len(x)))
-    return x
+    return x.astype(np.float32)
 
 
 def _hz_to_mel(f):

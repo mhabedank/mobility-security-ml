@@ -32,13 +32,37 @@ jobs:
         run: |
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import json
+          from hilbench.ml.train_real import TASK_DATASETS
           r = json.load(open("models/train-request.json"))
           print("tasks=" + " ".join(r["tasks"])); print(f"epochs={r.get('epochs', 20)}"); print(f"version={r['version']}")
+          ds = sorted({d for t in r["tasks"] for d in TASK_DATASETS[t]})
+          print("datasets=" + " ".join(ds)); print("cache_key=hbdata-" + "+".join(ds))
           PY
-      - name: download + train
+      # extracted datasets (not the raw archives) are cached between runs; data never enters git
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            ${{ runner.temp }}/hbdata
+            !${{ runner.temp }}/hbdata/*/raw
+          key: ${{ steps.req.outputs.cache_key }}-${{ hashFiles('hilbench/data/registry.py') }}
+      - name: download
+        id: download
         env:
           HILBENCH_DATA: ${{ runner.temp }}/hbdata
-        run: hilbench train ${{ steps.req.outputs.tasks }} --download --epochs ${{ steps.req.outputs.epochs }} --version ${{ steps.req.outputs.version }}
+        run: |
+          for ds in ${{ steps.req.outputs.datasets }}; do hilbench data download "$ds"; done
+          rm -rf "$HILBENCH_DATA"/*/raw
+      - uses: actions/cache/save@v4
+        with:
+          path: |
+            ${{ runner.temp }}/hbdata
+            !${{ runner.temp }}/hbdata/*/raw
+          key: ${{ steps.req.outputs.cache_key }}-${{ hashFiles('hilbench/data/registry.py') }}
+        continue-on-error: true  # the key exists already when the cache was restored
+      - name: train
+        env:
+          HILBENCH_DATA: ${{ runner.temp }}/hbdata
+        run: hilbench train ${{ steps.req.outputs.tasks }} --epochs ${{ steps.req.outputs.epochs }} --version ${{ steps.req.outputs.version }}
       - name: verify (unit tests + HIL suite on the simulator)
         env:
           HILBENCH_DATA: ${{ runner.temp }}/hbdata
