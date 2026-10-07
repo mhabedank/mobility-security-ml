@@ -121,14 +121,40 @@ TensorFlow). Modelle, die auf ein kleines Target nicht passen, können per
 `-D MI_EXCLUDE_<NAME>` in `platformio.ini` und `excluded_models` in `targets.yaml`
 ausgeschlossen werden.
 
-Mitgelieferte Referenzmodelle (`models/zoo`, Neubau mit `hilbench zoo`):
+Mitgelieferte Modelle (`models/zoo`). Die Version 0.2.0 ist auf echten, offen lizenzierten
+Daten trainiert. int8-Werte gelten für die Arithmetik des Geräts (bit-exakte Host-Referenz):
 
-| Modell | Aufgabe | MACs | Parameter | Arena |
-|---|---|---:|---:|---:|
-| `can_ids_mlp` | CAN-Bus-Intrusion-Detection (DoS, Fuzzing, Spoofing), trainiert | 1,6 k | 2,0 KB | 64 B |
-| `sensor_ae` | Anomalieerkennung Raddrehzahlsensor (Autoencoder), trainiert | 10 k | 12 KB | 128 B |
-| `imu_gnss_cnn1d` | GNSS-Spoofing-Detektor, 1D-CNN über IMU+GNSS (Benchmark-Gewichte) | 162 k | 6,9 KB | 2 KB |
-| `kws_dscnn` | Keyword Spotting DS-CNN à la MLPerf Tiny (Benchmark-Gewichte) | 488 k | 5,8 KB | 7,8 KB |
+| Modell | Version | Aufgabe | Daten (Lizenz) | int8-Ergebnis | MACs | Parameter | Arena |
+|---|---|---|---|---|---:|---:|---:|
+| `kws_dscnn` | 0.2.0 | Keyword Spotting, 12 Klassen (DS-CNN à la MLPerf Tiny) | Speech Commands v0.02 (CC BY 4.0) | 90,5 % Acc. (5092 Clips) | 816 k | 9,6 KB | 8,0 KB |
+| `har_cnn1d` | 0.2.0 | Bewegungserkennung aus IMU (6 Aktivitäten) | UCI HAR (CC BY 4.0) | 93,3 % Acc. (2947 Fenster) | 354 k | 7,3 KB | 4,0 KB |
+| `can_ids_mlp` | 0.1.0 | CAN-Bus-Intrusion-Detection | synthetisch | Bench-Referenz | 1,6 k | 2,0 KB | 64 B |
+| `sensor_ae` | 0.1.0 | Anomalieerkennung Raddrehzahlsensor (Autoencoder) | synthetisch | Bench-Referenz | 10 k | 12 KB | 128 B |
+| `imu_gnss_cnn1d` | 0.1.0 | GNSS-Spoofing-Detektor, 1D-CNN über IMU+GNSS | Benchmark-Gewichte | – | 162 k | 6,9 KB | 2 KB |
+
+## Trainingsdaten und Training auf echten Daten
+
+Die Daten liegen nie im Repo. `hilbench data` lädt sie vom Originalanbieter nach
+`$HILBENCH_DATA` und prüft dabei die Lizenz, die der Anbieter aktuell deklariert.
+Auswahl, abgelehnte Datensätze und die Frage, was auf Hugging Face gespiegelt werden darf:
+[docs/datasets.md](docs/datasets.md).
+
+```bash
+pip install -e ".[train]"
+hilbench data list                       # Use Cases, Lizenzen, HF-Mirror erlaubt?
+hilbench train kws har can mimii --download   # trainieren -> int8 -> bit-exakt prüfen -> models/zoo
+hilbench run -b sim                      # HIL-Suite inkl. Genauigkeit auf dem (simulierten) Gerät
+```
+
+Ohne lokale GPU geht es über CI: Die Tasks in `models/train-request.json` eintragen und pushen.
+Der Workflow `train` trainiert, testet auf dem Simulator und committet nur Modellparameter und
+Berichte zurück.
+
+**Hugging Face Zoo:** `hilbench hub publish --org <org> --version 0.2.0` legt pro Modell ein
+privates Repo `<org>/hilbench-<modell>` mit Model Card (Metriken, Trainingsdaten-Attribution,
+Lizenz), `.npz`, `.h` und `.tflite` an und taggt es mit `v<version>`. In CI geht das über
+`models/hub-release.json` und den Workflow `hub`. Dafür braucht es das Secret `HF_TOKEN`
+(Write-Token) und optional die Variable `HF_ORG`.
 
 ## Kommandos
 
@@ -182,5 +208,6 @@ hilbench/ml/         Quantisierung, Python-Referenz, Training, Codegen, TFLite-I
 hil/                 targets.yaml (Chip-Katalog), boards.yaml (dein Laborinventar), udev/Host-Setup
 models/zoo|custom    Referenzmodelle / eigene importierte Modelle
 tests/hil, tests/unit  HIL-Suiten / Host-Tests
-docs/                hardware.md, protocol.md, ci.md, extending.md
+docs/                hardware.md, protocol.md, ci.md, extending.md, datasets.md
+hilbench/data/       Datensatz-Registry (Lizenzen) + Downloader
 ```
