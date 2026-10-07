@@ -129,6 +129,7 @@ Daten trainiert. int8-Werte gelten für die Arithmetik des Geräts (bit-exakte H
 | `kws_dscnn` | 0.2.0 | Keyword Spotting, 12 Klassen (DS-CNN à la MLPerf Tiny) | Speech Commands v0.02 (CC BY 4.0) | 90,5 % Acc. (5092 Clips) | 816 k | 9,6 KB | 8,0 KB |
 | `har_cnn1d` | 0.2.0 | Bewegungserkennung aus IMU (6 Aktivitäten) | UCI HAR (CC BY 4.0) | 93,3 % Acc. (2947 Fenster) | 354 k | 7,3 KB | 4,0 KB |
 | `can_ids_road` | 0.2.0 | CAN-Bus-Intrusion-Detection pro Frame (MLP 32-64-32-2) | ROAD, echtes Fahrzeug (CC BY 4.0) | 98,9 % Acc., Recall 81,7 %, FPR 0,8 % (2,2 Mio. Frames, ungesehene Captures) | 4,2 k | 5,0 KB | 128 B |
+| `mimii_fan_ae` | 0.2.0 | Anomalieerkennung an Maschinengeräuschen (Autoencoder, 5 × 40 Log-Mel) | MIMII Lüfter 6 dB (CC BY-SA 4.0) | AUC 0,84 pro 10-s-Clip (id_00 0,75, id_02 0,96; 700 Clips) | 35 k | 39 KB | 400 B |
 | `can_ids_mlp` | 0.1.0 | CAN-Bus-Intrusion-Detection | synthetisch | Bench-Referenz | 1,6 k | 2,0 KB | 64 B |
 | `sensor_ae` | 0.1.0 | Anomalieerkennung Raddrehzahlsensor (Autoencoder) | synthetisch | Bench-Referenz | 10 k | 12 KB | 128 B |
 | `imu_gnss_cnn1d` | 0.1.0 | GNSS-Spoofing-Detektor, 1D-CNN über IMU+GNSS | Benchmark-Gewichte | – | 162 k | 6,9 KB | 2 KB |
