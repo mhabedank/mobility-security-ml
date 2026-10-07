@@ -9,7 +9,7 @@
  * evaluated on vehicles it was not trained on.
  *
  * Memory: per-ID state for up to MSML_CAN_N_SLOTS identifiers at a time (about 10 KB in total).
- * When a new ID arrives and all slots are taken, the least recently seen ID is evicted. Real
+ * When a new ID arrives and all slots are taken, the ID seen the fewest times is evicted. Real
  * vehicles use far fewer IDs per bus; eviction only happens under fuzzing or ID scanning.
  *
  * Limits: 11-bit (standard) identifiers only; extended IDs are folded into the 11-bit range.

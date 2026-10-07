@@ -30,18 +30,29 @@ jobs:
           int main(void) {
               static can_ids_tiny_t ids;
               can_ids_tiny_init(&ids);
-              int mismatches = 0;
+              int mismatches = 0, alarms = 0;
               for (int i = 0; i < TV_N_FRAMES; i++) {
                   const tv_frame_t *f = &tv_frames[i];
-                  float s = can_ids_tiny_score(&ids, f->ts_us, f->can_id, f->dlc, f->data);
+                  float s;
+                  alarms += can_ids_tiny_process(&ids, f->ts_us, f->can_id, f->dlc, f->data, &s);
                   mismatches += (s != tv_expected_score[i]);
               }
-              printf("score mismatches: %d / %d\n", mismatches, TV_N_FRAMES);
+          #ifndef TV_EXPECTED_ALARMS
+          #define TV_EXPECTED_ALARMS (-1)
+          #define TV_NO_EXPECTED_ALARMS
+          #endif
+              printf("score mismatches: %d / %d, alarms: %d (expected %d)\n",
+                     mismatches, TV_N_FRAMES, alarms, TV_EXPECTED_ALARMS);
+          #ifndef TV_NO_EXPECTED_ALARMS
+              return mismatches != 0 || alarms != TV_EXPECTED_ALARMS;
+          #else
               return mismatches != 0;
+          #endif
           }
           SRC
           gcc -std=c99 -O2 -ffp-contract=off -Wall -Wextra -Werror -Wno-unused-parameter \
             -I $D -I $D/generated -I firmware/components/msml_can_features/include \
             /tmp/check.c $D/can_ids_tiny.c firmware/components/msml_can_features/msml_can_features.c \
+            firmware/components/msml_can_features/msml_alarm.c \
             -o /tmp/check
           /tmp/check

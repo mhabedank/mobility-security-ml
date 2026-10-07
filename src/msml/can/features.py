@@ -20,6 +20,9 @@ REPO = Path(__file__).resolve().parents[3]
 SRC_DIR = REPO / "firmware" / "components" / "msml_can_features"
 C_FILE = SRC_DIR / "msml_can_features.c"
 H_FILE = SRC_DIR / "include" / "msml_can_features.h"
+ALARM_C = SRC_DIR / "msml_alarm.c"
+ALARM_H = SRC_DIR / "include" / "msml_alarm.h"
+SOURCES = [C_FILE, H_FILE, ALARM_C, ALARM_H]
 
 FEATURE_NAMES = [
     "dt_id_ms",
@@ -42,20 +45,25 @@ PAYLOAD_COLS = [f"b{i}" for i in range(8)]
 
 @lru_cache(maxsize=1)
 def _lib() -> ctypes.CDLL:
-    digest = hashlib.sha256(C_FILE.read_bytes() + H_FILE.read_bytes()).hexdigest()[:12]
+    digest = hashlib.sha256(b"".join(p.read_bytes() for p in SOURCES)).hexdigest()[:12]
     cache = Path(os.environ.get("MSML_CACHE", REPO / "artifacts" / ".cache"))
     cache.mkdir(parents=True, exist_ok=True)
     so = cache / f"libmsml_can_features_{digest}.so"
     if not so.exists():
         cc = os.environ.get("CC", "gcc")
         cmd = [cc, "-O2", "-ffp-contract=off", "-shared", "-fPIC",
-               "-I", str(H_FILE.parent), str(C_FILE), "-o", str(so)]
+               "-I", str(H_FILE.parent), str(C_FILE), str(ALARM_C), "-o", str(so)]
         subprocess.run(cmd, check=True)
     lib = ctypes.CDLL(str(so))
     lib.msml_can_extract_batch.restype = ctypes.c_int
     lib.msml_can_extract_batch.argtypes = [
         ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p,
         ctypes.c_size_t, ctypes.c_void_p,
+    ]
+    lib.msml_alarm_batch.restype = None
+    lib.msml_alarm_batch.argtypes = [
+        ctypes.c_void_p, ctypes.c_void_p, ctypes.c_size_t, ctypes.c_uint,
+        ctypes.c_int64, ctypes.c_int64, ctypes.c_void_p,
     ]
     return lib
 
@@ -85,4 +93,15 @@ def extract(frames: pd.DataFrame) -> np.ndarray:
     )
     if rc != 0:
         raise MemoryError("msml_can_extract_batch failed")
+    return out
+
+
+def alarms(ts_us: np.ndarray, flagged: np.ndarray, k: int, window_ms: float,
+           holdoff_ms: float = 1000.0) -> np.ndarray:
+    """Alarm aggregation (C implementation, msml_alarm.c): 1 where a frame raises an alarm."""
+    ts = np.ascontiguousarray(ts_us, dtype=np.int64)
+    fl = np.ascontiguousarray(flagged, dtype=np.uint8)
+    out = np.zeros(ts.size, dtype=np.uint8)
+    _lib().msml_alarm_batch(ts.ctypes.data, fl.ctypes.data, ts.size, int(k),
+                            int(window_ms * 1000), int(holdoff_ms * 1000), out.ctypes.data)
     return out

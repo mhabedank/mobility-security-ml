@@ -27,7 +27,9 @@ void msml_can_reset(msml_can_state_t *s)
     memset(s->slot_of, MSML_CAN_NO_SLOT, sizeof(s->slot_of));
 }
 
-/* Slot for this identifier; allocates one (evicting the least recently seen) if needed. */
+/* Slot for this identifier; allocates one if needed. When all slots are taken, the ID seen the
+ * fewest times is evicted (ties: least recently seen). Periodic IDs of the vehicle have high
+ * counts and survive; one-off IDs from fuzzing or ID scanning are evicted first. */
 static msml_can_id_state_t *slot_for(msml_can_state_t *s, uint16_t id)
 {
     uint8_t k = s->slot_of[id];
@@ -39,7 +41,8 @@ static msml_can_id_state_t *slot_for(msml_can_state_t *s, uint16_t id)
     } else {
         k = 0;
         for (uint16_t i = 1; i < MSML_CAN_N_SLOTS; i++) {
-            if (s->slots[i].last_us < s->slots[k].last_us) {
+            const msml_can_id_state_t *a = &s->slots[i], *b = &s->slots[k];
+            if (a->count < b->count || (a->count == b->count && a->last_us < b->last_us)) {
                 k = (uint8_t)i;
             }
         }

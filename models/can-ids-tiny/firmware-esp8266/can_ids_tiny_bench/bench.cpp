@@ -5,23 +5,28 @@
 #include "src/can_ids_tiny.h"
 #include "src/test_vectors.h"
 
+#ifndef TV_EXPECTED_ALARMS
+#define TV_EXPECTED_ALARMS (-1) /* test vectors generated without the alarm stage */
+#endif
+
 static can_ids_tiny_t s_ids;
 static uint32_t s_cycles[TV_N_FRAMES];
-static int s_mismatches, s_detected, s_attacks;
+static int s_mismatches, s_detected, s_attacks, s_alarms;
 static uint32_t s_sum;
 
 static void run_once()
 {
     can_ids_tiny_init(&s_ids);
     const float thr = can_ids_tiny_threshold();
-    s_mismatches = s_detected = s_attacks = 0;
+    s_mismatches = s_detected = s_attacks = s_alarms = 0;
     for (int i = 0; i < TV_N_FRAMES; i++) {
         tv_frame_t f;
         float expected;
         memcpy_P(&f, &tv_frames[i], sizeof(f));
         memcpy_P(&expected, &tv_expected_score[i], sizeof(expected));
+        float s;
         uint32_t t0 = ESP.getCycleCount();
-        float s = can_ids_tiny_score(&s_ids, f.ts_us, f.can_id, f.dlc, f.data);
+        s_alarms += can_ids_tiny_process(&s_ids, f.ts_us, f.can_id, f.dlc, f.data, &s);
         s_cycles[i] = ESP.getCycleCount() - t0;
         s_mismatches += (s != expected);
         s_attacks += f.label;
@@ -56,9 +61,11 @@ void loop()
     const float mhz = ESP.getCpuFreqMHz();
     Serial.printf("CAN_IDS_TINY_RESULT {\"target\":\"esp8266\",\"cpu_mhz\":%.0f,\"frames\":%d,"
                   "\"score_mismatches\":%d,\"attack_frames\":%d,\"detected\":%d,"
+                  "\"alarms\":%d,\"expected_alarms\":%d,"
                   "\"latency_us\":{\"median\":%.2f,\"mean\":%.2f,\"p99\":%.2f,\"max\":%.2f},"
                   "\"state_bytes\":%u,\"free_heap\":%u}\n",
-                  mhz, TV_N_FRAMES, s_mismatches, s_attacks, s_detected,
+                  mhz, TV_N_FRAMES, s_mismatches, s_attacks, s_detected, s_alarms,
+                  TV_EXPECTED_ALARMS,
                   s_cycles[TV_N_FRAMES / 2] / mhz, (float)s_sum / TV_N_FRAMES / mhz,
                   s_cycles[(TV_N_FRAMES * 99) / 100] / mhz, s_cycles[TV_N_FRAMES - 1] / mhz,
                   (unsigned)sizeof(s_ids), (unsigned)ESP.getFreeHeap());

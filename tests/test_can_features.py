@@ -64,12 +64,25 @@ def test_state_is_independent_per_call():
     np.testing.assert_array_equal(extract(df), extract(df))
 
 
-def test_eviction_keeps_recent_ids_and_reports_new():
-    # 300 distinct IDs (more than the 255 slots): the oldest IDs are evicted, so ID 0 is
-    # new again, while a recently seen ID keeps its history.
-    rows = [(i * 0.001, i, [0]) for i in range(300)]
-    rows += [(0.400, 299, [0]), (0.401, 0, [0])]
+def test_eviction_keeps_frequent_ids():
+    # A periodic ID is seen 50 times, then an ID scan sends 300 one-off IDs (more than the
+    # 255 slots). The periodic ID must keep its history; early one-off IDs are evicted.
+    rows = [(i * 0.010, 0x7FF, [0]) for i in range(50)]
+    rows += [(0.5 + i * 0.0001, i, [0]) for i in range(300)]
+    rows += [(0.6, 0x7FF, [0]), (0.601, 0, [0])]
     x = extract(frames(rows))
-    assert x[-2, F["id_count"]] == 1      # ID 299 still tracked
-    assert x[-1, F["id_count"]] == 0      # ID 0 was evicted
+    assert x[-2, F["id_count"]] == 50     # periodic ID survived the scan
+    assert x[-1, F["id_count"]] == 0      # one-off ID 0 was evicted
     assert x[-1, F["dt_id_ms"]] == 1000.0
+
+
+def test_alarm_needs_k_flags_in_window_and_holds_off():
+    from msml.can.features import alarms
+
+    ts = np.array([0, 10_000, 20_000, 500_000, 510_000, 520_000, 530_000, 2_000_000,
+                   2_001_000, 2_002_000], dtype=np.int64)
+    fl = np.array([1, 0, 1, 1, 1, 1, 1, 1, 1, 1])
+    a = alarms(ts, fl, k=3, window_ms=50, holdoff_ms=1000)
+    # first alarm at 520 ms (3 flags within 50 ms), suppressed at 530 ms (hold-off),
+    # next alarm at 2002 ms
+    assert a.tolist() == [0, 0, 0, 0, 0, 1, 0, 0, 0, 1]

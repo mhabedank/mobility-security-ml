@@ -22,6 +22,10 @@
 #include "freertos/task.h"
 #include "test_vectors.h"
 
+#ifndef TV_EXPECTED_ALARMS
+#define TV_EXPECTED_ALARMS (-1) /* test vectors generated without the alarm stage */
+#endif
+
 static can_ids_tiny_t s_ids;
 static uint32_t s_cycles[TV_N_FRAMES];
 
@@ -31,15 +35,19 @@ static int cmp_u32(const void *a, const void *b)
     return (x > y) - (x < y);
 }
 
+static int s_alarms;
+
 static void run_once(int *mismatches, int *detected, int *attacks)
 {
     can_ids_tiny_init(&s_ids);
     const float thr = can_ids_tiny_threshold();
     *mismatches = *detected = *attacks = 0;
+    s_alarms = 0;
     for (int i = 0; i < TV_N_FRAMES; i++) {
         const tv_frame_t *f = &tv_frames[i];
+        float s;
         uint32_t t0 = esp_cpu_get_cycle_count();
-        float s = can_ids_tiny_score(&s_ids, f->ts_us, f->can_id, f->dlc, f->data);
+        s_alarms += can_ids_tiny_process(&s_ids, f->ts_us, f->can_id, f->dlc, f->data, &s);
         s_cycles[i] = esp_cpu_get_cycle_count() - t0;
         *mismatches += (s != tv_expected_score[i]);
         *attacks += f->label;
@@ -68,9 +76,11 @@ void app_main(void)
     while (1) {
         printf("CAN_IDS_TINY_RESULT {\"target\":\"%s\",\"cpu_mhz\":%.0f,\"frames\":%d,"
                "\"score_mismatches\":%d,\"attack_frames\":%d,\"detected\":%d,"
+               "\"alarms\":%d,\"expected_alarms\":%d,"
                "\"latency_us\":{\"median\":%.2f,\"mean\":%.2f,\"p99\":%.2f,\"max\":%.2f},"
                "\"state_bytes\":%u,\"free_heap\":%" PRIu32 "}\n",
                CONFIG_IDF_TARGET, mhz, TV_N_FRAMES, mismatches, attacks, detected,
+               s_alarms, TV_EXPECTED_ALARMS,
                s_cycles[TV_N_FRAMES / 2] / mhz, (float)sum / TV_N_FRAMES / mhz,
                s_cycles[(TV_N_FRAMES * 99) / 100] / mhz, s_cycles[TV_N_FRAMES - 1] / mhz,
                (unsigned)sizeof(s_ids), esp_get_free_heap_size());

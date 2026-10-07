@@ -8,6 +8,8 @@ SKETCH="$HERE/can_ids_tiny_bench"
 mkdir -p "$SKETCH/src"
 cp "$REPO/firmware/components/msml_can_features/msml_can_features.c" \
    "$REPO/firmware/components/msml_can_features/include/msml_can_features.h" \
+   "$REPO/firmware/components/msml_can_features/msml_alarm.c" \
+   "$REPO/firmware/components/msml_can_features/include/msml_alarm.h" \
    "$REPO/models/can-ids-tiny/c/can_ids_tiny.c" "$REPO/models/can-ids-tiny/c/can_ids_tiny.h" \
    "$REPO"/models/can-ids-tiny/c/generated/*.h "$SKETCH/src/"
 EXTRA=()

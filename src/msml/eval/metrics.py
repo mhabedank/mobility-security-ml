@@ -41,3 +41,49 @@ def false_alarms_per_hour(captures: list[tuple[np.ndarray, np.ndarray, np.ndarra
         events += alarm_events(ts[benign], score[benign] >= threshold, merge_s)
         seconds += float(ts[-1] - ts[0]) if ts.size > 1 else 0.0
     return events / (seconds / 3600.0) if seconds > 0 else float("nan")
+
+
+def attack_episodes(ts: np.ndarray, y: np.ndarray, gap_s: float = 1.0) -> list[tuple[float, float]]:
+    """Group attack frames into episodes; a gap longer than gap_s starts a new episode."""
+    t = ts[y == 1]
+    if t.size == 0:
+        return []
+    cut = np.flatnonzero(np.diff(t) > gap_s)
+    starts = np.r_[t[0], t[cut + 1]]
+    ends = np.r_[t[cut], t[-1]]
+    return list(zip(starts.tolist(), ends.tolist()))
+
+
+def alarm_metrics(captures: list[tuple[np.ndarray, np.ndarray, np.ndarray]],
+                  window_s: float) -> dict:
+    """Event-level metrics for alarms.
+
+    captures: list of (ts_seconds, y, alarm). An alarm is true if an attack frame occurred within
+    window_s before it (inclusive); otherwise it is a false alarm. An attack episode is detected
+    if a true alarm falls inside [start, end + window_s].
+    """
+    false_alarms, seconds, episodes, detected, latencies = 0, 0.0, 0, 0, []
+    for ts, y, alarm in captures:
+        seconds += float(ts[-1] - ts[0]) if ts.size > 1 else 0.0
+        t_alarm = ts[alarm.astype(bool)]
+        t_attack = ts[y == 1]
+        if t_attack.size:
+            i = np.searchsorted(t_attack, t_alarm, side="right") - 1
+            ok = (i >= 0) & (t_alarm - t_attack[np.clip(i, 0, None)] <= window_s)
+        else:
+            ok = np.zeros(t_alarm.size, dtype=bool)
+        false_alarms += int(np.count_nonzero(~ok))
+        true_alarms = t_alarm[ok]
+        for start, end in attack_episodes(ts, y):
+            episodes += 1
+            hit = true_alarms[(true_alarms >= start) & (true_alarms <= end + window_s)]
+            if hit.size:
+                detected += 1
+                latencies.append(float(hit[0] - start))
+    hours = seconds / 3600.0
+    return {
+        "episodes": episodes,
+        "episode_recall": detected / episodes if episodes else float("nan"),
+        "median_latency_ms": float(np.median(latencies) * 1000) if latencies else float("nan"),
+        "false_alarms_per_hour": false_alarms / hours if hours > 0 else float("nan"),
+    }

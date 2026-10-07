@@ -55,6 +55,34 @@ def summary_table(results: dict) -> str:
     return "\n".join(rows)
 
 
+def alarm_table(results: dict, key: str, feature_set: str = "no_can_id") -> str:
+    """Event-level metrics after alarm aggregation, mean over the four sets."""
+    rows = ["| Test split | Attacks detected | Median time to alarm | False alarms / h |",
+            "|---|---|---|---|"]
+    for split, label in SPLIT_LABELS.items():
+        ms = [results[s][feature_set]["splits"][split]["alarm"][key] for s in results]
+        mean = {k: sum(m[k] for m in ms) / len(ms)
+                for k in ("episode_recall", "median_latency_ms", "false_alarms_per_hour")}
+        rows.append(f"| {label} | {mean['episode_recall']:.1%} "
+                    f"| {mean['median_latency_ms']:.0f} ms | {mean['false_alarms_per_hour']:.1f} |")
+    return "\n".join(rows)
+
+
+def alarm_grid_table(results: dict, feature_set: str = "no_can_id") -> str:
+    """Trade-off over the whole alarm grid, mean over all sets and splits."""
+    keys = next(iter(results.values()))[feature_set]["splits"]
+    keys = next(iter(keys.values()))["alarm"].keys()
+    rows = ["| k | Window | Attacks detected | False alarms / h |", "|---|---|---|---|"]
+    for key in keys:
+        ms = [sp["alarm"][key] for entry in results.values()
+              for sp in entry[feature_set]["splits"].values()]
+        k, w = key[1:].split("_w")
+        rec = sum(m["episode_recall"] for m in ms) / len(ms)
+        fa = sum(m["false_alarms_per_hour"] for m in ms) / len(ms)
+        rows.append(f"| {k} | {w} ms | {rec:.1%} | {fa:.1f} |")
+    return "\n".join(rows)
+
+
 def per_attack_table(results: dict, feature_set: str = "no_can_id") -> str:
     """Recall per attack type, split by whether the attack type was in the training set."""
     seen, unseen = {}, {}
@@ -76,7 +104,13 @@ def per_attack_table(results: dict, feature_set: str = "no_can_id") -> str:
 
 def cmd_tables(_args) -> None:
     results = json.loads((RESULTS / "protocol_results.json").read_text())
-    print("## Summary\n")
+    alarm = json.loads((RESULTS / "config.json").read_text())["alarm"]
+    key = f"k{alarm['k']}_w{alarm['window_ms']}"
+    print(f"## Alarms ({key}, selected on validation)\n")
+    print(alarm_table(results, key))
+    print("\n## Alarm grid\n")
+    print(alarm_grid_table(results))
+    print("\n## Frame level\n")
     print(summary_table(results))
     print("\n## Per attack\n")
     print(per_attack_table(results))
@@ -99,6 +133,8 @@ def build() -> Path:
     feat = REPO / "firmware" / "components" / "msml_can_features"
     shutil.copy(feat / "msml_can_features.c", HF_DIR / "c")
     shutil.copy(feat / "include" / "msml_can_features.h", HF_DIR / "c")
+    shutil.copy(feat / "msml_alarm.c", HF_DIR / "c")
+    shutil.copy(feat / "include" / "msml_alarm.h", HF_DIR / "c")
     bench = RESULTS / "benchmarks"
     if bench.exists():
         shutil.copytree(bench, HF_DIR / "benchmarks")
