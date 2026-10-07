@@ -64,16 +64,16 @@ void app_main(void)
         sum += s_cycles[i];
     }
     const float mhz = cpu_hz / 1e6f;
-    printf("CAN_IDS_TINY_RESULT {\"target\":\"%s\",\"cpu_mhz\":%.0f,\"frames\":%d,"
-           "\"score_mismatches\":%d,\"attack_frames\":%d,\"detected\":%d,"
-           "\"latency_us\":{\"median\":%.2f,\"mean\":%.2f,\"p99\":%.2f,\"max\":%.2f},"
-           "\"state_bytes\":%u,\"free_heap\":%" PRIu32 "}\n",
-           CONFIG_IDF_TARGET, mhz, TV_N_FRAMES, mismatches, attacks, detected,
-           s_cycles[TV_N_FRAMES / 2] / mhz, (float)sum / TV_N_FRAMES / mhz,
-           s_cycles[(TV_N_FRAMES * 99) / 100] / mhz, s_cycles[TV_N_FRAMES - 1] / mhz,
-           (unsigned)sizeof(s_ids), esp_get_free_heap_size());
-    printf("CAN_IDS_TINY_DONE\n");
+    /* Repeat the result so a serial monitor that connects late still sees it. */
     while (1) {
-        vTaskDelay(pdMS_TO_TICKS(10000));
+        printf("CAN_IDS_TINY_RESULT {\"target\":\"%s\",\"cpu_mhz\":%.0f,\"frames\":%d,"
+               "\"score_mismatches\":%d,\"attack_frames\":%d,\"detected\":%d,"
+               "\"latency_us\":{\"median\":%.2f,\"mean\":%.2f,\"p99\":%.2f,\"max\":%.2f},"
+               "\"state_bytes\":%u,\"free_heap\":%" PRIu32 "}\n",
+               CONFIG_IDF_TARGET, mhz, TV_N_FRAMES, mismatches, attacks, detected,
+               s_cycles[TV_N_FRAMES / 2] / mhz, (float)sum / TV_N_FRAMES / mhz,
+               s_cycles[(TV_N_FRAMES * 99) / 100] / mhz, s_cycles[TV_N_FRAMES - 1] / mhz,
+               (unsigned)sizeof(s_ids), esp_get_free_heap_size());
+        vTaskDelay(pdMS_TO_TICKS(5000));
     }
 }
