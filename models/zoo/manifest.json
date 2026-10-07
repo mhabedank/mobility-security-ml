@@ -104,6 +104,28 @@
       "n_tests": 8,
       "version": "0.2.0",
       "source": "real-data"
+    },
+    {
+      "name": "can_ids_road",
+      "description": "CAN bus intrusion detection MLP (32-64-32-2) on per-frame features, trained on the ROAD dataset (real vehicle; fuzzing, fabrication, masquerade attacks)",
+      "in_shape": [
+        1,
+        1,
+        32
+      ],
+      "out_shape": [
+        1,
+        1,
+        2
+      ],
+      "layers": 3,
+      "macs": 4160,
+      "param_bytes": 5042,
+      "arena_size": 128,
+      "crc32": "c27bb0df",
+      "n_tests": 8,
+      "version": "0.2.0",
+      "source": "real-data"
     }
   ]
 }
