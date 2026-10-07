@@ -1,4 +1,8 @@
-# Virtual boards: real ESP32 / ESP32-S3 / ESP32-C3 firmware running in Espressif's QEMU.
+# Virtual boards: real ESP32 firmware running in Espressif's QEMU.
+# ESP32-S3 / ESP32-C3 entries are disabled: they need firmware built on ESP-IDF >= 5
+# (arduino-esp32 3.x); with the default 2.x core (IDF 4.4) the emulated flash
+# fails to initialise ("assert failed: do_core_init startup.c:328"). Real
+# hardware is not affected.
 # Used by CI (job "esp32 in QEMU") and handy for local development:
 #   hilbench --boards hil/qemu-boards.yaml run -b esp32-qemu
 # Needs qemu-system-xtensa / qemu-system-riscv32 from
@@ -20,6 +24,7 @@ boards:
 
   - id: esp32c3-qemu
     target: esp32c3
+    enabled: false
     port: socket://127.0.0.1:5556
     reset: soft
     flasher: command
@@ -29,6 +34,7 @@ boards:
 
   - id: esp32s3-qemu
     target: esp32s3
+    enabled: false
     port: socket://127.0.0.1:5557
     reset: soft
     flasher: command

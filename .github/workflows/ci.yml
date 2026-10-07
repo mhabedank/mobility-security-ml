@@ -60,10 +60,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # ESP32-S3/-C3 need ESP-IDF >= 5 to boot in QEMU; the Arduino 2.x core
+        # (IDF 4.4) asserts in esp_flash_init there (see hil/qemu-boards.yaml).
         include:
           - {board: esp32-qemu, target: esp32, arch: xtensa}
-          - {board: esp32s3-qemu, target: esp32s3, arch: xtensa}
-          - {board: esp32c3-qemu, target: esp32c3, arch: riscv32}
     env:
       QEMU_RELEASE: esp-develop-9.2.2-20250817
       QEMU_VERSION: esp_develop_9.2.2_20250817

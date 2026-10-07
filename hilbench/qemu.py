@@ -1,4 +1,4 @@
-"""Run ESP32 / ESP32-C3 firmware in Espressif's QEMU as a virtual bench board.
+"""Run ESP32 firmware (ESP32-S3/-C3 with ESP-IDF >= 5) in Espressif's QEMU as a virtual bench board.
 
 The emulator's UART is exposed on a TCP port, so the board is just
 `port: socket://localhost:5555` in boards.yaml and the normal harness works:

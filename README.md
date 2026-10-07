@@ -43,10 +43,12 @@ Bootloader-Rauschen, Watchdog-Crashes und Hänger simulieren.
 
 ### Virtuelle ESP32-Boards (QEMU)
 
-Die echte ESP32-, ESP32-S3- und ESP32-C3-Firmware läuft auch im
-[Espressif-QEMU](https://github.com/espressif/qemu/releases). `hil/qemu-boards.yaml` bindet die
-Emulatoren als normale Boards ein: Der Flasher startet QEMU, die UART liegt auf
-`socket://127.0.0.1:555x`. CI führt so die HIL-Suite auf allen drei Chips aus.
+Die echte ESP32-Firmware läuft auch im
+[Espressif-QEMU](https://github.com/espressif/qemu/releases). `hil/qemu-boards.yaml` bindet den
+Emulator als normales Board ein: Der Flasher startet QEMU, die UART liegt auf
+`socket://127.0.0.1:5555`. CI führt so die komplette HIL-Suite auf der Arduino-ESP32-Firmware aus.
+ESP32-S3/-C3 sind dort vorbereitet, booten im QEMU aber erst mit Firmware auf Basis von ESP-IDF ≥ 5
+(arduino-esp32 3.x).
 
 ```bash
 hilbench --boards hil/qemu-boards.yaml run -b esp32-qemu --quick
@@ -162,7 +164,7 @@ Passt der gemeldete Chip zum Target? So fällt ein vertauschtes Kabel sofort auf
 ## CI
 
 * `.github/workflows/ci.yml`: Unit-Tests, die komplette HIL-Suite gegen simulierte Boards, die
-  HIL-Suite auf ESP32/ESP32-S3/ESP32-C3 im QEMU und Firmware-Builds für alle 11 Targets mit
+  HIL-Suite auf der ESP32-Firmware im QEMU und Firmware-Builds für alle 11 Targets mit
   RAM-/Flash-Übersicht.
 * `.github/workflows/hil.yml`: läuft nächtlich oder manuell auf einem **self-hosted Runner**,
   an dem die echten Boards hängen. Einrichtung: [docs/ci.md](docs/ci.md).
