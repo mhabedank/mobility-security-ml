@@ -20,6 +20,32 @@ protokolliert Herkunft, Lizenz, Abrufzeit und SHA-256 in `SOURCE.json`.
 | `can-mirgu` | CAN-IDS auf modernem Fahrzeug während der Fahrt | CC BY 4.0 | ja | ja | 500 MB | **beim Anbieter defekt**: Das UCI-Zip enthält statt Header und Datenanfang ~180 MB Nullbytes, nicht rekonstruierbar. Der Downloader verweigert es mit Begründung, CAN-IDS deckt `road` ab |
 | `mimii` | Anomalie-Erkennung an Maschinengeräuschen (Lüfter, Pumpen, Ventile; Predictive Maintenance) | CC BY-SA 4.0 | ja | ja, **Share-Alike** | 10 GB pro Maschine/SNR; wir lesen per HTTP-Range nur ~1150 Clips (~2 GB) | **trainiert** (`mimii_fan_ae`, Gewichte unter CC BY-SA 4.0) |
 
+### Bezug zur Mobilität
+
+Nicht jeder Datensatz stammt aus einem Fahrzeug. Für die beiden, bei denen das nicht
+offensichtlich ist, steht hier, warum sie im Mobility-Zoo sind und wo ihre Grenzen liegen.
+
+**`mimii`: Akustische Zustandsüberwachung von Nebenaggregaten.** Lüfter, Pumpen, Ventile
+und Schienenführungen sind genau die Komponenten, die in Fahrzeugen und Mobilitätsinfrastruktur
+verschleißen. Beispiele: Batterie- und Leistungselektronik-Kühlung im E-Fahrzeug (Lüfter,
+Kühlmittelpumpen), Klimagebläse, Kühlung von DC-Schnellladesäulen, Pumpen und Ventile in
+Schienenfahrzeugen, Schiebetüren in Bus und Bahn. Ein Mikrofon plus Mikrocontroller erkennt
+abweichende Geräusche, bevor das Bauteil ausfällt. Das ist Predictive Maintenance für Flotten
+und Ladeinfrastruktur ohne Cloud-Anbindung. Das Verfahren braucht nur Aufnahmen im Normalzustand,
+was im Feld der Regelfall ist.
+*Grenze:* Die Aufnahmen stammen aus einer Fabrikhalle, nicht aus einem Fahrzeug. Das Modell
+belegt, dass Pipeline und Hardware tragen. Für den Einsatz an einem konkreten Aggregat trainieren
+wir mit eigenen Normalaufnahmen nach.
+
+**`uci-har`: Bewegungserkennung aus IMU-Daten.** Beschleunigungs- und Drehratensensoren
+stecken in jedem Smartphone, Wearable, E-Scooter und Steuergerät. Das Modell zeigt, wie
+Fenster aus 6-Achsen-IMU-Daten auf dem Mikrocontroller klassifiziert werden: Gehen,
+Treppe, Sitzen, Stehen, Liegen. Mobilitätsbezug hat das bei Fußgängern und Mikromobilität
+(z. B. Sturzerkennung), bei multimodaler Wegeerkennung und als
+Vorstufe für Fahrmanöver- oder Fahrstilerkennung mit derselben Architektur.
+*Grenze:* Es gibt keine Fahrzeugklassen (Auto, Bus, Rad), und der Sensor saß am Gürtel.
+Für Verkehrsmittel- oder Manövererkennung braucht es andere Daten bei gleicher Pipeline.
+
 Lizenzprüfung: `hilbench data verify` vergleicht die Lizenz, die der Anbieter **heute**
 deklariert (Zenodo-API), mit der Registry. Ein Lizenzwechsel lässt den CI-Job
 `datasets / verify-licenses` fehlschlagen.
