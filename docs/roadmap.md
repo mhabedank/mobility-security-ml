@@ -2,6 +2,29 @@
 
 Grundlage: [Recherche](research/README.md). Stand: 2026-10-07.
 
+## Ziel und Leitplanken (Entscheidung vom 2026-10-07)
+
+- **Ziel:** Sichtbare Reputation in den Bereichen Mobility, ML/KI und Automotive Security. Mehrere solide, gut
+  dokumentierte Modelle schnell auf Hugging Face bringen statt monatelang an einem einzigen zu feilen.
+- **Lizenz:** Modelle sollen **kommerziell nutzbar** sein. Wir trainieren deshalb nur auf Daten unter CC BY oder MIT
+  (oder vergleichbar). NC-Datensätze (HCRL, SynCAN, TU/e) kommen höchstens als Vergleichs-Benchmark vor.
+- **Framework:** Pro Modell wählen wir, was am besten passt (sklearn/emlearn, Keras oder PyTorch). Es gibt keine feste Vorgabe.
+- **Hardware:** Vorerst nur der vorhandene **ESP32** und kaum Budget. Benchmarks auf dem Gerät laufen über
+  **Testvektoren per UART**, dafür braucht es keinen CAN-Bus. Ein CAN-Transceiver (SN65HVD230, ~3 €) ist optional für eine Live-Demo.
+- **Keine eigenen Fahrzeugdaten** in dieser Phase. Später sind Datenmarktplätze oder Kooperationspartner denkbar.
+- **Hugging-Face-Organisation** existiert bereits.
+
+### Fast-Track-Plan
+
+| # | Modell | Daten (Lizenz) | Status |
+|---|---|---|---|
+| 1 | `can-ids-tiny`: CAN-Angriffserkennung pro Frame mit Features für unbekannte Fahrzeuge, Random Forest → C (emlearn) | can-train-and-test (CC BY 4.0; über Bitbucket erreichbar) | in Arbeit |
+| 2 | `v2x-misbehavior-tiny` | VeReMi Extension (CC BY 4.0) | Datenzugang klären |
+| 3 | `gnss-spoofing-tiny` | Aissou GPS Spoofing (CC BY 4.0) | Datenzugang klären |
+
+**Was die Modelle hervorheben soll:** ehrliche Evaluation (unbekannte Fahrzeuge, unbekannte Angriffe, Fehlalarme pro Stunde),
+Messwerte vom echten ESP32 und Model Cards mit klarer Abgrenzung des Einsatzzwecks.
+
 ## Bewertung der Low-Hanging Fruits
 
 Jedes Problemfeld wird nach vier Kriterien bewertet:
