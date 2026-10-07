@@ -7,14 +7,17 @@ from __future__ import annotations
 import numpy as np
 
 from .model import QLayer, QModel
-from .quant import multiply_by_quantized_multiplier, trunc_div
+from . import quant
+from .quant import trunc_div
 
 
 def _requant(layer: QLayer, acc: np.ndarray) -> np.ndarray:
     """acc has the output channel as last axis."""
     mult = layer.mult.astype(np.int64)
     shift = layer.shift.astype(np.int64)
-    v = multiply_by_quantized_multiplier(acc, mult, shift) + layer.out_zp
+    fn = (quant.multiply_by_quantized_multiplier_single if layer.rounding == "single"
+          else quant.multiply_by_quantized_multiplier)
+    v = fn(acc, mult, shift) + layer.out_zp
     return np.clip(v, layer.act_min, layer.act_max).astype(np.int8)
 
 

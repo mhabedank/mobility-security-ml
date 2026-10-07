@@ -48,10 +48,11 @@ def model_to_c(model: QModel) -> str:
         else:
             in_hwc, out_hwc = l.in_shape, l.out_shape
         layer_rows.append(
-            "    {{ {op}, {kh}, {kw}, {sh}, {sw}, {pt}, {pl}, 0, {ih}, {iw}, {ic}, {oh}, {ow}, {oc}, "
+            "    {{ {op}, {kh}, {kw}, {sh}, {sw}, {pt}, {pl}, {fl}, {ih}, {iw}, {ic}, {oh}, {ow}, {oc}, "
             "{izp}, {ozp}, {amin}, {amax}, {nm}, {w}, {b}, {mu}, {sh_} }}".format(
                 op=f"MI_OP_{l.op.upper()}", kh=l.kernel[0], kw=l.kernel[1], sh=l.stride[0],
-                sw=l.stride[1], pt=l.pad[0], pl=l.pad[1], ih=in_hwc[0], iw=in_hwc[1], ic=in_hwc[2],
+                sw=l.stride[1], pt=l.pad[0], pl=l.pad[1],
+                fl="MI_FLAG_SINGLE_ROUNDING" if l.rounding == "single" else 0, ih=in_hwc[0], iw=in_hwc[1], ic=in_hwc[2],
                 oh=out_hwc[0], ow=out_hwc[1], oc=out_hwc[2], izp=l.in_zp, ozp=l.out_zp,
                 amin=l.act_min, amax=l.act_max, nm=n_mult, w=refs[0], b=refs[1], mu=refs[2], sh_=refs[3]))
     out.append(f"static const mi_layer_t {m}_layers[{len(model.layers)}] = {{\n" + ",\n".join(layer_rows) + "\n};\n")

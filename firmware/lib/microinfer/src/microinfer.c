@@ -39,11 +39,22 @@ int32_t mi_multiply_by_quantized_multiplier(int32_t x, int32_t mult, int shift)
         right_shift);
 }
 
+/* Single-rounding variant (TFLITE_SINGLE_ROUNDING), used by TFLite's
+ * FULLY_CONNECTED kernels. */
+int32_t mi_multiply_by_quantized_multiplier_single(int32_t x, int32_t mult, int shift)
+{
+    const int total_shift = 31 - shift;
+    const int64_t round = (int64_t)1 << (total_shift - 1);
+    return (int32_t)(((int64_t)x * mult + round) >> total_shift);
+}
+
 static int8_t mi_requantize(const mi_layer_t *l, int32_t acc, uint16_t ch)
 {
     const uint16_t idx = l->n_mult > 1 ? ch : 0;
-    int32_t v = mi_multiply_by_quantized_multiplier(acc, MI_RD_I32(&l->mult[idx]),
-                                                    (int)MI_RD_I8(&l->shift[idx]));
+    const int32_t m = MI_RD_I32(&l->mult[idx]);
+    const int s = (int)MI_RD_I8(&l->shift[idx]);
+    int32_t v = (l->flags & MI_FLAG_SINGLE_ROUNDING) ? mi_multiply_by_quantized_multiplier_single(acc, m, s)
+                                                     : mi_multiply_by_quantized_multiplier(acc, m, s);
     v += l->out_zp;
     if (v < l->act_min) v = l->act_min;
     if (v > l->act_max) v = l->act_max;

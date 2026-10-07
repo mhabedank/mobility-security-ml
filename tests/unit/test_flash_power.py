@@ -63,3 +63,12 @@ def test_power(tmp_path):
     assert not marker.exists()
     with pytest.raises(PowerError):
         make_power({"type": "command", "on": "false", "off": "true"}).on()
+
+
+def test_parse_pio_sizes():
+    from hilbench.build import parse_pio_sizes
+
+    out = ("RAM:   [====      ]  41.0% (used 33560 bytes from 81920 bytes)\n"
+           "Flash: [===       ]  29.4% (used 307288 bytes from 1044464 bytes)\n")
+    assert parse_pio_sizes(out) == {"ram_used": 33560, "ram_total": 81920,
+                                    "flash_used": 307288, "flash_total": 1044464}

@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import time
@@ -67,14 +68,28 @@ def build_native(lab: Lab, target: Target, build_id: int, verbose: bool = False)
     return _write_manifest(out, target, build_id, {"exe": "hilbench-sim"}, {})
 
 
+def parse_pio_sizes(output: str) -> dict:
+    """Extract "RAM: [==  ] 41.0% (used 33560 bytes from 81920 bytes)" style lines."""
+    sizes = {}
+    for kind in ("RAM", "Flash"):
+        m = re.search(rf"{kind}:\s*\[[^\]]*\]\s*[\d.]+%\s*\(used (\d+) bytes from (\d+) bytes\)", output)
+        if m:
+            sizes[f"{kind.lower()}_used"] = int(m.group(1))
+            sizes[f"{kind.lower()}_total"] = int(m.group(2))
+    return sizes
+
+
 def build_platformio(lab: Lab, target: Target, build_id: int, verbose: bool = False) -> Firmware:
     if not target.pio_env:
         raise BuildError(f"target {target.name} has no pio_env")
     env = {**os.environ, "HIL_BUILD_ID": f"0x{build_id:08x}"}
     argv = pio_cmd() + ["run", "-d", str(lab.firmware_dir), "-e", target.pio_env]
-    res = subprocess.run(argv, env=env, capture_output=not verbose, text=True)
+    res = subprocess.run(argv, env=env, capture_output=True, text=True)
+    output = (res.stdout or "") + (res.stderr or "")
+    if verbose:
+        print(output)
     if res.returncode != 0:
-        tail = "\n".join(((res.stdout or "") + (res.stderr or "")).strip().splitlines()[-40:])
+        tail = "\n".join(output.strip().splitlines()[-40:])
         raise BuildError(f"PlatformIO build of {target.pio_env} failed:\n{tail}")
 
     pio_build = lab.firmware_dir / ".pio" / "build" / target.pio_env
@@ -88,7 +103,7 @@ def build_platformio(lab: Lab, target: Target, build_id: int, verbose: bool = Fa
         if src.exists():
             shutil.copy2(src, out / src.name)
             files[ext] = src.name
-    extra: dict = {"pio_env": target.pio_env}
+    extra: dict = {"pio_env": target.pio_env, **parse_pio_sizes(output)}
     hm = pio_build / "hil_manifest.json"
     if hm.exists():
         pio_manifest = json.loads(hm.read_text())

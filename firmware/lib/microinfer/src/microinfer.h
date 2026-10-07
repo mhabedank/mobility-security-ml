@@ -45,6 +45,9 @@ typedef enum {
     MI_OP_RESHAPE = 6
 } mi_op_t;
 
+/* mi_layer_t.flags */
+#define MI_FLAG_SINGLE_ROUNDING 0x01u /* TFLITE_SINGLE_ROUNDING requantization */
+
 typedef enum {
     MI_OK = 0,
     MI_ERR_ARENA = -1,
@@ -65,7 +68,7 @@ typedef struct {
     uint8_t k_h, k_w;
     uint8_t stride_h, stride_w;
     uint8_t pad_t, pad_l;
-    uint8_t reserved;
+    uint8_t flags; /* MI_FLAG_* */
     uint16_t in_h, in_w, in_c;
     uint16_t out_h, out_w, out_c;
     int16_t in_zp, out_zp;
@@ -106,6 +109,7 @@ uint32_t mi_crc32_update(uint32_t crc, const uint8_t *data, size_t len);
 
 /* Exposed for unit tests. */
 int32_t mi_multiply_by_quantized_multiplier(int32_t x, int32_t mult, int shift);
+int32_t mi_multiply_by_quantized_multiplier_single(int32_t x, int32_t mult, int shift);
 
 #ifdef __cplusplus
 }

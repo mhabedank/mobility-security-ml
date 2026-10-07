@@ -24,6 +24,7 @@ from .train import train_dense
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 ZOO_DIR = REPO_ROOT / "models" / "zoo"
+CUSTOM_DIR = REPO_ROOT / "models" / "custom"  # your own models (hilbench import-tflite)
 FW_ZOO_DIR = REPO_ROOT / "firmware" / "lib" / "modelzoo" / "src"
 
 
@@ -116,14 +117,26 @@ def build_kws_dscnn(out: Path) -> QModel:
 BUILDERS = [build_can_ids, build_sensor_ae, build_imu_gnss_cnn, build_kws_dscnn]
 
 
-def load_zoo(zoo_dir: str | Path = ZOO_DIR) -> dict[str, QModel]:
+def load_zoo(zoo_dir: str | Path = ZOO_DIR, custom_dir: str | Path | None = CUSTOM_DIR) -> dict[str, QModel]:
+    """Built-in reference models followed by custom models (models/custom/*.npz)."""
     zoo_dir = Path(zoo_dir)
     manifest = json.loads((zoo_dir / "manifest.json").read_text())
-    return {m["name"]: QModel.load(zoo_dir / f"{m['name']}.npz") for m in manifest["models"]}
+    models = {m["name"]: QModel.load(zoo_dir / f"{m['name']}.npz") for m in manifest["models"]}
+    if custom_dir is not None and Path(custom_dir).is_dir():
+        for p in sorted(Path(custom_dir).glob("*.npz")):
+            if p.name.endswith(".eval.npz"):
+                continue
+            m = QModel.load(p)
+            if m.name in models:
+                raise ValueError(f"custom model {p} clashes with built-in model {m.name}")
+            models[m.name] = m
+    return models
 
 
 def load_eval(name: str, zoo_dir: str | Path = ZOO_DIR) -> dict | None:
     p = Path(zoo_dir) / f"{name}.eval.npz"
+    if not p.exists():
+        p = CUSTOM_DIR / f"{name}.eval.npz"
     if not p.exists():
         return None
     with np.load(p) as z:
@@ -138,17 +151,16 @@ def main(argv=None):
     args = ap.parse_args(argv)
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    if args.codegen_only:
-        models = list(load_zoo(out).values())
-    else:
-        models = []
+    if not args.codegen_only:
+        built = []
         for b in BUILDERS:
             m = b(out)
             m.save(out / f"{m.name}.npz")
-            models.append(m)
+            built.append(m)
             print(json.dumps({**m.summary(), **{k: v for k, v in m.meta.items() if k != "classes"}}))
-        manifest = {"format": "hilbench-zoo/1", "models": [m.summary() for m in models]}
+        manifest = {"format": "hilbench-zoo/1", "models": [m.summary() for m in built]}
         (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    models = list(load_zoo(out).values())  # built-in + models/custom
     write_zoo_sources(models, Path(args.fw_out))
     print(f"wrote {len(models)} models to {out} and C sources to {args.fw_out}")
 

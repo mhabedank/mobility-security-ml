@@ -35,6 +35,7 @@ class QLayer:
     shift: np.ndarray | None = None  # int8  [1 or out_c]
     in_scale: float = 1.0
     out_scale: float = 1.0
+    rounding: str = "double"  # requantization: "double" (TFLite default) | "single"
 
     @property
     def has_params(self) -> bool:
@@ -127,7 +128,7 @@ class QModel:
                 k: getattr(l, k)
                 for k in (
                     "op", "in_shape", "out_shape", "kernel", "stride", "pad", "in_zp",
-                    "out_zp", "act_min", "act_max", "in_scale", "out_scale",
+                    "out_zp", "act_min", "act_max", "in_scale", "out_scale", "rounding",
                 )
             }
             for k in ("weights", "bias", "mult", "shift"):

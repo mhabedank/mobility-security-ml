@@ -118,10 +118,9 @@ def pytest_generate_tests(metafunc):
 
 
 def _zoo_names() -> list[str]:
-    from .ml.zoo import ZOO_DIR
+    from .ml.zoo import load_zoo
 
-    manifest = json.loads((ZOO_DIR / "manifest.json").read_text())
-    return [m["name"] for m in manifest["models"]]
+    return list(load_zoo())
 
 
 @pytest.hookimpl(tryfirst=True)
@@ -273,9 +272,11 @@ def _bring_up(st: HilState, board: Board) -> DUT:
         raise _Unavailable("fail", f"bringing up {board.id} failed: {e}") from e
     d = DUT(session, st.recorder, st.options, st.baseline)
     info = session.info
+    sizes = {k: v for k, v in (fw.manifest if fw else {}).items()
+             if k in ("ram_used", "ram_total", "flash_used", "flash_total")}
     d.record("board", **{k: info.get(k) for k in ("chip", "cpu_mhz", "build", "framework", "uid", "fw",
                                                     "free_heap", "has_cycles")},
-             port=session.port, events=list(session.events))
+             port=session.port, events=list(session.events), **sizes)
     return d
 
 

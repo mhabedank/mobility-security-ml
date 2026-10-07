@@ -11,6 +11,7 @@
   hilbench run [...] [-- PYTEST ARGS] build, flash and run the HIL test-suite
   hilbench report RUN_DIR            re-render summary.md / compare to a baseline
   hilbench zoo                       rebuild the reference model zoo + firmware sources
+  hilbench import-tflite M.tflite    add your own int8 TFLite model to all boards
 """
 from __future__ import annotations
 
@@ -276,6 +277,31 @@ def cmd_zoo(args):
     return 0
 
 
+def cmd_import_tflite(args):
+    from .ml import tflite_import
+    from .ml.codegen import write_zoo_sources
+    from .ml.zoo import CUSTOM_DIR, FW_ZOO_DIR, load_zoo
+
+    name = args.name or Path(args.model).stem
+    try:
+        qm = tflite_import.load_tflite(args.model, name, args.description or "")
+    except tflite_import.UnsupportedModel as e:
+        print(f"error: {e}", file=sys.stderr)
+        return 2
+    print(json.dumps(qm.summary(), indent=2))
+    if args.verify:
+        bad = tflite_import.verify_with_interpreter(args.model, qm)
+        print(f"TFLite interpreter comparison: {32 - bad}/32 bit-exact")
+        if bad:
+            return 1
+    CUSTOM_DIR.mkdir(parents=True, exist_ok=True)
+    qm.save(CUSTOM_DIR / f"{name}.npz")
+    write_zoo_sources(list(load_zoo().values()), FW_ZOO_DIR)
+    print(f"saved {CUSTOM_DIR / (name + '.npz')} and regenerated firmware/lib/modelzoo "
+          "- rebuild firmware (hilbench run does that) to deploy it")
+    return 0
+
+
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
     pytest_args = []
@@ -344,6 +370,13 @@ def main(argv=None):
     p = sub.add_parser("zoo", help="rebuild model zoo and firmware model sources")
     p.add_argument("--codegen-only", action="store_true")
     p.set_defaults(fn=cmd_zoo)
+
+    p = sub.add_parser("import-tflite", help="add an int8 .tflite model to the firmware")
+    p.add_argument("model")
+    p.add_argument("--name", help="model name (default: file name)")
+    p.add_argument("--description")
+    p.add_argument("--verify", action="store_true", help="compare with the TFLite interpreter (needs tensorflow)")
+    p.set_defaults(fn=cmd_import_tflite)
 
     args = ap.parse_args(argv)
     try:

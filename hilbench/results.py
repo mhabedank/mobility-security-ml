@@ -102,17 +102,27 @@ def _fmt_us(us) -> str:
     return f"{us} µs"
 
 
+def _fmt_kib(used, total=None) -> str:
+    if not used:
+        return "-"
+    s = f"{used / 1024:.1f} KiB"
+    return f"{s} / {total / 1024:.0f}" if total else s
+
+
 def render_markdown(summary: dict, title: str = "HIL TinyML bench") -> str:
     out = [f"# {title}\n"]
     boards = summary["boards"]
     out.append("## Boards\n")
-    out.append("| Board | Target | Chip | MHz | Firmware | passed | failed | skipped |")
-    out.append("|---|---|---|---:|---|---:|---:|---:|")
+    out.append("| Board | Target | Chip | MHz | Firmware | RAM | Flash | free heap | passed | failed | skipped |")
+    out.append("|---|---|---|---:|---|---:|---:|---:|---:|---:|---:|")
     for b in sorted(boards):
         info = boards[b]
         t = summary["tests"].get(b, {})
         out.append(f"| {b} | {info.get('target', '-')} | {info.get('chip', '-')} | {info.get('cpu_mhz', '-')} | "
-                   f"{info.get('build', '-')} | {t.get('passed', 0)} | {t.get('failed', 0)} | {t.get('skipped', 0)} |")
+                   f"{info.get('build', '-')} | {_fmt_kib(info.get('ram_used'), info.get('ram_total'))} | "
+                   f"{_fmt_kib(info.get('flash_used'), info.get('flash_total'))} | "
+                   f"{_fmt_kib(info.get('free_heap'))} | "
+                   f"{t.get('passed', 0)} | {t.get('failed', 0)} | {t.get('skipped', 0)} |")
     models = sorted({m for p in summary["perf"].values() for m in p})
     if models:
         out.append("\n## Latency (average per inference)\n")

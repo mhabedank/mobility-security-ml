@@ -65,6 +65,14 @@ def multiply_by_quantized_multiplier(x, mult, shift) -> np.ndarray:
     return (high >> right) + (remainder > threshold).astype(np.int64)
 
 
+def multiply_by_quantized_multiplier_single(x, mult, shift) -> np.ndarray:
+    """TFLITE_SINGLE_ROUNDING variant (used by TFLite FULLY_CONNECTED)."""
+    x = np.asarray(x, dtype=np.int64)
+    mult = np.asarray(mult, dtype=np.int64)
+    total = 31 - np.asarray(shift, dtype=np.int64)
+    return (x * mult + np.left_shift(np.int64(1), total - 1)) >> total
+
+
 def trunc_div(a: np.ndarray, b) -> np.ndarray:
     """C-style integer division (truncate toward zero)."""
     a = np.asarray(a, dtype=np.int64)

@@ -19,7 +19,7 @@ dependencies = [
 [project.optional-dependencies]
 hw = ["esptool>=4.7", "platformio>=6.1", "pytest-xdist>=3.3"]
 tflite = ["tflite>=2.10"]
-dev = ["pytest-xdist>=3.3", "ruff>=0.4"]
+dev = ["pytest-xdist>=3.3", "ruff>=0.4", "tflite>=2.10"]
 
 [project.scripts]
 hilbench = "hilbench.cli:main"
