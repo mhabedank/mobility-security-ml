@@ -12,6 +12,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import tarfile
 import time
@@ -73,6 +74,8 @@ def declared_license(src: Source) -> str | None:
         lic = meta.get("license") or {}
         return lic.get("id") if isinstance(lic, dict) else str(lic)
     if src.uci_id:
+        # The UCI API has no license field; the dataset pages state CC BY 4.0 for
+        # all donated datasets since 2023. Report what the API offers for audit.
         data = uci_record(src.uci_id).get("data", {})
         return data.get("license") or data.get("licence")
     return None  # direct URLs: license is documented by the publisher, see homepage
@@ -156,12 +159,23 @@ def _extract(archive: Path, target: Path) -> None:
     target.mkdir(parents=True, exist_ok=True)
     name = archive.name.lower()
     if name.endswith(".zip"):
-        with zipfile.ZipFile(archive) as z:
-            for m in z.infolist():  # zip-slip protection
-                p = (target / m.filename).resolve()
-                if not str(p).startswith(str(target.resolve())):
-                    raise DataError(f"unsafe path in {archive.name}: {m.filename}")
-            z.extractall(target)
+        try:
+            with zipfile.ZipFile(archive) as z:
+                for m in z.infolist():  # zip-slip protection
+                    p = (target / m.filename).resolve()
+                    if not str(p).startswith(str(target.resolve())):
+                        raise DataError(f"unsafe path in {archive.name}: {m.filename}")
+                z.extractall(target)
+        except (zipfile.BadZipFile, NotImplementedError) as e:
+            # Some archives (e.g. Google-Drive exports, deflate64) trip Python's zipfile.
+            tool = shutil.which("7z") or shutil.which("unzip")
+            if not tool:
+                raise DataError(f"{archive.name}: {e}; install unzip or 7z") from e
+            cmd = [tool, "x", "-y", f"-o{target}", str(archive)] if tool.endswith("7z") else \
+                [tool, "-o", "-q", str(archive), "-d", str(target)]
+            res = subprocess.run(cmd, capture_output=True, text=True)
+            if res.returncode not in (0, 1):  # unzip: 1 = warnings
+                raise DataError(f"{archive.name}: {e}; {Path(tool).name} failed: {res.stderr[-500:]}") from e
     elif name.endswith((".tar.gz", ".tgz", ".tar", ".tar.xz", ".tar.bz2")):
         with tarfile.open(archive) as t:
             kwargs = {"filter": "data"} if sys.version_info >= (3, 12) else {}
