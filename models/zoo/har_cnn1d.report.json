@@ -1,0 +1,48 @@
+{
+  "name": "har_cnn1d",
+  "version": "0.2.0",
+  "description": "Human activity recognition 1D-CNN over 2.56 s of accelerometer + gyroscope (9 x 128 @50 Hz), trained on UCI HAR",
+  "labels": [
+    "walking",
+    "walking_upstairs",
+    "walking_downstairs",
+    "sitting",
+    "standing",
+    "laying"
+  ],
+  "summary": {
+    "name": "har_cnn1d",
+    "description": "Human activity recognition 1D-CNN over 2.56 s of accelerometer + gyroscope (9 x 128 @50 Hz), trained on UCI HAR",
+    "in_shape": [
+      1,
+      128,
+      9
+    ],
+    "out_shape": [
+      1,
+      1,
+      6
+    ],
+    "layers": 8,
+    "macs": 354496,
+    "param_bytes": 7318,
+    "arena_size": 4096,
+    "crc32": "94bee56a",
+    "n_tests": 8
+  },
+  "float_accuracy": 0.9334916864608076,
+  "int8_accuracy": 0.9328130302002036,
+  "test_samples": 2947,
+  "tflite_interpreter_mismatches": 0,
+  "datasets": [
+    {
+      "id": "uci-har",
+      "title": "Human Activity Recognition Using Smartphones",
+      "license": "CC-BY-4.0",
+      "attribution": "Human Activity Recognition Using Smartphones by J. Reyes-Ortiz, D. Anguita, A. Ghio, L. Oneto, X. Parra, UCI Machine Learning Repository, doi:10.24432/C54S4K (CC BY 4.0)",
+      "citation": "Anguita et al., 'A Public Domain Dataset for Human Activity Recognition Using Smartphones', ESANN 2013",
+      "homepage": "https://archive.ics.uci.edu/dataset/240/human+activity+recognition+using+smartphones",
+      "retrieved": "2026-10-07T12:13:11Z"
+    }
+  ]
+}

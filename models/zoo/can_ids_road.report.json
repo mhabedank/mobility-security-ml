@@ -1,0 +1,48 @@
+{
+  "name": "can_ids_road",
+  "version": "0.2.0",
+  "description": "CAN bus intrusion detection MLP (32-64-32-2) on per-frame features, trained on the ROAD dataset (real vehicle; fuzzing, fabrication, masquerade attacks)",
+  "labels": [
+    "normal",
+    "attack"
+  ],
+  "summary": {
+    "name": "can_ids_road",
+    "description": "CAN bus intrusion detection MLP (32-64-32-2) on per-frame features, trained on the ROAD dataset (real vehicle; fuzzing, fabrication, masquerade attacks)",
+    "in_shape": [
+      1,
+      1,
+      32
+    ],
+    "out_shape": [
+      1,
+      1,
+      2
+    ],
+    "layers": 3,
+    "macs": 4160,
+    "param_bytes": 5042,
+    "arena_size": 128,
+    "crc32": "c27bb0df",
+    "n_tests": 8
+  },
+  "float_accuracy": 0.9908900429409072,
+  "int8_accuracy": 0.9892461545727343,
+  "test_samples": 2202096,
+  "tflite_interpreter_mismatches": 0,
+  "int8_precision": 0.6590468730675682,
+  "int8_recall": 0.817451998056912,
+  "int8_f1": 0.7297522453125178,
+  "int8_false_positive_rate": 0.007647309294617664,
+  "datasets": [
+    {
+      "id": "road",
+      "title": "ROAD - Real ORNL Automotive Dynamometer CAN Intrusion Dataset",
+      "license": "CC-BY-4.0",
+      "attribution": "ROAD dataset by M. Verma, R. Bridges, M. Iannacone, S. Hollifield, P. Moriano, S. Hespeler et al., Oak Ridge National Laboratory (CC BY 4.0)",
+      "citation": "Verma et al., 'A comprehensive guide to CAN IDS data and introduction of the ROAD dataset', PLOS ONE 19(1), 2024. doi:10.1371/journal.pone.0296879",
+      "homepage": "https://0xsam.com/road/",
+      "retrieved": "2026-10-07T12:20:10Z"
+    }
+  ]
+}

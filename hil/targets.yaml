@@ -1,0 +1,136 @@
+# Target catalogue: one entry per kind of SoC/board the bench knows how to
+# build, flash, reset and verify. Boards in boards.yaml reference these names.
+#
+# Keys (all optional except where noted):
+#   pio_env         PlatformIO env in firmware/platformio.ini
+#   build           platformio | native | prebuilt
+#   flasher         esptool | platformio | uf2 | command | none
+#   flasher_options flasher specific settings (see docs/hardware.md)
+#   reset           esp_classic | esp_usb_jtag | dtr_pulse | soft | power | command | process | none
+#   usb_ids         "vid:pid" of the USB bridge/native USB (used by `hilbench discover`)
+#   probe_match     regex on esptool's chip detection (discover --probe)
+#   chip_match      regex the firmware's INFO.chip must match (catches a wrong board in a slot)
+#   reenumerates    true for native USB CDC devices whose port vanishes on reset
+#   budgets         {model: max average latency in microseconds}
+#   excluded_models models not built for this target (-D MI_EXCLUDE_...)
+#   extends         inherit from another target
+
+native:
+  description: Host simulator - the bench firmware as a local process (no hardware)
+  arch: host
+  build: native
+  flasher: none
+  transport: process
+  reset: process
+  boot_timeout_s: 5
+
+# ---------------------------------------------------------------- Espressif --
+esp8266:
+  description: ESP8266 / ESP8266MOD (ESP-12E/F) - Xtensa LX106 @ 80 MHz, ~80 KiB DRAM, no FPU
+  arch: xtensa-lx106
+  pio_env: esp8266
+  flasher: esptool
+  esptool_chip: esp8266
+  flasher_options: {baud: 460800}
+  reset: esp_classic
+  usb_ids: ["1a86:7523", "1a86:55d4", "10c4:ea60", "0403:6001", "0403:6015"]
+  probe_match: "ESP8266"
+  chip_match: "^ESP8266"
+
+esp8266_160mhz:
+  extends: esp8266
+  description: ESP8266 clocked at 160 MHz
+  pio_env: esp8266_160mhz
+
+esp32:
+  description: ESP32 (D0WD) - dual Xtensa LX6 @ 240 MHz, 520 KiB SRAM
+  arch: xtensa-lx6
+  pio_env: esp32
+  flasher: esptool
+  esptool_chip: esp32
+  flasher_options: {baud: 921600}
+  reset: esp_classic
+  usb_ids: ["10c4:ea60", "1a86:7523", "1a86:55d4", "0403:6001", "0403:6015"]
+  probe_match: "ESP32(?!-[SCHP][0-9])"
+  chip_match: "^ESP32(?!-[SCHP][0-9])"
+
+esp32s3:
+  description: ESP32-S3 - dual Xtensa LX7 @ 240 MHz with vector extensions (UART port)
+  arch: xtensa-lx7
+  pio_env: esp32s3
+  flasher: esptool
+  esptool_chip: esp32s3
+  flasher_options: {baud: 921600}
+  reset: esp_classic
+  usb_ids: ["10c4:ea60", "1a86:55d4", "1a86:7523"]
+  probe_match: "ESP32-S3"
+  chip_match: "^ESP32-S3"
+
+esp32s3_usb:
+  extends: esp32s3
+  description: ESP32-S3 via native USB-Serial/JTAG port
+  pio_env: esp32s3_usb
+  reset: esp_usb_jtag
+  usb_ids: ["303a:1001"]
+  reenumerates: true
+
+esp32c3:
+  description: ESP32-C3 - single RISC-V RV32IMC @ 160 MHz (UART port)
+  arch: riscv32
+  pio_env: esp32c3
+  flasher: esptool
+  esptool_chip: esp32c3
+  flasher_options: {baud: 921600}
+  reset: esp_classic
+  usb_ids: ["10c4:ea60", "1a86:55d4", "1a86:7523"]
+  probe_match: "ESP32-C3"
+  chip_match: "^ESP32-C3"
+
+esp32c3_usb:
+  extends: esp32c3
+  description: ESP32-C3 via native USB-Serial/JTAG (e.g. C3 SuperMini)
+  pio_env: esp32c3_usb
+  reset: esp_usb_jtag
+  usb_ids: ["303a:1001"]
+  reenumerates: true
+
+# ------------------------------------------------------------ Raspberry Pi --
+rp2040:
+  description: RP2040 (Raspberry Pi Pico) - dual Cortex-M0+ @ 133 MHz, 264 KiB SRAM
+  arch: armv6m
+  pio_env: rp2040
+  flasher: platformio        # or: uf2 (copy to the RPI-RP2 drive)
+  reset: soft
+  usb_ids: ["2e8a:000a", "2e8a:00c0"]
+  chip_match: "^RP2040"
+  reenumerates: true
+
+rp2350:
+  description: RP2350 (Raspberry Pi Pico 2) - dual Cortex-M33 @ 150 MHz with FPU/DSP
+  arch: armv8m-main
+  pio_env: rp2350
+  flasher: platformio
+  reset: soft
+  usb_ids: ["2e8a:000f", "2e8a:0009", "2e8a:000a"]
+  chip_match: "^RP2350"
+  reenumerates: true
+
+# --------------------------------------------------------------- ST / Nordic --
+stm32f446:
+  description: STM32F446RE (NUCLEO-F446RE) - Cortex-M4F @ 180 MHz, serial via ST-LINK VCP
+  arch: armv7em
+  pio_env: stm32f446
+  flasher: platformio        # or: command with st-flash/openocd/pyocd
+  reset: soft
+  usb_ids: ["0483:374b", "0483:374e", "0483:374f"]
+  chip_match: "^STM32"
+
+nrf52840:
+  description: nRF52840 (Arduino Nano 33 BLE / Sense) - Cortex-M4F @ 64 MHz
+  arch: armv7em
+  pio_env: nrf52840
+  flasher: platformio
+  reset: soft
+  usb_ids: ["2341:805a", "2341:005a"]
+  chip_match: "^nRF52840"
+  reenumerates: true

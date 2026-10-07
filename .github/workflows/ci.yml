@@ -1,0 +1,126 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  host:
+    name: unit tests + simulated board
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e ".[dev]"
+      - run: ruff check hilbench tests
+      - run: pytest tests/unit -q
+      - name: HIL suite against the simulator
+        run: hilbench run -b sim -b sim-noisy --parallel --slow --results results/sim --junit results/sim/junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sim-results
+          path: results/
+
+  firmware:
+    name: firmware ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [esp8266, esp8266_160mhz, esp32, esp32s3, esp32s3_usb, esp32c3, esp32c3_usb,
+                 rp2040, rp2350, stm32f446, nrf52840]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ matrix.target }}-${{ hashFiles('firmware/platformio.ini') }}
+          restore-keys: pio-${{ matrix.target }}-
+      - run: pip install -e ".[hw]"
+      - run: hilbench build -t ${{ matrix.target }} -v
+      - name: firmware size
+        run: |
+          cat build/fw/${{ matrix.target }}/manifest.json
+          ls -l build/fw/${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fw-${{ matrix.target }}
+          path: build/fw/${{ matrix.target }}
+
+  qemu:
+    name: ${{ matrix.board }} (real firmware in QEMU)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # ESP32-S3/-C3 need ESP-IDF >= 5 to boot in QEMU; the Arduino 2.x core
+        # (IDF 4.4) asserts in esp_flash_init there (see hil/qemu-boards.yaml).
+        include:
+          - {board: esp32-qemu, target: esp32, arch: xtensa}
+    env:
+      QEMU_RELEASE: esp-develop-9.2.2-20250817
+      QEMU_VERSION: esp_develop_9.2.2_20250817
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ matrix.target }}-${{ hashFiles('firmware/platformio.ini') }}
+          restore-keys: pio-${{ matrix.target }}-
+      - name: Espressif QEMU
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq libslirp0 libsdl2-2.0-0 libpixman-1-0
+          curl -sSL "https://github.com/espressif/qemu/releases/download/$QEMU_RELEASE/qemu-${{ matrix.arch }}-softmmu-$QEMU_VERSION-x86_64-linux-gnu.tar.xz" | tar xJ -C "$HOME"
+          echo "$HOME/qemu/bin" >> "$GITHUB_PATH"
+      - run: pip install -e ".[hw]"
+      - name: HIL suite on the emulated board
+        run: |
+          hilbench --boards hil/qemu-boards.yaml run -b ${{ matrix.board }} --quick --require-all \
+            --results results/${{ matrix.board }} --junit results/${{ matrix.board }}/junit.xml
+      - name: diagnostics
+        if: failure()
+        run: |
+          for f in build/fw/*/qemu.log results/*/logs/*.log; do echo "=== $f"; tail -n 60 "$f" | cut -c1-300; done
+      - name: stop QEMU
+        if: always()
+        run: python -m hilbench.qemu stop --port 5555; python -m hilbench.qemu stop --port 5556; python -m hilbench.qemu stop --port 5557
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qemu-${{ matrix.board }}
+          path: |
+            results/
+            build/fw/*/qemu.log
+
+  firmware-summary:
+    name: firmware size overview
+    needs: firmware
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: fw-*
+          path: fw
+      - name: RAM / flash per target
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, pathlib
+          print("| Target | RAM used | Flash used | build |\n|---|---:|---:|---|")
+          for m in sorted(pathlib.Path("fw").glob("*/manifest.json")):
+              d = json.loads(m.read_text())
+              f = lambda u, t: f"{u/1024:.1f} / {t/1024:.0f} KiB" if u else "-"
+              print(f"| {d['target']} | {f(d.get('ram_used'), d.get('ram_total'))} | "
+                    f"{f(d.get('flash_used'), d.get('flash_total'))} | {d['build_id']} |")
+          PY
+          cat "$GITHUB_STEP_SUMMARY"

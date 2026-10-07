@@ -1,0 +1,84 @@
+# Train zoo models on the real datasets and commit the results back.
+# Trigger: push a change to models/train-request.json (tasks, epochs, version).
+name: train
+
+on:
+  push:
+    paths: ["models/train-request.json"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: train-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: sudo apt-get install -y -qq p7zip-full unzip > /dev/null
+      - run: pip install -e ".[train,dev]"
+      - name: request
+        id: req
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from hilbench.ml.train_real import TASK_DATASETS
+          r = json.load(open("models/train-request.json"))
+          print("tasks=" + " ".join(r["tasks"])); print(f"epochs={r.get('epochs', 20)}"); print(f"version={r['version']}")
+          ds = sorted({d for t in r["tasks"] for d in TASK_DATASETS[t]})
+          print("datasets=" + " ".join(ds)); print("cache_key=hbdata-" + "+".join(ds))
+          PY
+      # extracted datasets (not the raw archives) are cached between runs; data never enters git
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            ${{ runner.temp }}/hbdata
+            !${{ runner.temp }}/hbdata/*/raw
+          key: ${{ steps.req.outputs.cache_key }}-${{ hashFiles('hilbench/data/registry.py') }}
+      - name: download
+        id: download
+        env:
+          HILBENCH_DATA: ${{ runner.temp }}/hbdata
+        run: |
+          for ds in ${{ steps.req.outputs.datasets }}; do hilbench data download "$ds"; done
+          rm -rf "$HILBENCH_DATA"/*/raw
+      - uses: actions/cache/save@v4
+        with:
+          path: |
+            ${{ runner.temp }}/hbdata
+            !${{ runner.temp }}/hbdata/*/raw
+          key: ${{ steps.req.outputs.cache_key }}-${{ hashFiles('hilbench/data/registry.py') }}
+        continue-on-error: true  # the key exists already when the cache was restored
+      - name: train
+        env:
+          HILBENCH_DATA: ${{ runner.temp }}/hbdata
+        run: hilbench train ${{ steps.req.outputs.tasks }} --epochs ${{ steps.req.outputs.epochs }} --version ${{ steps.req.outputs.version }}
+      - name: verify (unit tests + HIL suite on the simulator)
+        env:
+          HILBENCH_DATA: ${{ runner.temp }}/hbdata
+        run: |
+          pytest tests/unit -q
+          hilbench run -b sim --quick
+      - name: reports
+        run: |
+          for f in models/zoo/*.report.json; do
+            python -c "import json,sys; r=json.load(open(sys.argv[1])); print({k: v for k, v in r.items() if k not in ('datasets','summary','labels','description')})" "$f"
+          done
+      - name: commit models
+        run: |
+          git config user.name "hilbench-trainer"
+          git config user.email "hilbench-trainer@users.noreply.github.com"
+          git add models/zoo firmware/lib/modelzoo/src
+          git diff --cached --quiet && { echo "nothing to commit"; exit 0; }
+          git commit -m "Train ${{ steps.req.outputs.tasks }} on real data (v${{ steps.req.outputs.version }})" -m "Automated by the train workflow: models/zoo parameters, int8 TFLite and reports only."
+          for i in 1 2 3; do git pull --rebase origin ${{ github.ref_name }} && git push origin HEAD:${{ github.ref_name }} && break; sleep 5; done

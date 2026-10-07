@@ -1,0 +1,51 @@
+{
+  "name": "mimii_fan_ae",
+  "version": "0.2.0",
+  "description": "Machine-sound anomaly detection autoencoder (5 x 40 log-mel -> 64-64-8-64-64), trained on normal fan recordings of MIMII (6 dB SNR); anomaly score = reconstruction MSE averaged over a 10 s clip",
+  "labels": [
+    "normal",
+    "anomaly"
+  ],
+  "summary": {
+    "name": "mimii_fan_ae",
+    "description": "Machine-sound anomaly detection autoencoder (5 x 40 log-mel -> 64-64-8-64-64), trained on normal fan recordings of MIMII (6 dB SNR); anomaly score = reconstruction MSE averaged over a 10 s clip",
+    "in_shape": [
+      1,
+      1,
+      200
+    ],
+    "out_shape": [
+      1,
+      1,
+      200
+    ],
+    "layers": 6,
+    "macs": 34816,
+    "param_bytes": 38992,
+    "arena_size": 400,
+    "crc32": "ff708556",
+    "n_tests": 8
+  },
+  "float_auc": 0.8366938775510203,
+  "int8_auc": 0.8360816326530612,
+  "int8_pauc": 0.39338775510204077,
+  "int8_window_auc": 0.7481366233278322,
+  "int8_window_detection_rate": 0.25677655677655675,
+  "int8_window_false_positive_rate": 0.03098901098901099,
+  "test_clips": 700,
+  "test_samples": 27300,
+  "int8_auc_id_00": 0.7535999999999999,
+  "int8_auc_id_02": 0.9560000000000001,
+  "tflite_interpreter_mismatches": 0,
+  "datasets": [
+    {
+      "id": "mimii",
+      "title": "MIMII - Sound Dataset for Malfunctioning Industrial Machine Investigation and Inspection",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "MIMII dataset by H. Purohit, R. Tanabe, K. Ichige, T. Endo, Y. Nikaido, K. Suefusa, Y. Kawaguchi, Hitachi, Ltd. (CC BY-SA 4.0)",
+      "citation": "Purohit et al., 'MIMII Dataset: Sound Dataset for Malfunctioning Industrial Machine Investigation and Inspection', DCASE 2019 Workshop",
+      "homepage": "https://zenodo.org/records/3384388",
+      "retrieved": "2026-10-07T13:11:01Z"
+    }
+  ]
+}
