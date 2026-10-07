@@ -42,7 +42,7 @@ jobs:
       - run: hilbench data download ${{ matrix.dataset }}
       - name: archive listing
         run: |
-          for z in "$HILBENCH_DATA/${{ matrix.dataset }}"/raw/*; do ls -la "$z"; file "$z"; 7z l "$z" | head -40; done
+          for z in "$HILBENCH_DATA/${{ matrix.dataset }}"/raw/*; do ls -la "$z"; file "$z"; xxd -l 96 "$z"; xxd -s 22 -l 64 "$z"; 7z l "$z" | head -40; done
       - run: hilbench data tree ${{ matrix.dataset }} --max 150
       - name: sample content
         run: |

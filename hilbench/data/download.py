@@ -293,10 +293,52 @@ def _verify_checksum(path: Path, checksum: str | None) -> None:
         raise DataError(f"{path.name}: {algo} mismatch ({got} != {want}) - file deleted, retry")
 
 
+_MAGIC = [(b"PK\x03\x04", ".zip"), (b"\x1f\x8b", ".tar.gz"), (b"BZh", ".tar.bz2"), (b"\xfd7zXZ", ".tar.xz"),
+          (b"7z\xbc\xaf\x27\x1c", ".7z"), (b"Rar!", ".rar")]
+
+
+def _sniff(head: bytes) -> str | None:
+    if len(head) > 262 and head[257:262] == b"ustar":
+        return ".tar"
+    return next((ext for magic, ext in _MAGIC if head.startswith(magic)), None)
+
+
+def _embedded_payload(archive: Path) -> Path | None:
+    """Some UCI downloads are an *empty* zip (bare end-of-central-directory record)
+    followed by the real archive. Split that payload off into its own file."""
+    with open(archive, "rb") as fh:
+        head = fh.read(22)
+        if len(head) < 22 or not head.startswith(b"PK\x05\x06") or archive.stat().st_size < 1024:
+            return None
+        fh.seek(22 + struct.unpack_from("<H", head, 20)[0])  # skip the zip comment
+        start = fh.tell()
+        ext = _sniff(fh.read(512))
+        if ext is None:
+            fh.seek(start)
+            raise DataError(f"{archive.name}: empty zip followed by unknown data {fh.read(16).hex()}")
+        out = archive.with_name(archive.name[:-4] + ".payload" + ext)
+        if not out.exists():
+            fh.seek(start)
+            with open(out, "wb") as dst:
+                shutil.copyfileobj(fh, dst, 1 << 20)
+    return out
+
+
 def _extract(archive: Path, target: Path) -> None:
     target.mkdir(parents=True, exist_ok=True)
     name = archive.name.lower()
-    if name.endswith(".zip"):
+    payload = _embedded_payload(archive) if name.endswith(".zip") else None
+    if payload is not None:
+        print(f"  {archive.name}: empty zip wrapper, extracting embedded {payload.name}", flush=True)
+        _extract(payload, target)
+    elif name.endswith((".7z", ".rar")):
+        tool = shutil.which("7z")
+        if not tool:
+            raise DataError(f"{archive.name}: install 7z (p7zip-full)")
+        res = subprocess.run([tool, "x", "-y", f"-o{target}", str(archive)], capture_output=True, text=True)
+        if res.returncode != 0:
+            raise DataError(f"{archive.name}: 7z failed: {res.stderr[-500:]}")
+    elif name.endswith(".zip"):
         try:
             with zipfile.ZipFile(archive) as z:
                 for m in z.infolist():  # zip-slip protection

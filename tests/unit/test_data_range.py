@@ -50,3 +50,28 @@ def test_unsafe_member_path_rejected(tmp_path, remote_zip):
     f, _ = remote_zip
     with pytest.raises(dl.DataError, match="unsafe path"):
         dl.fetch_zip_members(f, tmp_path, (("*evil.wav", 1),))
+
+
+@pytest.mark.parametrize("kind", ["tar.gz", "zip"])
+def test_empty_zip_wrapper_with_embedded_archive(tmp_path, kind):
+    """UCI sometimes serves an empty zip with the real archive appended."""
+    import tarfile
+
+    src = tmp_path / "src"
+    (src / "set").mkdir(parents=True)
+    (src / "set" / "a.log").write_text("(1.0) can0 123#00\n")
+    payload = tmp_path / f"p.{kind}"
+    if kind == "zip":
+        with zipfile.ZipFile(payload, "w") as z:
+            z.write(src / "set" / "a.log", "set/a.log")
+    else:
+        with tarfile.open(payload, "w:gz") as t:
+            t.add(src / "set", arcname="set")
+    empty = io.BytesIO()
+    zipfile.ZipFile(empty, "w").close()
+    assert len(empty.getvalue()) == 22
+    wrapped = tmp_path / "raw" / "ds.zip"
+    wrapped.parent.mkdir()
+    wrapped.write_bytes(empty.getvalue() + payload.read_bytes() + b"\0" * 2048)
+    dl._extract(wrapped, tmp_path / "out")
+    assert (tmp_path / "out" / "set" / "a.log").read_text().startswith("(1.0)")
