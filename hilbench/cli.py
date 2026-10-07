@@ -14,6 +14,8 @@
   hilbench zoo                       rebuild the reference model zoo + firmware sources
   hilbench import-tflite M.tflite    add your own int8 TFLite model to all boards
   hilbench data list|verify|download training datasets (licenses checked, stored outside the repo)
+  hilbench train kws|har|can ...     train zoo models on the real datasets
+  hilbench hub publish --version V   push the zoo to the Hugging Face Hub (private repos)
 """
 from __future__ import annotations
 
@@ -406,6 +408,15 @@ def cmd_data(args):
 
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
+    if argv[:1] == ["hub"]:  # hilbench hub publish|mirror-dataset ...
+        from .hub import main as hub_main
+
+        return hub_main(argv[1:])
+    if argv[:1] == ["train"]:  # hilbench train kws|har|can ...
+        from .ml.train_real import main as train_main
+
+        train_main(argv[1:])
+        return 0
     pytest_args = []
     if "--" in argv:
         i = argv.index("--")

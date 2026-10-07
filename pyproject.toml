@@ -19,6 +19,8 @@ dependencies = [
 [project.optional-dependencies]
 hw = ["esptool>=4.7", "platformio>=6.1", "pytest-xdist>=3.3"]
 tflite = ["tflite>=2.10"]
+train = ["tensorflow-cpu>=2.16", "tflite>=2.10"]
+hub = ["huggingface_hub>=0.24"]
 dev = ["pytest-xdist>=3.3", "ruff>=0.4", "tflite>=2.10"]
 
 [project.scripts]

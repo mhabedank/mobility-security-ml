@@ -1,0 +1,48 @@
+# Publish the model zoo to the Hugging Face Hub.
+# Needs the repository secret HF_TOKEN (write token) and optionally the
+# repository variable HF_ORG (defaults to the token's user).
+name: hub
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "zoo version to publish (models whose meta.version matches; synthetic = 0.1.0)"
+        required: true
+        default: "0.1.0"
+      org:
+        description: "HF organisation/user (empty = vars.HF_ORG or token owner)"
+        required: false
+        default: ""
+      public:
+        description: "create public repos"
+        type: boolean
+        default: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e ".[hub]"
+      - name: render model cards (dry run)
+        run: hilbench hub publish --version "${{ inputs.version }}" --org "${ORG:-preview}" --dry-run --out hub-stage
+        env:
+          ORG: ${{ inputs.org || vars.HF_ORG }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hub-stage-${{ inputs.version }}
+          path: hub-stage
+      - name: publish
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          ORG: ${{ inputs.org || vars.HF_ORG }}
+        run: |
+          if [ -z "$HF_TOKEN" ]; then echo "::error::repository secret HF_TOKEN is not set"; exit 1; fi
+          ARGS="--version ${{ inputs.version }}"
+          [ -n "$ORG" ] && ARGS="$ARGS --org $ORG"
+          [ "${{ inputs.public }}" = "true" ] && ARGS="$ARGS --public"
+          hilbench hub publish $ARGS
