@@ -1,0 +1,36 @@
+set_01 full      test_01_known_vehicle_known_attack         F1=0.968 P=0.953 R=0.983 AUC-PR=0.970 FA/h=15.7
+set_01 full      test_02_unknown_vehicle_known_attack       F1=0.993 P=0.994 R=0.992 AUC-PR=0.997 FA/h=47.2
+set_01 full      test_03_known_vehicle_unknown_attack       F1=0.654 P=0.951 R=0.499 AUC-PR=0.610 FA/h=6.6
+set_01 full      test_04_unknown_vehicle_unknown_attack     F1=0.442 P=0.878 R=0.295 AUC-PR=0.370 FA/h=9.3
+set_01 no_can_id test_01_known_vehicle_known_attack         F1=0.971 P=0.952 R=0.992 AUC-PR=0.989 FA/h=15.7
+set_01 no_can_id test_02_unknown_vehicle_known_attack       F1=0.994 P=0.994 R=0.994 AUC-PR=0.997 FA/h=79.6
+set_01 no_can_id test_03_known_vehicle_unknown_attack       F1=0.650 P=0.876 R=0.517 AUC-PR=0.587 FA/h=15.7
+set_01 no_can_id test_04_unknown_vehicle_unknown_attack     F1=0.471 P=0.840 R=0.327 AUC-PR=0.357 FA/h=13.4
+set_01 done in 238s
+set_02 full      test_01_known_vehicle_known_attack         F1=0.810 P=0.756 R=0.872 AUC-PR=0.950 FA/h=77.8
+set_02 full      test_02_unknown_vehicle_known_attack       F1=0.870 P=0.835 R=0.907 AUC-PR=0.895 FA/h=113.3
+set_02 full      test_03_known_vehicle_unknown_attack       F1=0.952 P=0.910 R=0.999 AUC-PR=0.975 FA/h=84.5
+set_02 full      test_04_unknown_vehicle_unknown_attack     F1=0.912 P=0.864 R=0.967 AUC-PR=0.906 FA/h=145.4
+set_02 no_can_id test_01_known_vehicle_known_attack         F1=0.871 P=0.889 R=0.853 AUC-PR=0.866 FA/h=43.8
+set_02 no_can_id test_02_unknown_vehicle_known_attack       F1=0.895 P=0.887 R=0.904 AUC-PR=0.892 FA/h=59.8
+set_02 no_can_id test_03_known_vehicle_unknown_attack       F1=0.967 P=0.940 R=0.995 AUC-PR=0.962 FA/h=50.2
+set_02 no_can_id test_04_unknown_vehicle_unknown_attack     F1=0.931 P=0.900 R=0.965 AUC-PR=0.952 FA/h=83.4
+set_02 done in 396s
+set_03 full      test_01_known_vehicle_known_attack         F1=0.954 P=0.992 R=0.920 AUC-PR=0.997 FA/h=33.0
+set_03 full      test_02_unknown_vehicle_known_attack       F1=0.778 P=0.869 R=0.705 AUC-PR=0.894 FA/h=39.4
+set_03 full      test_03_known_vehicle_unknown_attack       F1=0.732 P=0.970 R=0.588 AUC-PR=0.954 FA/h=31.4
+set_03 full      test_04_unknown_vehicle_unknown_attack     F1=0.901 P=0.983 R=0.832 AUC-PR=0.969 FA/h=64.6
+set_03 no_can_id test_01_known_vehicle_known_attack         F1=0.963 P=0.993 R=0.935 AUC-PR=0.998 FA/h=24.2
+set_03 no_can_id test_02_unknown_vehicle_known_attack       F1=0.824 P=0.881 R=0.774 AUC-PR=0.908 FA/h=77.3
+set_03 no_can_id test_03_known_vehicle_unknown_attack       F1=0.928 P=0.975 R=0.886 AUC-PR=0.965 FA/h=22.6
+set_03 no_can_id test_04_unknown_vehicle_unknown_attack     F1=0.949 P=0.985 R=0.916 AUC-PR=0.985 FA/h=59.4
+set_03 done in 288s
+set_04 full      test_01_known_vehicle_known_attack         F1=0.979 P=0.985 R=0.972 AUC-PR=0.990 FA/h=55.1
+set_04 full      test_02_unknown_vehicle_known_attack       F1=0.911 P=0.984 R=0.848 AUC-PR=0.950 FA/h=29.8
+set_04 full      test_03_known_vehicle_unknown_attack       F1=0.910 P=0.923 R=0.898 AUC-PR=0.943 FA/h=22.0
+set_04 full      test_04_unknown_vehicle_unknown_attack     F1=0.935 P=0.971 R=0.901 AUC-PR=0.970 FA/h=26.9
+set_04 no_can_id test_01_known_vehicle_known_attack         F1=0.984 P=0.985 R=0.982 AUC-PR=0.982 FA/h=55.1
+set_04 no_can_id test_02_unknown_vehicle_known_attack       F1=0.733 P=0.614 R=0.909 AUC-PR=0.889 FA/h=309.5
+set_04 no_can_id test_03_known_vehicle_unknown_attack       F1=0.931 P=0.907 R=0.957 AUC-PR=0.903 FA/h=77.3
+set_04 no_can_id test_04_unknown_vehicle_unknown_attack     F1=0.897 P=0.863 R=0.933 AUC-PR=0.925 FA/h=263.1
+set_04 done in 231s

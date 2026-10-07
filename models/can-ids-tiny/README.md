@@ -12,7 +12,8 @@ The model card with all results is in [MODEL_CARD.md](MODEL_CARD.md). It is publ
 | `c/` | Detector API `can_ids_tiny.[ch]`, host harness, `generated/` (model, config, test vectors) |
 | `firmware/` | ESP-IDF benchmark app (ESP32, ESP32-S3, ...): replays recorded frames, checks scores and alarms, measures latency |
 | `firmware-esp8266/` | The same benchmark as an Arduino sketch for ESP8266 (Wemos D1 mini, NodeMCU); `build.sh` |
-| `results/` | Protocol results, export config, benchmark results |
+| `results/` | Protocol results, export config, benchmark results, trained model (`model.joblib`), logs |
+| `prebuilt/` | Ready-to-flash benchmark firmware for ESP32, ESP32-S3 and ESP8266 |
 
 The feature extractor is shared: `firmware/components/msml_can_features/`.
 
@@ -22,7 +23,7 @@ No CAN transceiver is needed; the board only needs USB.
 
 **Without installing anything (Chrome or Edge):** open
 [esptool-js](https://espressif.github.io/esptool-js/), click *Connect* and pick the board's
-serial port. The log shows the chip type. Flash `can-ids-tiny-bench-<chip>.bin` at address `0x0`
+serial port. The log shows the chip type. Flash `prebuilt/can-ids-tiny-bench-<chip>.bin` at address `0x0`
 and click *Program*. Then switch to the *Console*, connect at 115200 baud and press *Reset*. The
 result line repeats every 5 seconds.
 
