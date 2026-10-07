@@ -771,7 +771,7 @@
               "episodes": 33,
               "episode_recall": 0.6363636363636364,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 27.99691965331475
+              "false_alarms_per_hour": 26.523397566298186
             },
             "k1_w200": {
               "episodes": 33,
@@ -912,13 +912,13 @@
               "episodes": 50,
               "episode_recall": 0.22,
               "median_latency_ms": 2.6280879974365234,
-              "false_alarms_per_hour": 32.03068977082996
+              "false_alarms_per_hour": 4.2304684602982965
             },
             "k1_w200": {
               "episodes": 50,
               "episode_recall": 0.22,
               "median_latency_ms": 2.6280879974365234,
-              "false_alarms_per_hour": 5.439173734669239
+              "false_alarms_per_hour": 4.2304684602982965
             },
             "k1_w1000": {
               "episodes": 50,
@@ -936,7 +936,7 @@
               "episodes": 50,
               "episode_recall": 0.18,
               "median_latency_ms": 16.731977462768555,
-              "false_alarms_per_hour": 1.813057911556413
+              "false_alarms_per_hour": 0.6043526371854709
             },
             "k2_w1000": {
               "episodes": 50,
@@ -1228,13 +1228,13 @@
               "episodes": 71,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 78.79302054581338
+              "false_alarms_per_hour": 76.2180852338587
             },
             "k1_w200": {
               "episodes": 71,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 78.79302054581338
+              "false_alarms_per_hour": 76.2180852338587
             },
             "k1_w1000": {
               "episodes": 71,
@@ -1246,13 +1246,13 @@
               "episodes": 71,
               "episode_recall": 0.14084507042253522,
               "median_latency_ms": 2.4939775466918945,
-              "false_alarms_per_hour": 29.354262556283416
+              "false_alarms_per_hour": 28.83927549389248
             },
             "k2_w200": {
               "episodes": 71,
               "episode_recall": 0.16901408450704225,
               "median_latency_ms": 6.923913955688477,
-              "false_alarms_per_hour": 36.0490943673656
+              "false_alarms_per_hour": 35.53410730497466
             },
             "k2_w1000": {
               "episodes": 71,
@@ -1270,7 +1270,7 @@
               "episodes": 71,
               "episode_recall": 0.16901408450704225,
               "median_latency_ms": 16.677021980285645,
-              "false_alarms_per_hour": 24.719378994764984
+              "false_alarms_per_hour": 24.204391932374044
             },
             "k3_w1000": {
               "episodes": 71,
@@ -1369,13 +1369,13 @@
               "episodes": 15,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 96.1747847323485
+              "false_alarms_per_hour": 94.80085923617209
             },
             "k1_w200": {
               "episodes": 15,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 96.1747847323485
+              "false_alarms_per_hour": 94.80085923617209
             },
             "k1_w1000": {
               "episodes": 15,
@@ -1393,7 +1393,7 @@
               "episodes": 15,
               "episode_recall": 1.0,
               "median_latency_ms": 1.09100341796875,
-              "false_alarms_per_hour": 24.043696183087125
+              "false_alarms_per_hour": 23.35673343499892
             },
             "k2_w1000": {
               "episodes": 15,
@@ -1800,13 +1800,13 @@
               "episodes": 71,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 39.65400380410216
+              "false_alarms_per_hour": 38.62402967932029
             },
             "k1_w200": {
               "episodes": 71,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 39.65400380410216
+              "false_alarms_per_hour": 38.62402967932029
             },
             "k1_w1000": {
               "episodes": 71,
@@ -1941,13 +1941,13 @@
               "episodes": 15,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 48.08739236617425
+              "false_alarms_per_hour": 47.400429618086044
             },
             "k1_w200": {
               "episodes": 15,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 48.08739236617425
+              "false_alarms_per_hour": 47.400429618086044
             },
             "k1_w1000": {
               "episodes": 15,
@@ -2503,13 +2503,13 @@
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 236.4714256227452
+              "false_alarms_per_hour": 235.71350438677487
             },
             "k1_w200": {
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 236.4714256227452
+              "false_alarms_per_hour": 235.71350438677487
             },
             "k1_w1000": {
               "episodes": 22,
@@ -2521,13 +2521,13 @@
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 3.0864477157592773,
-              "false_alarms_per_hour": 181.14317539691058
+              "false_alarms_per_hour": 180.38525416094024
             },
             "k2_w200": {
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 3.0864477157592773,
-              "false_alarms_per_hour": 210.70210359975374
+              "false_alarms_per_hour": 209.9441823637834
             },
             "k2_w1000": {
               "episodes": 22,
@@ -2539,13 +2539,13 @@
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 5.038022994995117,
-              "false_alarms_per_hour": 65.93914752941933
+              "false_alarms_per_hour": 65.181226293449
             },
             "k3_w200": {
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 5.038022994995117,
-              "false_alarms_per_hour": 156.13177460988945
+              "false_alarms_per_hour": 155.37385337391913
             },
             "k3_w1000": {
               "episodes": 22,
@@ -3099,13 +3099,13 @@
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 206.91249741990205
+              "false_alarms_per_hour": 206.1545761839317
             },
             "k1_w200": {
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 0.0,
-              "false_alarms_per_hour": 206.91249741990205
+              "false_alarms_per_hour": 206.1545761839317
             },
             "k1_w1000": {
               "episodes": 22,
@@ -3117,13 +3117,13 @@
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 3.907442092895508,
-              "false_alarms_per_hour": 131.87829505883866
+              "false_alarms_per_hour": 131.12037382286834
             },
             "k2_w200": {
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 3.907442092895508,
-              "false_alarms_per_hour": 147.0367197782454
+              "false_alarms_per_hour": 146.27879854227507
             },
             "k2_w1000": {
               "episodes": 22,
@@ -3141,7 +3141,7 @@
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 5.601644515991211,
-              "false_alarms_per_hour": 75.03420236106338
+              "false_alarms_per_hour": 74.27628112509305
             },
             "k3_w1000": {
               "episodes": 22,
@@ -4315,15 +4315,15 @@
           "alarm": {
             "k1_w50": {
               "episodes": 48,
-              "episode_recall": 0.375,
-              "median_latency_ms": 63.89570236206055,
-              "false_alarms_per_hour": 1741.1708018444087
+              "episode_recall": 0.6458333333333334,
+              "median_latency_ms": 308.34388732910156,
+              "false_alarms_per_hour": 1732.4291866822505
             },
             "k1_w200": {
               "episodes": 48,
-              "episode_recall": 0.4166666666666667,
-              "median_latency_ms": 95.05760669708252,
-              "false_alarms_per_hour": 1739.1840711257364
+              "episode_recall": 0.6458333333333334,
+              "median_latency_ms": 308.34388732910156,
+              "false_alarms_per_hour": 1732.4291866822505
             },
             "k1_w1000": {
               "episodes": 48,
@@ -4333,15 +4333,15 @@
             },
             "k2_w50": {
               "episodes": 48,
-              "episode_recall": 0.20833333333333334,
-              "median_latency_ms": 557.2824478149414,
-              "false_alarms_per_hour": 950.8493219565655
+              "episode_recall": 0.375,
+              "median_latency_ms": 350.1780033111572,
+              "false_alarms_per_hour": 947.2732066629553
             },
             "k2_w200": {
               "episodes": 48,
-              "episode_recall": 0.3333333333333333,
-              "median_latency_ms": 177.83498764038086,
-              "false_alarms_per_hour": 1389.9168107831451
+              "episode_recall": 0.4583333333333333,
+              "median_latency_ms": 326.5960216522217,
+              "false_alarms_per_hour": 1386.340695489535
             },
             "k2_w1000": {
               "episodes": 48,
@@ -4351,15 +4351,15 @@
             },
             "k3_w50": {
               "episodes": 48,
-              "episode_recall": 0.1875,
-              "median_latency_ms": 42.05894470214844,
-              "false_alarms_per_hour": 276.15556989545047
+              "episode_recall": 0.25,
+              "median_latency_ms": 95.11911869049072,
+              "false_alarms_per_hour": 274.9635314642471
             },
             "k3_w200": {
               "episodes": 48,
-              "episode_recall": 0.2916666666666667,
-              "median_latency_ms": 151.97205543518066,
-              "false_alarms_per_hour": 949.2599373816277
+              "episode_recall": 0.3541666666666667,
+              "median_latency_ms": 187.29710578918457,
+              "false_alarms_per_hour": 947.6705528066898
             },
             "k3_w1000": {
               "episodes": 48,
@@ -4375,9 +4375,9 @@
             },
             "k5_w200": {
               "episodes": 48,
-              "episode_recall": 0.14583333333333334,
-              "median_latency_ms": 119.34113502502441,
-              "false_alarms_per_hour": 274.56618532051266
+              "episode_recall": 0.20833333333333334,
+              "median_latency_ms": 247.6259469985962,
+              "false_alarms_per_hour": 272.9768007455748
             },
             "k5_w1000": {
               "episodes": 48,
@@ -4452,13 +4452,13 @@
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 0.9784698486328125,
-              "false_alarms_per_hour": 125.81492517107597
+              "false_alarms_per_hour": 125.05700393510564
             },
             "k1_w200": {
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 0.9784698486328125,
-              "false_alarms_per_hour": 125.81492517107597
+              "false_alarms_per_hour": 125.05700393510564
             },
             "k1_w1000": {
               "episodes": 22,
@@ -4470,13 +4470,13 @@
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 3.4710168838500977,
-              "false_alarms_per_hour": 36.38021932657618
+              "false_alarms_per_hour": 35.622298090605845
             },
             "k2_w200": {
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 3.4710168838500977,
-              "false_alarms_per_hour": 57.602013933745624
+              "false_alarms_per_hour": 56.84409269777529
             },
             "k2_w1000": {
               "episodes": 22,
@@ -4494,7 +4494,7 @@
               "episodes": 22,
               "episode_recall": 1.0,
               "median_latency_ms": 4.841446876525879,
-              "false_alarms_per_hour": 26.5272432589618
+              "false_alarms_per_hour": 25.769322022991464
             },
             "k3_w1000": {
               "episodes": 22,
@@ -4587,13 +4587,13 @@
               "episodes": 9,
               "episode_recall": 1.0,
               "median_latency_ms": 205.75904846191406,
-              "false_alarms_per_hour": 2163.425419334302
+              "false_alarms_per_hour": 2158.0370621254992
             },
             "k1_w200": {
               "episodes": 9,
               "episode_recall": 1.0,
               "median_latency_ms": 205.75904846191406,
-              "false_alarms_per_hour": 2163.425419334302
+              "false_alarms_per_hour": 2158.0370621254992
             },
             "k1_w1000": {
               "episodes": 9,
@@ -4605,13 +4605,13 @@
               "episodes": 9,
               "episode_recall": 1.0,
               "median_latency_ms": 14.578104019165039,
-              "false_alarms_per_hour": 1277.938718021051
+              "false_alarms_per_hour": 1276.14259895145
             },
             "k2_w200": {
               "episodes": 9,
               "episode_recall": 1.0,
               "median_latency_ms": 71.24209403991699,
-              "false_alarms_per_hour": 1788.0365337877108
+              "false_alarms_per_hour": 1783.5462361137086
             },
             "k2_w1000": {
               "episodes": 9,
@@ -4623,13 +4623,13 @@
               "episodes": 9,
               "episode_recall": 1.0,
               "median_latency_ms": 7.644891738891602,
-              "false_alarms_per_hour": 434.6608148434214
+              "false_alarms_per_hour": 432.86469577382053
             },
             "k3_w200": {
               "episodes": 9,
               "episode_recall": 1.0,
               "median_latency_ms": 10.949850082397461,
-              "false_alarms_per_hour": 1317.4533375522713
+              "false_alarms_per_hour": 1316.5552780174708
             },
             "k3_w1000": {
               "episodes": 9,
@@ -4647,7 +4647,7 @@
               "episodes": 9,
               "episode_recall": 1.0,
               "median_latency_ms": 16.16978645324707,
-              "false_alarms_per_hour": 458.90842228303376
+              "false_alarms_per_hour": 458.0103627482333
             },
             "k5_w1000": {
               "episodes": 9,

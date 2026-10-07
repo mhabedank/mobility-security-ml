@@ -38,15 +38,15 @@
   "threshold": 0.5666666626930237,
   "score": "share of trees voting attack",
   "alarm": {
-    "k": 1,
-    "window_ms": 50,
+    "k": 3,
+    "window_ms": 200,
     "holdoff_ms": 1000,
     "selected_on": "validation captures",
     "validation": {
       "episodes": 29,
-      "episode_recall": 1.0,
-      "median_latency_ms": 0.0,
-      "false_alarms_per_hour": 39.21944194645841
+      "episode_recall": 0.7931034482758621,
+      "median_latency_ms": 24.45197105407715,
+      "false_alarms_per_hour": 1.9065006501750617
     },
     "validation_grid": {
       "k1_w50": {

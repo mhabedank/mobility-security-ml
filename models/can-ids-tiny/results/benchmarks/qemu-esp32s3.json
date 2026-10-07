@@ -4,8 +4,10 @@
   "frames": 4000,
   "score_mismatches": 0,
   "attack_frames": 738,
-  "detected": 730,
-  "state_bytes": 65560,
-  "free_heap": 307216,
+  "detected": 732,
+  "alarms": 2,
+  "expected_alarms": 2,
+  "state_bytes": 10408,
+  "free_heap": 362368,
   "environment": "QEMU (esp_develop_9.2.2), functional check only: latency in QEMU is not representative"
 }

@@ -55,16 +55,22 @@ def summary_table(results: dict) -> str:
     return "\n".join(rows)
 
 
-def alarm_table(results: dict, key: str, feature_set: str = "no_can_id") -> str:
-    """Event-level metrics after alarm aggregation, mean over the four sets."""
-    rows = ["| Test split | Attacks detected | Median time to alarm | False alarms / h |",
-            "|---|---|---|---|"]
+def alarm_table(results: dict, keys: list[str], feature_set: str = "no_can_id") -> str:
+    """Event-level metrics after alarm aggregation over the four sets (mean and median)."""
+    import statistics
+
+    header = ("| Test split | Alarm rule | Attacks detected (mean) | Median time to alarm "
+              "| False alarms / h (median) | False alarms / h (mean) |")
+    rows = [header, "|---|---|---|---|---|---|"]
     for split, label in SPLIT_LABELS.items():
-        ms = [results[s][feature_set]["splits"][split]["alarm"][key] for s in results]
-        mean = {k: sum(m[k] for m in ms) / len(ms)
-                for k in ("episode_recall", "median_latency_ms", "false_alarms_per_hour")}
-        rows.append(f"| {label} | {mean['episode_recall']:.1%} "
-                    f"| {mean['median_latency_ms']:.0f} ms | {mean['false_alarms_per_hour']:.1f} |")
+        for key in keys:
+            ms = [results[s][feature_set]["splits"][split]["alarm"][key] for s in results]
+            rec = sum(m["episode_recall"] for m in ms) / len(ms)
+            lat = statistics.median(m["median_latency_ms"] for m in ms)
+            fa = [m["false_alarms_per_hour"] for m in ms]
+            k, w = key[1:].split("_w")
+            rows.append(f"| {label} | {k} in {w} ms | {rec:.0%} | {lat:.0f} ms "
+                        f"| {statistics.median(fa):.1f} | {sum(fa) / len(fa):.1f} |")
     return "\n".join(rows)
 
 
@@ -106,8 +112,8 @@ def cmd_tables(_args) -> None:
     results = json.loads((RESULTS / "protocol_results.json").read_text())
     alarm = json.loads((RESULTS / "config.json").read_text())["alarm"]
     key = f"k{alarm['k']}_w{alarm['window_ms']}"
-    print(f"## Alarms ({key}, selected on validation)\n")
-    print(alarm_table(results, key))
+    print(f"## Alarms ({key} selected on validation, k1_w50 for comparison)\n")
+    print(alarm_table(results, [key, "k1_w50"]))
     print("\n## Alarm grid\n")
     print(alarm_grid_table(results))
     print("\n## Frame level\n")

@@ -10,7 +10,8 @@ The model card with all results is in [MODEL_CARD.md](MODEL_CARD.md). It is publ
 | `pipeline.py` | `evaluate` (4-set protocol), `export` (final model, C code, parity check), `convert`, `testvectors` |
 | `publish.py` | `tables` (Markdown tables from the results), `build [--repo ORG/NAME --upload]` (Hugging Face folder) |
 | `c/` | Detector API `can_ids_tiny.[ch]`, host harness, `generated/` (model, config, test vectors) |
-| `firmware/` | ESP-IDF benchmark app: replays recorded frames, checks scores, measures latency |
+| `firmware/` | ESP-IDF benchmark app (ESP32, ESP32-S3, ...): replays recorded frames, checks scores and alarms, measures latency |
+| `firmware-esp8266/` | The same benchmark as an Arduino sketch for ESP8266 (Wemos D1 mini, NodeMCU); `build.sh` |
 | `results/` | Protocol results, export config, benchmark results |
 
 The feature extractor is shared: `firmware/components/msml_can_features/`.
@@ -24,6 +25,10 @@ No CAN transceiver is needed; the board only needs USB.
 serial port. The log shows the chip type. Flash `can-ids-tiny-bench-<chip>.bin` at address `0x0`
 and click *Program*. Then switch to the *Console*, connect at 115200 baud and press *Reset*. The
 result line repeats every 5 seconds.
+
+For an ESP8266 board (Wemos D1 mini, NodeMCU), use `can-ids-tiny-bench-esp8266.bin` the same way.
+To build it yourself, install the esp8266 Arduino core (3.1.x) and run `firmware-esp8266/build.sh`.
+Set `FQBN=esp8266:esp8266:nodemcuv2:xtal=160` for a NodeMCU.
 
 **With ESP-IDF v5.5:**
 
