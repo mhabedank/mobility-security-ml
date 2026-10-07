@@ -15,6 +15,7 @@ import re
 import time
 from pathlib import Path
 
+import joblib
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import precision_recall_curve
@@ -225,6 +226,7 @@ def build_host_scorer(export_dir: Path) -> Path:
     exe = export_dir / "host_score"
     subprocess.run([
         "gcc", "-std=c99", "-O2", "-ffp-contract=off", "-Wall", "-Wextra", "-Werror",
+        "-Wno-unused-parameter",  # emlearn-generated trees ignore features_length
         "-I", str(export_dir), "-I", str(C_DIR), "-I", str(FEATURES_DIR / "include"),
         str(C_DIR / "host_score.c"), str(C_DIR / "can_ids_tiny.c"),
         str(FEATURES_DIR / "msml_can_features.c"), "-o", str(exe),
@@ -281,6 +283,8 @@ def cmd_export(args) -> None:
     hp, thr, _ = best
     X, y = subsample(tr + val, rng)
     clf = fit(X[:, idx], y, hp)
+    joblib.dump({"model": clf, "threshold": thr, "input_index": idx, "selection": selection},
+                export_dir / "model.joblib")
 
     cmodel = emlearn.convert(clf, method="inline", dtype="float")
     cmodel.save(file=str(export_dir / f"{MODEL_NAME}.h"), name=MODEL_NAME)

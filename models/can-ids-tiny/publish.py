@@ -42,13 +42,15 @@ def summary_table(results: dict) -> str:
     """Mean over the four sets per split type, with and without the raw CAN ID feature."""
     rows = ["| Test split | F1 (no CAN ID, published) | F1 (with CAN ID) | Recall | False alarms / h |",
             "|---|---|---|---|---|"]
+    def mean(split, fs, key):
+        vals = [results[s][fs]["splits"][split][key] for s in results]
+        return sum(vals) / len(vals)
+
     for split, label in SPLIT_LABELS.items():
-        def mean(fs, key):
-            vals = [results[s][fs]["splits"][split][key] for s in results]
-            return sum(vals) / len(vals)
-        rows.append(f"| {label} | {mean('no_can_id', 'f1'):.3f} | {mean('full', 'f1'):.3f} "
-                    f"| {mean('no_can_id', 'recall'):.3f} "
-                    f"| {mean('no_can_id', 'false_alarms_per_hour'):.1f} |")
+        rows.append(f"| {label} | {mean(split, 'no_can_id', 'f1'):.3f} "
+                    f"| {mean(split, 'full', 'f1'):.3f} "
+                    f"| {mean(split, 'no_can_id', 'recall'):.3f} "
+                    f"| {mean(split, 'no_can_id', 'false_alarms_per_hour'):.1f} |")
     return "\n".join(rows)
 
 
@@ -63,9 +65,11 @@ def per_attack_table(results: dict, feature_set: str = "no_can_id") -> str:
     attacks = sorted(set(seen) | set(unseen))
     rows = ["| Attack | Recall when seen in training | Recall when not seen in training |",
             "|---|---|---|"]
+    def fmt(d, a):
+        return f"{sum(d[a]) / len(d[a]):.3f}" if a in d else "–"
+
     for a in attacks:
-        f = (lambda d: f"{sum(d[a]) / len(d[a]):.3f}" if a in d else "–")
-        rows.append(f"| {a} | {f(seen)} | {f(unseen)} |")
+        rows.append(f"| {a} | {fmt(seen, a)} | {fmt(unseen, a)} |")
     return "\n".join(rows)
 
 
