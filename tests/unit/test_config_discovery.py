@@ -83,3 +83,12 @@ def test_port_matching(tmp_path):
 def test_esptool_chip_detection(out, chip, targets):
     assert parse_esptool_chip(out) == chip
     assert set(match_probe(chip, load_targets())) - {"esp8266_160mhz"} == targets
+
+
+def test_power_on_off_keys_survive_yaml(tmp_path):
+    from hilbench.power import CommandPower, make_power
+
+    p = tmp_path / "boards.yaml"
+    p.write_text("boards:\n  - {id: a, target: esp32, power: {type: command, on: 'true', off: 'true'}}\n")
+    power = make_power(load_lab(p).board("a").power)
+    assert isinstance(power, CommandPower) and power.on_cmd == "true"

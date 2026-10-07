@@ -121,6 +121,12 @@ def _read_yaml(path: Path) -> dict:
         raise ConfigError(f"config file not found: {path}") from e
 
 
+def _yaml_bool_keys(d: dict) -> dict:
+    """YAML 1.1 reads unquoted `on:` / `off:` keys as True / False."""
+    names = {True: "on", False: "off"}
+    return {names.get(k, k) if isinstance(k, bool) else k: v for k, v in d.items()}
+
+
 def load_targets(path: str | Path | None = None, extra: dict | None = None) -> dict[str, Target]:
     raw = _read_yaml(Path(path or DEFAULT_TARGETS))
     raw.update(extra or {})
@@ -174,6 +180,7 @@ def load_lab(boards_path: str | Path | None = None, targets_path: str | Path | N
         if spec.get("port") == "auto":
             spec["port"] = None
         spec["match"] = {k: str(v) for k, v in (spec.get("match") or {}).items()}
+        spec["power"] = _yaml_bool_keys(spec.get("power") or {})
         boards.append(Board(target=targets[tname], **spec))
 
     return Lab(

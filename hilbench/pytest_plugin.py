@@ -23,7 +23,6 @@ from .flash import Firmware, FlashError
 from .lock import BoardLock
 from .results import Recorder, compare_to_baseline, new_run_dir, render_markdown, write_summary
 from .session import BoardSession, SessionError
-from .transport import TransportError
 
 
 def pytest_addoption(parser):
@@ -265,11 +264,11 @@ def _bring_up(st: HilState, board: Board) -> DUT:
         fw = _firmware_for(st, board)
     except BuildError as e:
         raise _Unavailable("fail", f"firmware build for {board.target.name} failed: {e}") from e
-    session = BoardSession(st.lab, board, fw, flash=not st.options["no_flash"], log_dir=st.run_dir / "logs")
     try:
+        session = BoardSession(st.lab, board, fw, flash=not st.options["no_flash"], log_dir=st.run_dir / "logs")
         session.__enter__()
-    except (SessionError, FlashError, TransportError, DiscoveryError, OSError) as e:
-        raise _Unavailable("fail", f"bringing up {board.id} failed: {e}") from e
+    except Exception as e:  # any bring-up problem fails this board once, not every test
+        raise _Unavailable("fail", f"bringing up {board.id} failed: {type(e).__name__}: {e}") from e
     d = DUT(session, st.recorder, st.options, st.baseline)
     info = session.info
     sizes = {k: v for k, v in (fw.manifest if fw else {}).items()
