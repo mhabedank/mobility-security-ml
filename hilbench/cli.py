@@ -13,6 +13,7 @@
   hilbench report RUN_DIR            re-render summary.md / compare to a baseline
   hilbench zoo                       rebuild the reference model zoo + firmware sources
   hilbench import-tflite M.tflite    add your own int8 TFLite model to all boards
+  hilbench data list|verify|download training datasets (licenses checked, stored outside the repo)
 """
 from __future__ import annotations
 
@@ -358,6 +359,51 @@ def cmd_import_tflite(args):
     return 0
 
 
+def cmd_data(args):
+    from .data import download as dl
+    from .data.registry import REJECTED, SOURCES
+
+    if args.action == "list":
+        print(f"data directory: {dl.data_root()}\n")
+        for s in SOURCES.values():
+            state = "downloaded" if (dl.dataset_dir(s.id) / "SOURCE.json").exists() else "-"
+            print(f"{s.id:16s} {s.license:13s} ~{s.approx_size_mb:>5d} MB  {state:10s} {s.use_case}")
+        print("\nrejected (license):")
+        for k, why in REJECTED.items():
+            print(f"  {k}: {why}")
+        return 0
+    ids = args.ids or list(SOURCES)
+    rc = 0
+    for ds in ids:
+        if ds not in SOURCES:
+            print(f"unknown dataset {ds}", file=sys.stderr)
+            return 2
+        src = SOURCES[ds]
+        if args.action == "info":
+            for k, v in src.__dict__.items():
+                print(f"{k:15s} {v}")
+        elif args.action == "verify":
+            try:
+                ok, declared = dl.verify(src)
+            except Exception as e:  # network / API error
+                print(f"[ERR ] {ds}: {e}")
+                rc = 1
+                continue
+            mark = "ok  " if ok else "FAIL"
+            print(f"[{mark}] {ds}: registry {src.license}, publisher {declared or 'n/a (direct URL)'}")
+            rc |= 0 if ok else 1
+        elif args.action == "files":
+            for f in dl.remote_files(src):
+                print(f"{ds}: {f.name} {f.size or '?'} B {f.checksum or ''} {f.url}")
+        elif args.action == "download":
+            print(dl.download(ds, force=args.force))
+        elif args.action == "tree":
+            print(dl.tree(ds, args.max))
+        elif args.action == "path":
+            print(dl.dataset_dir(ds))
+    return rc
+
+
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
     pytest_args = []
@@ -434,6 +480,13 @@ def main(argv=None):
     p.add_argument("--description")
     p.add_argument("--verify", action="store_true", help="compare with the TFLite interpreter (needs tensorflow)")
     p.set_defaults(fn=cmd_import_tflite)
+
+    p = sub.add_parser("data", help="external training datasets (download outside the repo)")
+    p.add_argument("action", choices=["list", "info", "verify", "files", "download", "tree", "path"])
+    p.add_argument("ids", nargs="*")
+    p.add_argument("--force", action="store_true")
+    p.add_argument("--max", type=int, default=80)
+    p.set_defaults(fn=cmd_data)
 
     args = ap.parse_args(argv)
     try:

@@ -224,3 +224,7 @@ results/
 .pio/
 firmware/native/build/
 !firmware/lib/
+
+# downloaded datasets (never commit data)
+/data/
+*.tar.gz
