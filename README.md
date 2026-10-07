@@ -154,9 +154,11 @@ Berichte zurück.
 **Hugging Face Zoo:** `hilbench hub publish --org <org> --version 0.2.0` legt pro Modell ein
 privates Repo `<org>/hilbench-<modell>` mit Model Card (Metriken, Trainingsdaten-Attribution,
 Lizenz), `.npz`, `.h` und `.tflite` an und taggt es mit `v<version>`. In CI geht das über
-`models/hub-release.json` und den Workflow `hub` (`exclude` lässt Modelle weg). Dafür braucht es
-das Secret `HF_TOKEN` (Write-Token) und optional die Variable `HF_ORG`. Ohne Token macht der
-Workflow nur einen Probelauf und legt die Model Cards als Artefakt ab.
+`models/hub-release.json` und den Workflow `hub` (`exclude` lässt Modelle weg). `target` wählt
+das Ziel: `staging` zum Ausprobieren (Secret `HF_STAGING_TOKEN`, optional Variable `HF_STAGING_ORG`)
+oder `release` für den eigentlichen Zoo (Secret `HF_RELEASE_TOKEN`, optional `HF_RELEASE_ORG`).
+Jedes Ziel nutzt nur seinen eigenen Token. Fehlt der Token, macht der Workflow nur einen Probelauf
+und legt die Model Cards als Artefakt ab.
 
 ## Kommandos
 

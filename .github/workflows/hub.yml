@@ -1,6 +1,9 @@
 # Publish the model zoo to the Hugging Face Hub.
-# Needs the repository secret HF_TOKEN (write token) and optionally the
-# repository variable HF_ORG (defaults to the token's user).
+# Two targets, chosen by `target` in models/hub-release.json:
+#   staging -> secret HF_STAGING_TOKEN, variable HF_STAGING_ORG (try out a release)
+#   release -> secret HF_RELEASE_TOKEN, variable HF_RELEASE_ORG (the actual zoo)
+# Without an org variable the repos go to the token owner's account (HF_ORG is a
+# shared fallback). Without the token the job only renders the model cards.
 name: hub
 
 on:
@@ -13,13 +16,18 @@ on:
         required: true
         default: "0.1.0"
       org:
-        description: "HF organisation/user (empty = vars.HF_ORG or token owner)"
+        description: "HF organisation/user (empty = vars.HF_<TARGET>_ORG, vars.HF_ORG or token owner)"
         required: false
         default: ""
       ref:
         description: "git commit/branch whose models/zoo is published (empty = this branch)"
         required: false
         default: ""
+      target:
+        description: "staging or release"
+        type: choice
+        options: [staging, release]
+        default: staging
       public:
         description: "create public repos"
         type: boolean
@@ -41,12 +49,16 @@ jobs:
           r = json.load(open("tooling/models/hub-release.json"))
           print(f"version={r['version']}"); print(f"ref={r.get('ref', '')}")
           print(f"public={'false' if r.get('private', True) else 'true'}")
+          target = r.get("target", "staging")
+          assert target in ("staging", "release"), f"target must be staging or release, not {target!r}"
+          print(f"target={target}")
           print("exclude=" + " ".join(f"--exclude {m}" for m in r.get("exclude", [])))
           PY
           else
             echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
             echo "ref=${{ inputs.ref }}" >> "$GITHUB_OUTPUT"
             echo "public=${{ inputs.public }}" >> "$GITHUB_OUTPUT"
+            echo "target=${{ inputs.target }}" >> "$GITHUB_OUTPUT"
           fi
       - uses: actions/checkout@v4
         with:
@@ -61,9 +73,7 @@ jobs:
         working-directory: release
       - name: render model cards (dry run)
         working-directory: release
-        run: hilbench hub publish --version "${{ steps.rel.outputs.version }}" --org "${ORG:-preview}" ${{ steps.rel.outputs.exclude }} --dry-run --out ../hub-stage
-        env:
-          ORG: ${{ inputs.org || vars.HF_ORG }}
+        run: hilbench hub publish --version "${{ steps.rel.outputs.version }}" --org "${{ steps.rel.outputs.target }}-preview" ${{ steps.rel.outputs.exclude }} --dry-run --out ../hub-stage
       - uses: actions/upload-artifact@v4
         with:
           name: hub-stage-${{ steps.rel.outputs.version }}
@@ -71,14 +81,26 @@ jobs:
       - name: publish
         working-directory: release
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          ORG: ${{ inputs.org || vars.HF_ORG }}
+          TARGET: ${{ steps.rel.outputs.target }}
+          RELEASE_TOKEN: ${{ secrets.HF_RELEASE_TOKEN }}
+          STAGING_TOKEN: ${{ secrets.HF_STAGING_TOKEN }}
+          RELEASE_ORG: ${{ vars.HF_RELEASE_ORG }}
+          STAGING_ORG: ${{ vars.HF_STAGING_ORG }}
+          FALLBACK_ORG: ${{ vars.HF_ORG }}
+          INPUT_ORG: ${{ inputs.org }}
         run: |
+          # each target uses only its own token, never the other one as fallback
+          if [ "$TARGET" = "release" ]; then
+            export HF_TOKEN="$RELEASE_TOKEN"; ORG="${INPUT_ORG:-${RELEASE_ORG:-$FALLBACK_ORG}}"; SECRET=HF_RELEASE_TOKEN
+          else
+            export HF_TOKEN="$STAGING_TOKEN"; ORG="${INPUT_ORG:-${STAGING_ORG:-$FALLBACK_ORG}}"; SECRET=HF_STAGING_TOKEN
+          fi
           if [ -z "$HF_TOKEN" ]; then
-            echo "::warning::repository secret HF_TOKEN is not set - dry run only (model cards in the hub-stage artifact)"
+            echo "::warning::secret $SECRET is not set - dry run only (model cards in the hub-stage artifact)"
             exit 0
           fi
           ARGS="--version ${{ steps.rel.outputs.version }} ${{ steps.rel.outputs.exclude }}"
           [ -n "$ORG" ] && ARGS="$ARGS --org $ORG"
           [ "${{ steps.rel.outputs.public }}" = "true" ] && ARGS="$ARGS --public"
+          echo "publishing version ${{ steps.rel.outputs.version }} to $TARGET (${ORG:-account of the token})"
           hilbench hub publish $ARGS
