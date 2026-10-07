@@ -15,8 +15,8 @@ protokolliert Herkunft, Lizenz, Abrufzeit und SHA-256 in `SOURCE.json`.
 | ID | Use Case | Lizenz | kommerziell | HF-Mirror erlaubt | Größe | Status |
 |---|---|---|---|---|---|---|
 | `speech-commands` | Keyword Spotting / Sprachsteuerung im Fahrzeug | CC BY 4.0 | ja | ja (existiert bereits: `google/speech_commands`) | 2,3 GB | **trainiert** (`kws_dscnn`) |
-| `uci-har` | IMU-Bewegungserkennung (Beschleunigung + Gyro, 6 Aktivitäten) | CC BY 4.0 | ja | ja | 60 MB | Pipeline fertig, Training in CI |
-| `road` | CAN-Bus-Intrusion-Detection (echtes Fahrzeug, Fuzzing, Fabrication, Masquerade) | CC BY 4.0 | ja | ja | 560 MB | Download + Inspektion ok, Parser in Arbeit |
+| `uci-har` | IMU-Bewegungserkennung (Beschleunigung + Gyro, 6 Aktivitäten) | CC BY 4.0 | ja | ja | 60 MB | **trainiert** (`har_cnn1d`) |
+| `road` | CAN-Bus-Intrusion-Detection (echtes Fahrzeug, Fuzzing, Fabrication, Masquerade) | CC BY 4.0 | ja | ja | 560 MB | **trainiert** (`can_ids_road`) |
 | `can-mirgu` | CAN-IDS auf modernem Fahrzeug während der Fahrt | CC BY 4.0 | ja | ja | 500 MB | Download-Format wird angepasst |
 | `mimii` | Anomalie-Erkennung an Maschinengeräuschen (Lüfter, Pumpen, Ventile; Predictive Maintenance) | CC BY-SA 4.0 | ja | ja, **Share-Alike** | 10 GB pro Maschine/SNR; wir lesen per HTTP-Range nur ~1150 Clips (~2 GB) | Training in CI (`mimii_fan_ae`) |
 
