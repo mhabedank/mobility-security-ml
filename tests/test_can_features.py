@@ -62,3 +62,14 @@ def test_new_id_rate_rises_with_unseen_ids():
 def test_state_is_independent_per_call():
     df = frames([(0.0, 0x5, [1]), (0.01, 0x5, [2])])
     np.testing.assert_array_equal(extract(df), extract(df))
+
+
+def test_eviction_keeps_recent_ids_and_reports_new():
+    # 300 distinct IDs (more than the 255 slots): the oldest IDs are evicted, so ID 0 is
+    # new again, while a recently seen ID keeps its history.
+    rows = [(i * 0.001, i, [0]) for i in range(300)]
+    rows += [(0.400, 299, [0]), (0.401, 0, [0])]
+    x = extract(frames(rows))
+    assert x[-2, F["id_count"]] == 1      # ID 299 still tracked
+    assert x[-1, F["id_count"]] == 0      # ID 0 was evicted
+    assert x[-1, F["dt_id_ms"]] == 1000.0

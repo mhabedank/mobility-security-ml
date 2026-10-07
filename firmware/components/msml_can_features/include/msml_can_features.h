@@ -8,7 +8,11 @@
  * They do not use vehicle-specific knowledge (no DBC, no ID allow-list), so a model can be
  * evaluated on vehicles it was not trained on.
  *
- * Limits: 11-bit (standard) identifiers only; extended IDs are folded into the 11-bit table.
+ * Memory: per-ID state for up to MSML_CAN_N_SLOTS identifiers at a time (about 10 KB in total).
+ * When a new ID arrives and all slots are taken, the least recently seen ID is evicted. Real
+ * vehicles use far fewer IDs per bus; eviction only happens under fuzzing or ID scanning.
+ *
+ * Limits: 11-bit (standard) identifiers only; extended IDs are folded into the 11-bit range.
  * Build with -ffp-contract=off so float results match between host and MCU.
  */
 #ifndef MSML_CAN_FEATURES_H
@@ -21,7 +25,9 @@
 extern "C" {
 #endif
 
-#define MSML_CAN_N_IDS 2048
+#define MSML_CAN_N_IDS 2048     /* 11-bit identifier space */
+#define MSML_CAN_N_SLOTS 255    /* identifiers tracked at the same time */
+#define MSML_CAN_NO_SLOT 0xFF
 #define MSML_CAN_N_FEATURES 13
 
 /* Feature indices (keep in sync with msml/can/features.py: FEATURE_NAMES). */
@@ -45,13 +51,16 @@ typedef struct {
     int64_t last_us;
     float ewma_dt_ms;
     float ewma_ham;
+    uint16_t can_id;
     uint16_t count;
     uint8_t dlc;
     uint8_t data[8];
 } msml_can_id_state_t;
 
 typedef struct {
-    msml_can_id_state_t ids[MSML_CAN_N_IDS];
+    msml_can_id_state_t slots[MSML_CAN_N_SLOTS];
+    uint8_t slot_of[MSML_CAN_N_IDS]; /* identifier -> slot index, or MSML_CAN_NO_SLOT */
+    uint16_t slots_used;
     int64_t last_bus_us;
     float ewma_bus_dt_ms;
     float new_id_rate;

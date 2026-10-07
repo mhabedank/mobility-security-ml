@@ -402,6 +402,11 @@ def cmd_testvectors(args) -> None:
         "#define CAN_IDS_TINY_TEST_VECTORS_H",
         "#include <stdint.h>",
         "",
+        "/* Define TV_STORAGE as PROGMEM on targets that copy const data to RAM (ESP8266, AVR). */",
+        "#ifndef TV_STORAGE",
+        "#define TV_STORAGE",
+        "#endif",
+        "",
         "typedef struct {",
         "    int64_t ts_us;",
         "    uint16_t can_id;",
@@ -412,12 +417,12 @@ def cmd_testvectors(args) -> None:
         "",
         f"#define TV_N_FRAMES {len(df)}",
         "",
-        "static const tv_frame_t tv_frames[TV_N_FRAMES] = {",
+        "static const tv_frame_t tv_frames[TV_N_FRAMES] TV_STORAGE = {",
     ]
     for r, lab in zip(rec, labels):
         data = ",".join(f"0x{b:02X}" for b in r["data"])
         lines.append(f"    {{{r['ts']}, 0x{r['can_id']:03X}, {r['dlc']}, {lab}, {{{data}}}}},")
-    lines += ["};", "", "static const float tv_expected_score[TV_N_FRAMES] = {"]
+    lines += ["};", "", "static const float tv_expected_score[TV_N_FRAMES] TV_STORAGE = {"]
     lines += [f"    {s!r}f," for s in scores.tolist()]
     lines += ["};", "", "#endif /* CAN_IDS_TINY_TEST_VECTORS_H */", ""]
     (gen / "test_vectors.h").write_text("\n".join(lines))

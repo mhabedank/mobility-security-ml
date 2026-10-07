@@ -24,12 +24,38 @@ static inline uint8_t popcount8(uint8_t x)
 void msml_can_reset(msml_can_state_t *s)
 {
     memset(s, 0, sizeof(*s));
+    memset(s->slot_of, MSML_CAN_NO_SLOT, sizeof(s->slot_of));
+}
+
+/* Slot for this identifier; allocates one (evicting the least recently seen) if needed. */
+static msml_can_id_state_t *slot_for(msml_can_state_t *s, uint16_t id)
+{
+    uint8_t k = s->slot_of[id];
+    if (k != MSML_CAN_NO_SLOT) {
+        return &s->slots[k];
+    }
+    if (s->slots_used < MSML_CAN_N_SLOTS) {
+        k = (uint8_t)s->slots_used++;
+    } else {
+        k = 0;
+        for (uint16_t i = 1; i < MSML_CAN_N_SLOTS; i++) {
+            if (s->slots[i].last_us < s->slots[k].last_us) {
+                k = (uint8_t)i;
+            }
+        }
+        s->slot_of[s->slots[k].can_id] = MSML_CAN_NO_SLOT;
+    }
+    msml_can_id_state_t *e = &s->slots[k];
+    memset(e, 0, sizeof(*e));
+    e->can_id = id;
+    s->slot_of[id] = k;
+    return e;
 }
 
 void msml_can_update(msml_can_state_t *s, int64_t ts_us, uint32_t can_id, uint8_t dlc,
                      const uint8_t data[8], float out[MSML_CAN_N_FEATURES])
 {
-    msml_can_id_state_t *e = &s->ids[can_id & (MSML_CAN_N_IDS - 1)];
+    msml_can_id_state_t *e = slot_for(s, (uint16_t)(can_id & (MSML_CAN_N_IDS - 1)));
     const int first = (e->count == 0);
 
     /* Per-ID timing. */
