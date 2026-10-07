@@ -2,6 +2,7 @@
 
   hilbench discover [--probe]        find boards on USB, suggest boards.yaml entries
   hilbench list                      inventory + connection status
+  hilbench doctor                    check tools, permissions, boards, firmware artifacts
   hilbench build [-t T ...]          build firmware for targets
   hilbench flash -b BOARD            flash one board
   hilbench info -b BOARD             INFO + MODELS of a running board
@@ -86,6 +87,61 @@ def cmd_discover(args):
         print("\n# suggested entries for hil/boards.yaml (check the target!):")
         print(yaml.safe_dump({"boards": suggestions}, sort_keys=False))
     return 0
+
+
+def cmd_doctor(args):
+    import importlib.util
+    import os
+    import shutil
+
+    lab = _lab(args)
+    problems = 0
+
+    def check(ok: bool, msg: str, hint: str = "", hard: bool = True):
+        nonlocal problems
+        mark = "ok  " if ok else ("FAIL" if hard else "warn")
+        print(f"[{mark}] {msg}" + (f"\n       -> {hint}" if not ok and hint else ""))
+        if not ok and hard:
+            problems += 1
+
+    boards = lab.select()
+    hw = [b for b in boards if b.target.transport != "process"]
+    check(bool(shutil.which("make") and (shutil.which("cc") or shutil.which("gcc"))),
+          "make + C compiler (simulator)", "install build-essential / gcc", hard=False)
+    if any(b.target.build == "platformio" for b in hw):
+        has_pio = shutil.which("pio") or importlib.util.find_spec("platformio")
+        check(bool(has_pio), "PlatformIO", "pip install -e '.[hw]'  (or pip install platformio)")
+    if any(b.flash_method == "esptool" for b in hw):
+        check(importlib.util.find_spec("esptool") is not None, "esptool", "pip install esptool")
+    if any(b.power.get("type") == "uhubctl" for b in hw):
+        check(bool(shutil.which("uhubctl")), "uhubctl (USB port power)", "apt install uhubctl")
+    if len(hw) > 1:
+        check(importlib.util.find_spec("xdist") is not None, "pytest-xdist (parallel boards)",
+              "pip install pytest-xdist", hard=False)
+    if sys.platform.startswith("linux") and hw:
+        import grp
+
+        try:
+            groups = {grp.getgrgid(g).gr_name for g in os.getgroups()}
+            check("dialout" in groups or os.geteuid() == 0, "user is in group dialout",
+                  "sudo ./hil/setup-host.sh, then log in again", hard=False)
+        except KeyError:
+            pass
+    for b in boards:
+        ok, where = _available(b)
+        if b.target.transport != "process" and ok and not where.startswith(("rfc2217:", "socket:")):
+            check(os.access(where, os.R_OK | os.W_OK), f"{b.id}: connected at {where}, read/write access",
+                  "udev rules / dialout group (hil/setup-host.sh)")
+        else:
+            check(ok, f"{b.id}: {'available' if ok else 'not connected'} ({b.target.name})",
+                  "hilbench discover", hard=False)
+        try:
+            fw = Firmware.load(lab, b.target.name)
+            check(True, f"{b.id}: firmware artifact {fw.build_id:08x} ({fw.manifest.get('git', '?')})")
+        except FlashError:
+            check(False, f"{b.id}: no firmware built yet", f"hilbench build -t {b.target.name}", hard=False)
+    print("\nall good" if not problems else f"\n{problems} problem(s)")
+    return 1 if problems else 0
 
 
 def cmd_list(args):
@@ -320,6 +376,7 @@ def main(argv=None):
     p.add_argument("--probe", action="store_true", help="ask ESP ROM bootloaders for the chip type (resets them)")
     p.set_defaults(fn=cmd_discover)
     sub.add_parser("list", help="inventory and connection status").set_defaults(fn=cmd_list)
+    sub.add_parser("doctor", help="check host prerequisites and boards").set_defaults(fn=cmd_doctor)
     sub.add_parser("targets", help="known targets").set_defaults(fn=cmd_targets)
 
     p = sub.add_parser("build", help="build firmware")

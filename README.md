@@ -54,7 +54,7 @@ Bootloader-Rauschen, Watchdog-Crashes und Hänger simulieren.
 3. Den Eintrag `esp8266-1` in `hil/boards.yaml` anpassen (`match:` mit Seriennummer oder
    `location`), dann:
    ```bash
-   hilbench list                    # zeigt, welche Boards verbunden sind
+   hilbench doctor                  # prüft Tools, Rechte und welche Boards verbunden sind
    hilbench run -b esp8266-1        # bauen, flashen, testen
    ```
 4. Ergebnis ansehen: `results/<zeitstempel>/summary.md`, serielles Log in
@@ -122,6 +122,7 @@ Mitgelieferte Referenzmodelle (`models/zoo`, Neubau mit `hilbench zoo`):
 | Kommando | Zweck |
 |---|---|
 | `hilbench discover [--probe]` | USB-Geräte finden, Target raten, Inventar-Einträge vorschlagen |
+| `hilbench doctor` | Host prüfen: Tools, Rechte, verbundene Boards, gebaute Firmware |
 | `hilbench list` / `targets` | Inventar mit Verbindungsstatus / bekannte Targets |
 | `hilbench build [-t T] [--all]` | Firmware bauen (`build/fw/<target>/` inkl. Manifest) |
 | `hilbench flash -b B` / `info -b B` | Board flashen / INFO + Modelle anzeigen |
