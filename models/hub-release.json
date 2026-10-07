@@ -1,0 +1,6 @@
+{
+  "version": "0.1.0",
+  "ref": "c3ba27a",
+  "private": true,
+  "note": "Reference models on synthetic data. Pushing a change to this file publishes the zoo of `ref` to the Hugging Face Hub (workflow hub.yml)."
+}

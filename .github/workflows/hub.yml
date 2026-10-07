@@ -4,6 +4,8 @@
 name: hub
 
 on:
+  push:
+    paths: ["models/hub-release.json"]   # release-as-code: version + ref in that file
   workflow_dispatch:
     inputs:
       version:
@@ -29,31 +31,50 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.ref || github.ref }}
-      # the publishing code always comes from the dispatching branch
+          path: tooling
+      - name: release parameters
+        id: rel
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          r = json.load(open("tooling/models/hub-release.json"))
+          print(f"version={r['version']}"); print(f"ref={r.get('ref', '')}")
+          print(f"public={'false' if r.get('private', True) else 'true'}")
+          PY
+          else
+            echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+            echo "ref=${{ inputs.ref }}" >> "$GITHUB_OUTPUT"
+            echo "public=${{ inputs.public }}" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/checkout@v4
         with:
-          path: tooling
-      - run: cp -r tooling/hilbench tooling/pyproject.toml . && rm -rf tooling
+          ref: ${{ steps.rel.outputs.ref || github.sha }}
+          path: release
+      # models come from `ref`, the publishing code from the triggering commit
+      - run: rm -rf release/hilbench && cp -r tooling/hilbench tooling/pyproject.toml release/
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - run: pip install -e ".[hub]"
+        working-directory: release
       - name: render model cards (dry run)
-        run: hilbench hub publish --version "${{ inputs.version }}" --org "${ORG:-preview}" --dry-run --out hub-stage
+        working-directory: release
+        run: hilbench hub publish --version "${{ steps.rel.outputs.version }}" --org "${ORG:-preview}" --dry-run --out ../hub-stage
         env:
           ORG: ${{ inputs.org || vars.HF_ORG }}
       - uses: actions/upload-artifact@v4
         with:
-          name: hub-stage-${{ inputs.version }}
+          name: hub-stage-${{ steps.rel.outputs.version }}
           path: hub-stage
       - name: publish
+        working-directory: release
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           ORG: ${{ inputs.org || vars.HF_ORG }}
         run: |
           if [ -z "$HF_TOKEN" ]; then echo "::error::repository secret HF_TOKEN is not set"; exit 1; fi
-          ARGS="--version ${{ inputs.version }}"
+          ARGS="--version ${{ steps.rel.outputs.version }}"
           [ -n "$ORG" ] && ARGS="$ARGS --org $ORG"
-          [ "${{ inputs.public }}" = "true" ] && ARGS="$ARGS --public"
+          [ "${{ steps.rel.outputs.public }}" = "true" ] && ARGS="$ARGS --public"
           hilbench hub publish $ARGS
