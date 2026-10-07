@@ -222,3 +222,4 @@ __marimo__/
 # Local datasets and build outputs
 data/
 artifacts/
+tmp/
