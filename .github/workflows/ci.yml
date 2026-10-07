@@ -1,0 +1,55 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  host:
+    name: unit tests + simulated board
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e ".[dev]"
+      - run: ruff check hilbench tests
+      - run: pytest tests/unit -q
+      - name: HIL suite against the simulator
+        run: hilbench run -b sim -b sim-noisy --parallel --slow --results results/sim --junit results/sim/junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sim-results
+          path: results/
+
+  firmware:
+    name: firmware ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [esp8266, esp8266_160mhz, esp32, esp32s3, esp32s3_usb, esp32c3, esp32c3_usb,
+                 rp2040, rp2350, stm32f446, nrf52840]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ matrix.target }}-${{ hashFiles('firmware/platformio.ini') }}
+          restore-keys: pio-${{ matrix.target }}-
+      - run: pip install -e ".[hw]"
+      - run: hilbench build -t ${{ matrix.target }} -v
+      - name: firmware size
+        run: |
+          cat build/fw/${{ matrix.target }}/manifest.json
+          ls -l build/fw/${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fw-${{ matrix.target }}
+          path: build/fw/${{ matrix.target }}

@@ -1,0 +1,85 @@
+{
+  "format": "hilbench-zoo/1",
+  "models": [
+    {
+      "name": "can_ids_mlp",
+      "description": "CAN bus intrusion detection MLP (DoS/fuzzing/spoofing), 32-32-16-2",
+      "in_shape": [
+        1,
+        1,
+        32
+      ],
+      "out_shape": [
+        1,
+        1,
+        2
+      ],
+      "layers": 3,
+      "macs": 1568,
+      "param_bytes": 2018,
+      "arena_size": 64,
+      "crc32": "f6cda85f",
+      "n_tests": 8
+    },
+    {
+      "name": "sensor_ae",
+      "description": "Wheel-speed sensor anomaly autoencoder 64-32-8-32-64",
+      "in_shape": [
+        1,
+        1,
+        64
+      ],
+      "out_shape": [
+        1,
+        1,
+        64
+      ],
+      "layers": 4,
+      "macs": 4608,
+      "param_bytes": 5832,
+      "arena_size": 128,
+      "crc32": "f8c70c85",
+      "n_tests": 8
+    },
+    {
+      "name": "imu_gnss_cnn1d",
+      "description": "GNSS spoofing detector, 1D-CNN over IMU+GNSS window (benchmark weights)",
+      "in_shape": [
+        1,
+        64,
+        6
+      ],
+      "out_shape": [
+        1,
+        1,
+        2
+      ],
+      "layers": 8,
+      "macs": 161856,
+      "param_bytes": 6914,
+      "arena_size": 2048,
+      "crc32": "9ec52417",
+      "n_tests": 8
+    },
+    {
+      "name": "kws_dscnn",
+      "description": "Keyword spotting DS-CNN (MLPerf-Tiny-like, 49x10 MFCC, benchmark weights)",
+      "in_shape": [
+        49,
+        10,
+        1
+      ],
+      "out_shape": [
+        1,
+        1,
+        12
+      ],
+      "layers": 8,
+      "macs": 488384,
+      "param_bytes": 5836,
+      "arena_size": 8000,
+      "crc32": "33cf6517",
+      "n_tests": 8
+    }
+  ]
+}
