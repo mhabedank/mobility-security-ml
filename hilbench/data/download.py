@@ -303,6 +303,31 @@ def _sniff(head: bytes) -> str | None:
     return next((ext for magic, ext in _MAGIC if head.startswith(magic)), None)
 
 
+def _signature_scan(path: Path, limit: int = 5) -> dict:
+    """First offsets of archive signatures anywhere in a file (diagnostics for broken downloads)."""
+    sigs = {"zip-local": b"PK\x03\x04", "zip-central": b"PK\x01\x02", "zip-end": b"PK\x05\x06",
+            "zip64-end": b"PK\x06\x06", "7z": b"7z\xbc\xaf\x27\x1c", "rar": b"Rar!\x1a", "xz": b"\xfd7zXZ"}
+    found: dict[str, list[int]] = {k: [] for k in sigs}
+    zero = 0
+    with open(path, "rb") as fh:
+        pos, tail = 0, b""
+        while True:
+            block = fh.read(1 << 22)
+            if not block:
+                break
+            zero += block.count(0)
+            buf = tail + block
+            for k, sig in sigs.items():
+                i = buf.find(sig)
+                while i >= 0 and len(found[k]) < limit:
+                    off = pos - len(tail) + i
+                    if off not in found[k]:
+                        found[k].append(off)
+                    i = buf.find(sig, i + 1)
+            tail, pos = buf[-8:], pos + len(block)
+    return {"size": pos, "zero_bytes": zero, **{k: v for k, v in found.items() if v}}
+
+
 def _embedded_payload(archive: Path) -> Path | None:
     """Some UCI downloads are an *empty* zip (bare end-of-central-directory record)
     followed by the real archive. Split that payload off into its own file."""
@@ -327,7 +352,7 @@ def _embedded_payload(archive: Path) -> Path | None:
         if ext is None:
             fh.seek(start)
             raise DataError(f"{archive.name}: empty zip followed by unknown data at offset {start}: "
-                            f"{fh.read(32).hex()}")
+                            f"{fh.read(32).hex()}; signatures in file: {_signature_scan(archive)}")
         out = archive.with_name(archive.name[:-4] + ".payload" + ext)
         if not out.exists():
             fh.seek(start)
