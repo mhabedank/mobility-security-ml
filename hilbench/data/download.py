@@ -418,6 +418,8 @@ def download(ds_id: str, extract: bool = True, force: bool = False, check_licens
     marker = d / "SOURCE.json"
     if marker.exists() and not force:
         return d
+    if src.broken and not force:
+        raise DataError(f"{ds_id}: {src.broken}")
     d.mkdir(parents=True, exist_ok=True)
     if check_license:
         ok, declared = verify(src)

@@ -41,6 +41,8 @@ class Source:
     # may we mirror the (unmodified or preprocessed) data on the HF Hub?
     hf_rehost: str = "no"  # "yes" | "yes (share-alike)" | "no"
     notes: str = ""
+    # non-empty = the publisher's files are currently unusable; download refuses unless forced
+    broken: str = ""
     tags: tuple[str, ...] = field(default_factory=tuple)
 
 
@@ -73,6 +75,10 @@ SOURCES: dict[str, Source] = {s.id: s for s in [
         uci_id=1035,
         approx_size_mb=500,
         hf_rehost="yes",
+        broken="UCI download damaged at the source (checked 2026-10-07): the 520 MB zip has an intact "
+               "central directory for one member, but its first ~180 MB (local header + start of the "
+               "data) are zero bytes and no local header exists anywhere. Not recoverable; re-check "
+               "with `hilbench data download can-mirgu --force`.",
         tags=("can", "security", "automotive"),
     ),
     Source(

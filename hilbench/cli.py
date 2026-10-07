@@ -368,7 +368,8 @@ def cmd_data(args):
     if args.action == "list":
         print(f"data directory: {dl.data_root()}\n")
         for s in SOURCES.values():
-            state = "downloaded" if (dl.dataset_dir(s.id) / "SOURCE.json").exists() else "-"
+            state = "downloaded" if (dl.dataset_dir(s.id) / "SOURCE.json").exists() else \
+                "BROKEN" if s.broken else "-"
             print(f"{s.id:16s} {s.license:13s} ~{s.approx_size_mb:>5d} MB  {state:10s} {s.use_case}")
         print("\nrejected (license):")
         for k, why in REJECTED.items():
