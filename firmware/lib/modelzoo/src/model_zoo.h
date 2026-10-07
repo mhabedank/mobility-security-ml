@@ -40,7 +40,12 @@ extern "C" {
 #else
 #define MI_ZOO_ARENA_SIZE_6 MI_ZOO_ARENA_SIZE_5
 #endif
-#define MI_ZOO_ARENA_SIZE MI_ZOO_ARENA_SIZE_6
+#if !defined(MI_EXCLUDE_MIMII_FAN_AE) && 400u > MI_ZOO_ARENA_SIZE_6
+#define MI_ZOO_ARENA_SIZE_7 400u
+#else
+#define MI_ZOO_ARENA_SIZE_7 MI_ZOO_ARENA_SIZE_6
+#endif
+#define MI_ZOO_ARENA_SIZE MI_ZOO_ARENA_SIZE_7
 
 #define MI_ZOO_MAX_IN_0 4u
 #if !defined(MI_EXCLUDE_CAN_IDS_MLP) && 32u > MI_ZOO_MAX_IN_0
@@ -73,7 +78,12 @@ extern "C" {
 #else
 #define MI_ZOO_MAX_IN_6 MI_ZOO_MAX_IN_5
 #endif
-#define MI_ZOO_MAX_IN MI_ZOO_MAX_IN_6
+#if !defined(MI_EXCLUDE_MIMII_FAN_AE) && 200u > MI_ZOO_MAX_IN_6
+#define MI_ZOO_MAX_IN_7 200u
+#else
+#define MI_ZOO_MAX_IN_7 MI_ZOO_MAX_IN_6
+#endif
+#define MI_ZOO_MAX_IN MI_ZOO_MAX_IN_7
 
 #define MI_ZOO_MAX_OUT_0 4u
 #if !defined(MI_EXCLUDE_CAN_IDS_MLP) && 2u > MI_ZOO_MAX_OUT_0
@@ -106,7 +116,12 @@ extern "C" {
 #else
 #define MI_ZOO_MAX_OUT_6 MI_ZOO_MAX_OUT_5
 #endif
-#define MI_ZOO_MAX_OUT MI_ZOO_MAX_OUT_6
+#if !defined(MI_EXCLUDE_MIMII_FAN_AE) && 200u > MI_ZOO_MAX_OUT_6
+#define MI_ZOO_MAX_OUT_7 200u
+#else
+#define MI_ZOO_MAX_OUT_7 MI_ZOO_MAX_OUT_6
+#endif
+#define MI_ZOO_MAX_OUT MI_ZOO_MAX_OUT_7
 
 extern const mi_model_t mi_model_can_ids_mlp;
 extern const mi_model_t mi_model_sensor_ae;
@@ -114,6 +129,7 @@ extern const mi_model_t mi_model_imu_gnss_cnn1d;
 extern const mi_model_t mi_model_kws_dscnn;
 extern const mi_model_t mi_model_har_cnn1d;
 extern const mi_model_t mi_model_can_ids_road;
+extern const mi_model_t mi_model_mimii_fan_ae;
 
 /* NULL-terminated; models can be dropped with -DMI_EXCLUDE_<NAME>. */
 extern const mi_model_t *const mi_zoo[];

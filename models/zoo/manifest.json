@@ -126,6 +126,28 @@
       "n_tests": 8,
       "version": "0.2.0",
       "source": "real-data"
+    },
+    {
+      "name": "mimii_fan_ae",
+      "description": "Machine-sound anomaly detection autoencoder (5 x 40 log-mel -> 64-64-8-64-64), trained on normal fan recordings of MIMII (6 dB SNR); anomaly score = reconstruction MSE averaged over a 10 s clip",
+      "in_shape": [
+        1,
+        1,
+        200
+      ],
+      "out_shape": [
+        1,
+        1,
+        200
+      ],
+      "layers": 6,
+      "macs": 34816,
+      "param_bytes": 38992,
+      "arena_size": 400,
+      "crc32": "ff708556",
+      "n_tests": 8,
+      "version": "0.2.0",
+      "source": "real-data"
     }
   ]
 }
