@@ -1,0 +1,32 @@
+[project]
+name = "msml"
+version = "0.1.0"
+description = "TinyML models for automotive and mobility security"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "pyarrow>=17",
+    "scikit-learn>=1.5",
+    "emlearn>=0.23",
+    "setuptools>=70",  # emlearn imports distutils, which Python 3.12+ only gets via setuptools
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+publish = ["huggingface_hub>=1.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/msml"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

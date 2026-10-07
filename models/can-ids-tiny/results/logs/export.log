@@ -1,0 +1,36 @@
+{'n_estimators': 10, 'max_depth': 8, 'threshold': 0.6000000238418579, 'val_f1': 0.9396202755932342, 'val_auc_pr': 0.9466704093902584}
+{'n_estimators': 20, 'max_depth': 10, 'threshold': 0.550000011920929, 'val_f1': 0.9520103227223434, 'val_auc_pr': 0.969065119138907}
+{'n_estimators': 30, 'max_depth': 12, 'threshold': 0.5666666626930237, 'val_f1': 0.9562789421328851, 'val_auc_pr': 0.9716286434596151}
+alarm k3_w200 {'episodes': 29, 'episode_recall': 0.7931034482758621, 'median_latency_ms': 24.45197105407715, 'false_alarms_per_hour': 1.9065006501750617}
+{
+  "hyperparameters": {
+    "n_estimators": 30,
+    "max_depth": 12,
+    "min_samples_leaf": 20
+  },
+  "threshold": 0.5666666626930237,
+  "tree_nodes": 22346,
+  "parity_c_vs_python": {
+    "set_01/test_02_unknown_vehicle_known_attack/DoS-3": {
+      "frames": 200000,
+      "identical": 1.0,
+      "max_abs_diff": 0.0
+    },
+    "set_02/test_01_known_vehicle_known_attack/fuzzing-3": {
+      "frames": 200000,
+      "identical": 1.0,
+      "max_abs_diff": 0.0
+    },
+    "set_03/test_03_known_vehicle_unknown_attack/speed-1": {
+      "frames": 200000,
+      "identical": 1.0,
+      "max_abs_diff": 0.0
+    },
+    "set_04/test_04_unknown_vehicle_unknown_attack/triple-1": {
+      "frames": 200000,
+      "identical": 1.0,
+      "max_abs_diff": 0.0
+    }
+  }
+}
+4000 frames, 738 attack frames, 732 detected, 2 alarms on host
