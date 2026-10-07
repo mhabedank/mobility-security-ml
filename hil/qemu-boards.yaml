@@ -16,10 +16,18 @@ boards:
   - id: esp32-qemu
     target: esp32
     port: socket://127.0.0.1:5555
-    reset: soft
+    # "power" = restart the emulator. ESP.restart() inside QEMU sometimes ends in a
+    # TG0WDT/TG1WDT reset loop (emulator limitation, not seen on real chips).
+    reset: power
+    soft_reset: false
+    notes: "ESP.restart() is unreliable in QEMU (watchdog reset loop)"
     flasher: command
     flasher_options: {command: "{python} -m hilbench.qemu start {dir} --port 5555", timeout_s: 120}
-    power: {type: command, on: "true", off: "{python} -m hilbench.qemu stop --port 5555"}
+    power:
+      type: command
+      "on": "{python} -m hilbench.qemu start build/fw/esp32 --port 5555"
+      "off": "{python} -m hilbench.qemu stop --port 5555"
+      off_s: 0.2
     tags: [qemu]
 
   - id: esp32c3-qemu

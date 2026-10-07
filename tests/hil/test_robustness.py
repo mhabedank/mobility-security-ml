@@ -10,6 +10,8 @@ from hilbench.ml.zoo import load_zoo
 
 @pytest.mark.destructive
 def test_soft_reset_and_recover(dut):
+    if not dut.board.soft_reset:
+        pytest.skip(f"soft reset disabled for {dut.board.id}: {dut.board.notes}")
     boot = dut.session.reset("soft")
     info = dut.device.info()
     assert info["uptime_ms"] < 60000

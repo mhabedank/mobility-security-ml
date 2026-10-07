@@ -158,7 +158,9 @@ class BoardSession:
         elif not hardware_reset(method, self.transport, self.power, self.board.reset_options):
             raise SessionError(f"{self.board.id}: reset method '{method}' not available")
         self.note(f"reset ({method})")
-        if self.target.reenumerates and method != "process":
+        # A power cycle drops USB serial devices (and QEMU sockets); native USB
+        # devices re-enumerate on any reset.
+        if method == "power" or (self.target.reenumerates and method != "process"):
             time.sleep(0.5)
             self.connect(wait_port_s=10.0)
         else:
@@ -181,8 +183,11 @@ class BoardSession:
             try:
                 if not action():
                     continue
-                if self.transport is None or self.target.reenumerates or name == "reflash":
-                    self.port = self._resolve_port(10.0 if self.target.reenumerates else 2.0)
+                if (self.transport is None or self.target.reenumerates
+                        or name in ("power-cycle", "reflash")):
+                    if self.transport is not None:
+                        self.transport.close()
+                    self.port = self._resolve_port(10.0 if self.target.reenumerates else 5.0)
                     self.transport = self._make_transport()
                     self.transport.open()
                     self.device = Device(self.transport, log=self.log)

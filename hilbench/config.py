@@ -59,6 +59,7 @@ class Board:
     tags: list[str] = field(default_factory=list)
     env: dict[str, str] = field(default_factory=dict)  # extra env (simulator fault injection)
     enabled: bool = True
+    soft_reset: bool = True  # False: the RESET command is unreliable on this board (skip that test)
     notes: str = ""
 
     @property

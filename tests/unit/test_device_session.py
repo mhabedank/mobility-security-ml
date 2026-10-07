@@ -143,3 +143,16 @@ def test_results_summary_and_baseline(tmp_path):
                                       base, 0.25)
     assert regressions == ["b1/m: 100 µs vs baseline 50 µs (+100%)"]
     assert not compare_to_baseline(s, s, 0.0)
+
+
+def test_power_cycle_reset_reconnects(sim_lab):
+    """A power cycle drops the link (USB serial, QEMU socket): the session must reconnect."""
+    lab, fw = sim_lab
+    board = replace(lab.board("sim"), power={"type": "command", "on": "true", "off": "true", "off_s": 0,
+                                             "settle_s": 0})
+    with BoardSession(lab, board, fw) as s:
+        old = s.transport
+        s.reset("power")
+        assert s.transport is not old
+        assert s.device.ping()["pong"]
+        assert s.device.info()["inferences"] == 0
