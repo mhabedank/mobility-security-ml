@@ -22,7 +22,7 @@ und in GitHub Actions direkt in der Job-Zusammenfassung.
                 ┌───────────────────────── HIL-Host (PC / Raspberry Pi / CI-Runner) ──────────────────────────┐
  hil/boards.yaml│  hilbench run ──► build (PlatformIO / make) ──► flash (esptool / PIO / UF2 / Befehl)        │
  hil/targets.yaml  pytest + Plugin: 1 Testlauf pro Board, parallel (xdist), Board-Locks, Recovery             │
-                │        │ USB-Serial  "#12 INFER kws_dscnn <hex>"  ◄──►  "@{"id":12,"out":"…","us":…}"       │
+                │        │ USB-Serial  "#12 INFER can_ids_road <hex>"  ◄──►  "@{"id":12,"out":"…","us":…}"       │
                 └────────┼──────────────────────────────────────────────────────────────────────────────────┘
           ┌──────────────┼──────────────┬───────────────┬───────────────┬───────────────┐
       ESP8266MOD      ESP32(-S3/-C3)   RP2040/RP2350   STM32 Nucleo    nRF52840      Simulator (PC)
@@ -121,12 +121,11 @@ TensorFlow). Modelle, die auf ein kleines Target nicht passen, können per
 `-D MI_EXCLUDE_<NAME>` in `platformio.ini` und `excluded_models` in `targets.yaml`
 ausgeschlossen werden.
 
-Mitgelieferte Modelle (`models/zoo`). Die Version 0.2.0 ist auf echten, offen lizenzierten
+Mitgelieferte Modelle (`models/zoo`). Fokus: Mobilität und Cyber Security. Die Version 0.2.0 ist auf echten, offen lizenzierten
 Daten trainiert. int8-Werte gelten für die Arithmetik des Geräts (bit-exakte Host-Referenz):
 
 | Modell | Version | Aufgabe | Daten (Lizenz) | int8-Ergebnis | MACs | Parameter | Arena |
 |---|---|---|---|---|---:|---:|---:|
-| `kws_dscnn` | 0.2.0 | Keyword Spotting, 12 Klassen (DS-CNN à la MLPerf Tiny) | Speech Commands v0.02 (CC BY 4.0) | 90,5 % Acc. (5092 Clips) | 816 k | 9,6 KB | 8,0 KB |
 | `har_cnn1d` | 0.2.0 | Bewegungserkennung aus IMU (6 Aktivitäten) | UCI HAR (CC BY 4.0) | 93,3 % Acc. (2947 Fenster) | 354 k | 7,3 KB | 4,0 KB |
 | `can_ids_road` | 0.2.0 | CAN-Bus-Intrusion-Detection pro Frame (MLP 32-64-32-2) | ROAD, echtes Fahrzeug (CC BY 4.0) | 98,9 % Acc., Recall 81,7 %, FPR 0,8 % (2,2 Mio. Frames, ungesehene Captures) | 4,2 k | 5,0 KB | 128 B |
 | `mimii_fan_ae` | 0.2.0 | Anomalieerkennung an Maschinengeräuschen (Autoencoder, 5 × 40 Log-Mel) | MIMII Lüfter 6 dB (CC BY-SA 4.0) | AUC 0,84 pro 10-s-Clip (id_00 0,75, id_02 0,96; 700 Clips) | 35 k | 39 KB | 400 B |
@@ -144,7 +143,7 @@ Auswahl, abgelehnte Datensätze und die Frage, was auf Hugging Face gespiegelt w
 ```bash
 pip install -e ".[train]"
 hilbench data list                       # Use Cases, Lizenzen, HF-Mirror erlaubt?
-hilbench train kws har can mimii --download   # trainieren -> int8 -> bit-exakt prüfen -> models/zoo
+hilbench train can har mimii --download   # trainieren -> int8 -> bit-exakt prüfen -> models/zoo
 hilbench run -b sim                      # HIL-Suite inkl. Genauigkeit auf dem (simulierten) Gerät
 ```
 
@@ -155,8 +154,9 @@ Berichte zurück.
 **Hugging Face Zoo:** `hilbench hub publish --org <org> --version 0.2.0` legt pro Modell ein
 privates Repo `<org>/hilbench-<modell>` mit Model Card (Metriken, Trainingsdaten-Attribution,
 Lizenz), `.npz`, `.h` und `.tflite` an und taggt es mit `v<version>`. In CI geht das über
-`models/hub-release.json` und den Workflow `hub`. Dafür braucht es das Secret `HF_TOKEN`
-(Write-Token) und optional die Variable `HF_ORG`.
+`models/hub-release.json` und den Workflow `hub` (`exclude` lässt Modelle weg). Dafür braucht es
+das Secret `HF_TOKEN` (Write-Token) und optional die Variable `HF_ORG`. Ohne Token macht der
+Workflow nur einen Probelauf und legt die Model Cards als Artefakt ab.
 
 ## Kommandos
 
@@ -167,7 +167,7 @@ Lizenz), `.npz`, `.h` und `.tflite` an und taggt es mit `v<version>`. In CI geht
 | `hilbench list` / `targets` | Inventar mit Verbindungsstatus / bekannte Targets |
 | `hilbench build [-t T] [--all]` | Firmware bauen (`build/fw/<target>/` inkl. Manifest) |
 | `hilbench flash -b B` / `info -b B` | Board flashen / INFO + Modelle anzeigen |
-| `hilbench console -b B` | Interaktive Protokollkonsole (`PING`, `BENCH kws_dscnn 10`, …) |
+| `hilbench console -b B` | Interaktive Protokollkonsole (`PING`, `BENCH can_ids_road 10`, …) |
 | `hilbench reset -b B [--method M]`, `power -b B on/off/cycle` | Reset / Stromversorgung |
 | `hilbench run [-b B] [-t T] [--tag X] [--parallel] [--quick] [--slow] [--baseline S] [-- pytest-Args]` | Kompletter HIL-Lauf |
 | `hilbench report RUN [--baseline S]` | Bericht neu erzeugen / Regressionen prüfen |

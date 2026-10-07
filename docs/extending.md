@@ -66,11 +66,11 @@ Die CI-Matrix in `.github/workflows/ci.yml` um das neue Target ergänzen, dann b
 Wenn RAM oder Flash nicht reichen, große Modelle ausschließen:
 
 ```ini
-build_flags = ${env.build_flags} -D HIL_TARGET=\"tiny\" -D MI_EXCLUDE_KWS_DSCNN
+build_flags = ${env.build_flags} -D HIL_TARGET=\"tiny\" -D MI_EXCLUDE_HAR_CNN1D
 ```
 ```yaml
 tiny:
-  excluded_models: [kws_dscnn]
+  excluded_models: [har_cnn1d]
 ```
 
 Die Arena für die Aktivierungen wird automatisch auf das größte verbliebene Modell bemessen.

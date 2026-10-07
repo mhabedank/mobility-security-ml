@@ -41,6 +41,7 @@ jobs:
           r = json.load(open("tooling/models/hub-release.json"))
           print(f"version={r['version']}"); print(f"ref={r.get('ref', '')}")
           print(f"public={'false' if r.get('private', True) else 'true'}")
+          print("exclude=" + " ".join(f"--exclude {m}" for m in r.get("exclude", [])))
           PY
           else
             echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
@@ -60,7 +61,7 @@ jobs:
         working-directory: release
       - name: render model cards (dry run)
         working-directory: release
-        run: hilbench hub publish --version "${{ steps.rel.outputs.version }}" --org "${ORG:-preview}" --dry-run --out ../hub-stage
+        run: hilbench hub publish --version "${{ steps.rel.outputs.version }}" --org "${ORG:-preview}" ${{ steps.rel.outputs.exclude }} --dry-run --out ../hub-stage
         env:
           ORG: ${{ inputs.org || vars.HF_ORG }}
       - uses: actions/upload-artifact@v4
@@ -73,8 +74,11 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           ORG: ${{ inputs.org || vars.HF_ORG }}
         run: |
-          if [ -z "$HF_TOKEN" ]; then echo "::error::repository secret HF_TOKEN is not set"; exit 1; fi
-          ARGS="--version ${{ steps.rel.outputs.version }}"
+          if [ -z "$HF_TOKEN" ]; then
+            echo "::warning::repository secret HF_TOKEN is not set - dry run only (model cards in the hub-stage artifact)"
+            exit 0
+          fi
+          ARGS="--version ${{ steps.rel.outputs.version }} ${{ steps.rel.outputs.exclude }}"
           [ -n "$ORG" ] && ARGS="$ARGS --org $ORG"
           [ "${{ steps.rel.outputs.public }}" = "true" ] && ARGS="$ARGS --public"
           hilbench hub publish $ARGS

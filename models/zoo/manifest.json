@@ -62,28 +62,6 @@
       "n_tests": 8
     },
     {
-      "name": "kws_dscnn",
-      "description": "Keyword spotting DS-CNN (12 classes, 49x10 MFCC), trained on Speech Commands v0.02",
-      "in_shape": [
-        49,
-        10,
-        1
-      ],
-      "out_shape": [
-        1,
-        1,
-        12
-      ],
-      "layers": 12,
-      "macs": 816384,
-      "param_bytes": 9612,
-      "arena_size": 8000,
-      "crc32": "8d019949",
-      "n_tests": 8,
-      "version": "0.2.0",
-      "source": "real-data"
-    },
-    {
       "name": "har_cnn1d",
       "description": "Human activity recognition 1D-CNN over 2.56 s of accelerometer + gyroscope (9 x 128 @50 Hz), trained on UCI HAR",
       "in_shape": [

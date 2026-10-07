@@ -82,21 +82,6 @@ SOURCES: dict[str, Source] = {s.id: s for s in [
         tags=("can", "security", "automotive"),
     ),
     Source(
-        id="speech-commands",
-        title="Speech Commands v0.02",
-        use_case="keyword spotting / voice control (in-cabin HMI)",
-        license="CC-BY-4.0",
-        license_url="https://creativecommons.org/licenses/by/4.0/",
-        homepage="https://arxiv.org/abs/1804.03209",
-        attribution="Speech Commands dataset v0.02 by Pete Warden, Google (CC BY 4.0)",
-        citation="P. Warden, 'Speech Commands: A Dataset for Limited-Vocabulary Speech Recognition', "
-                 "arXiv:1804.03209, 2018",
-        urls=("https://storage.googleapis.com/download.tensorflow.org/data/speech_commands_v0.02.tar.gz",),
-        approx_size_mb=2300,
-        hf_rehost="yes (already mirrored: google/speech_commands)",
-        tags=("audio", "kws"),
-    ),
-    Source(
         id="uci-har",
         title="Human Activity Recognition Using Smartphones",
         use_case="IMU motion classification (6 activities, accelerometer + gyroscope @50 Hz)",

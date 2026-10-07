@@ -98,23 +98,7 @@ def build_imu_gnss_cnn(out: Path) -> QModel:
                         description="GNSS spoofing detector, 1D-CNN over IMU+GNSS window (benchmark weights)")
 
 
-def build_kws_dscnn(out: Path) -> QModel:
-    x = datasets.mfcc_like(256, seed=3)
-    net = FloatNet((49, 10, 1), [
-        FLayer("conv2d", 32, kernel=(10, 4), stride=(2, 2), padding="same", act="relu"),
-        FLayer("dwconv2d", kernel=(3, 3), padding="same", act="relu"),
-        FLayer("conv2d", 32, kernel=(1, 1), act="relu"),
-        FLayer("dwconv2d", kernel=(3, 3), padding="same", act="relu"),
-        FLayer("conv2d", 32, kernel=(1, 1), act="relu"),
-        FLayer("avgpool2d", kernel=(25, 5), stride=(25, 5)),
-        FLayer("reshape"),
-        FLayer("dense", 12),
-    ]).build(np.random.default_rng(3))
-    return net.quantize("kws_dscnn", x,
-                        description="Keyword spotting DS-CNN (MLPerf-Tiny-like, 49x10 MFCC, benchmark weights)")
-
-
-BUILDERS = [build_can_ids, build_sensor_ae, build_imu_gnss_cnn, build_kws_dscnn]
+BUILDERS = [build_can_ids, build_sensor_ae, build_imu_gnss_cnn]
 
 
 def load_zoo(zoo_dir: str | Path = ZOO_DIR, custom_dir: str | Path | None = CUSTOM_DIR) -> dict[str, QModel]:

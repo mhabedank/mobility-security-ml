@@ -1,6 +1,6 @@
 # Host simulator build (no PlatformIO needed).
 #   make -C firmware/native            -> build/hilbench-sim
-#   make -C firmware/native CFLAGS="-O2 -DMI_EXCLUDE_KWS_DSCNN"  -> without a model
+#   make -C firmware/native CFLAGS="-O2 -DMI_EXCLUDE_HAR_CNN1D"  -> without a model
 CC ?= cc
 HIL_BUILD_ID ?= 0
 OUT ?= build

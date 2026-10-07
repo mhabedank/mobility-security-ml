@@ -54,7 +54,7 @@ def render_card(m: QModel, version: str) -> str:
     meta = m.meta
     datasets = meta.get("datasets", [])
     lic = model_license(m)
-    audio = any(d.get("id") in ("speech-commands", "mimii") for d in datasets) or "kws" in m.name
+    audio = any(d.get("id") == "mimii" for d in datasets)
     front = ["---", f"license: {lic}", "library_name: hilbench", "pipeline_tag: "
              + ("audio-classification" if audio else "tabular-classification"),
              "tags:", "- tinyml", "- int8", "- microcontroller", "- embedded", "- hardware-in-the-loop"]
@@ -134,18 +134,18 @@ def stage_model(m: QModel, version: str, out: Path) -> Path:
     return d
 
 
-def select_models(version: str, names: list[str] | None) -> list[QModel]:
+def select_models(version: str, names: list[str] | None, exclude: list[str] | None = None) -> list[QModel]:
     zoo = load_zoo()
-    models = [m for n, m in zoo.items() if not names or n in names]
+    models = [m for n, m in zoo.items() if (not names or n in names) and n not in (exclude or [])]
     if not names:  # publish the models that belong to this version
         models = [m for m in models if m.meta.get("version", "0.1.0") == version]
     return models
 
 
 def publish(org: str, version: str, private: bool = True, names: list[str] | None = None,
-            dry_run: bool = False, out: Path | None = None) -> list[str]:
+            dry_run: bool = False, out: Path | None = None, exclude: list[str] | None = None) -> list[str]:
     out = out or Path(tempfile.mkdtemp(prefix="hilbench-hub-"))
-    models = select_models(version, names)
+    models = select_models(version, names, exclude)
     if not models:
         raise SystemExit(f"no models with version {version} in the zoo")
     staged = [stage_model(m, version, out) for m in models]
@@ -218,6 +218,7 @@ def main(argv=None) -> int:
     p.add_argument("--version", required=True)
     p.add_argument("--public", action="store_true", help="create public repos (default: private)")
     p.add_argument("--model", action="append", default=[])
+    p.add_argument("--exclude", action="append", default=[], help="model name to leave out (repeatable)")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--out", type=Path)
     p = sub.add_parser("mirror-dataset")
@@ -227,7 +228,7 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
     if args.cmd == "publish":
         publish(args.org, args.version, private=not args.public, names=args.model or None,
-                dry_run=args.dry_run, out=args.out)
+                dry_run=args.dry_run, out=args.out, exclude=args.exclude)
     else:
         print(mirror_dataset(args.dataset, args.org, private=not args.public))
     return 0

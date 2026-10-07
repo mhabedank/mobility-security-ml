@@ -2,7 +2,6 @@
 import numpy as np
 import pytest
 
-from hilbench.ml.features import mfcc
 from hilbench.ml.train_real import _road_labels, can_features, parse_candump, mimii_windows, roc_auc
 
 
@@ -36,10 +35,6 @@ def test_road_labels_interval_and_id(tmp_path):
     assert y.sum() == 101
 
 
-def test_mfcc_shape():
-    x = np.sin(np.linspace(0, 2000 * np.pi, 16000)).astype(np.float32)
-    assert mfcc(x).shape == (49, 10)
-
 
 def test_roc_auc_and_partial_auc():
     y = np.array([0, 0, 0, 0, 1, 1, 1, 1])
@@ -48,6 +43,13 @@ def test_roc_auc_and_partial_auc():
     assert roc_auc(np.ones(8), y) == 0.5  # ties
     assert abs(roc_auc(np.array([0, 1, 2, 5, 3, 4, 6, 7.0]), y) - 14 / 16) < 1e-9
     assert roc_auc(np.arange(8.0), y, max_fpr=0.1) == 1.0
+
+
+def test_log_mel_shape():
+    from hilbench.ml.features import log_mel
+
+    x = np.sin(np.linspace(0, 2000 * np.pi, 16000)).astype(np.float32)
+    assert log_mel(x).shape == (49, 40)
 
 
 def test_mimii_windows_stack_context():

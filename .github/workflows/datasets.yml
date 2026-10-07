@@ -19,7 +19,7 @@ jobs:
         run: hilbench data verify
       - name: remote files
         run: |
-          hilbench data files road can-mirgu uci-har speech-commands
+          hilbench data files road uci-har mimii
           curl -s https://zenodo.org/api/records/3384388 | python -c "import json,sys; [print('mimii', f['key'], f['size']) for f in json.load(sys.stdin)['files']]"
           curl -s https://zenodo.org/api/records/3678171 | python -c "import json,sys; d=json.load(sys.stdin); print(d['metadata'].get('license')); [print('dcase', f['key'], f['size']) for f in d['files']]"
           curl -s "https://archive.ics.uci.edu/api/dataset?id=1035" | python -c "import json,sys; d=json.load(sys.stdin)['data']; print({k: (str(v)[:120]) for k, v in d.items()})"

@@ -1,8 +1,7 @@
 """Feature extraction shared by training and the bench host (numpy only).
 
-MFCC parameters follow the MLPerf Tiny keyword-spotting reference:
-16 kHz, 1 s clips, 30 ms window, 20 ms hop, 40 mel bands (20 Hz - 4 kHz),
-10 cepstral coefficients -> 49 x 10 features.
+WAV reading and log-mel spectrograms (used by the machine-sound anomaly task).
+Defaults: 16 kHz, 30 ms window, 20 ms hop, 40 mel bands (20 Hz - 4 kHz).
 """
 from __future__ import annotations
 
@@ -16,7 +15,6 @@ WIN = 480  # 30 ms
 HOP = 320  # 20 ms
 NFFT = 512
 N_MELS = 40
-N_MFCC = 10
 FMIN, FMAX = 20.0, 4000.0
 
 
@@ -85,16 +83,7 @@ def mel_filterbank(n_mels: int = N_MELS, nfft: int = NFFT, sr: int = SR, fmin: f
     return fb
 
 
-def _dct_matrix(n_out: int, n_in: int) -> np.ndarray:
-    k = np.arange(n_out)[:, None]
-    n = np.arange(n_in)[None, :]
-    m = np.cos(np.pi / n_in * (n + 0.5) * k) * np.sqrt(2.0 / n_in)
-    m[0] /= np.sqrt(2.0)
-    return m.astype(np.float32)
-
-
 _FB = mel_filterbank()
-_DCT = _dct_matrix(N_MFCC, N_MELS)
 _WINDOW = np.hanning(WIN).astype(np.float32)
 
 
@@ -111,8 +100,3 @@ def log_mel(x: np.ndarray, n_mels: int = N_MELS, win: int = WIN, hop: int = HOP,
     window = _WINDOW if win == WIN else np.hanning(win).astype(np.float32)
     spec = np.abs(np.fft.rfft(frames(x, win, hop) * window, n=nfft)) ** 2
     return np.log(spec @ fb.T + 1e-6).astype(np.float32)
-
-
-def mfcc(x: np.ndarray) -> np.ndarray:
-    """1 s @16 kHz -> (49, 10) MFCC."""
-    return log_mel(x) @ _DCT.T

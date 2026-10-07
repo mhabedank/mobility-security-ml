@@ -56,8 +56,8 @@ def test_excluding_a_model_shrinks_buffers(tmp_path):
     if not shutil.which("make") or not shutil.which("cc"):
         pytest.skip("needs make + cc")
     subprocess.run(["make", "-B", "-C", str(REPO_ROOT / "firmware" / "native"), f"OUT={tmp_path}",
-                    "CFLAGS=-O2 -DMI_EXCLUDE_KWS_DSCNN"], check=True, capture_output=True)
+                    "CFLAGS=-O2 -DMI_EXCLUDE_HAR_CNN1D"], check=True, capture_output=True)
     out = subprocess.run([str(tmp_path / "hilbench-sim")], input="#1 INFO\n", capture_output=True, text=True).stdout
     info = json.loads([line for line in out.splitlines() if '"id":1' in line][0][1:])
     assert info["models"] == len(ZOO) - 1
-    assert info["arena"] == max(m.arena_size() for n, m in ZOO.items() if n != "kws_dscnn")
+    assert info["arena"] == max(m.arena_size() for n, m in ZOO.items() if n != "har_cnn1d")

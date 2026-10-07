@@ -1,6 +1,6 @@
 # Trainingsdaten: Auswahl, Lizenzen, Hosting
 
-Ziel: realistische, offen lizenzierte Daten für **mehrere Use Cases**, die wir auch
+Ziel: realistische, offen lizenzierte Daten für **mehrere Use Cases aus Mobilität und Cyber Security**, die wir auch
 kommerziell nutzen und – wo erlaubt – auf dem Hugging Face Hub spiegeln dürfen.
 Die Daten liegen **nie im Repository**: `hilbench data download <id>` lädt sie vom
 Originalanbieter nach `$HILBENCH_DATA` (Standard `~/.cache/hilbench/datasets`) und
@@ -14,7 +14,6 @@ protokolliert Herkunft, Lizenz, Abrufzeit und SHA-256 in `SOURCE.json`.
 
 | ID | Use Case | Lizenz | kommerziell | HF-Mirror erlaubt | Größe | Status |
 |---|---|---|---|---|---|---|
-| `speech-commands` | Keyword Spotting / Sprachsteuerung im Fahrzeug | CC BY 4.0 | ja | ja (existiert bereits: `google/speech_commands`) | 2,3 GB | **trainiert** (`kws_dscnn`) |
 | `uci-har` | IMU-Bewegungserkennung (Beschleunigung + Gyro, 6 Aktivitäten) | CC BY 4.0 | ja | ja | 60 MB | **trainiert** (`har_cnn1d`) |
 | `road` | CAN-Bus-Intrusion-Detection (echtes Fahrzeug, Fuzzing, Fabrication, Masquerade) | CC BY 4.0 | ja | ja | 560 MB | **trainiert** (`can_ids_road`) |
 | `can-mirgu` | CAN-IDS auf modernem Fahrzeug während der Fahrt | CC BY 4.0 | ja | ja | 500 MB | **beim Anbieter defekt**: Das UCI-Zip enthält statt Header und Datenanfang ~180 MB Nullbytes, nicht rekonstruierbar. Der Downloader verweigert es mit Begründung, CAN-IDS deckt `road` ab |
@@ -51,6 +50,10 @@ deklariert (Zenodo-API), mit der Registry. Ein Lizenzwechsel lässt den CI-Job
 `datasets / verify-licenses` fehlschlagen.
 
 ## Abgelehnt
+
+Nicht im Fokus (Lizenz wäre in Ordnung): Speech Commands v0.02 (CC BY 4.0, Keyword Spotting).
+Das Modell `kws_dscnn` war nur eine TinyML-Benchmark-Referenz ohne Mobilitätsbezug und ist entfernt.
+
 
 | Datensatz | Grund |
 |---|---|

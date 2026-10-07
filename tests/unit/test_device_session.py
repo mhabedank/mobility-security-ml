@@ -103,7 +103,7 @@ def test_crash_is_reported_with_serial_log(sim_lab):
     with _session(sim_lab, env={"HIL_SIM_CRASH_AFTER_LINES": "4"}) as s:  # PING+INFO used by bring-up
         s.device.ping()
         with pytest.raises(DeviceResetDetected) as ei:
-            s.device.selftest("kws_dscnn")
+            s.device.selftest("har_cnn1d")
         assert ei.value.boot_event["reset_reason"] == "watchdog"
         assert any("Soft WDT reset" in line for line in ei.value.log_tail)
         assert s.device.ping()["pong"]  # rebooted firmware answers again

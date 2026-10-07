@@ -25,27 +25,22 @@ extern "C" {
 #else
 #define MI_ZOO_ARENA_SIZE_3 MI_ZOO_ARENA_SIZE_2
 #endif
-#if !defined(MI_EXCLUDE_KWS_DSCNN) && 8000u > MI_ZOO_ARENA_SIZE_3
-#define MI_ZOO_ARENA_SIZE_4 8000u
+#if !defined(MI_EXCLUDE_HAR_CNN1D) && 4096u > MI_ZOO_ARENA_SIZE_3
+#define MI_ZOO_ARENA_SIZE_4 4096u
 #else
 #define MI_ZOO_ARENA_SIZE_4 MI_ZOO_ARENA_SIZE_3
 #endif
-#if !defined(MI_EXCLUDE_HAR_CNN1D) && 4096u > MI_ZOO_ARENA_SIZE_4
-#define MI_ZOO_ARENA_SIZE_5 4096u
+#if !defined(MI_EXCLUDE_CAN_IDS_ROAD) && 128u > MI_ZOO_ARENA_SIZE_4
+#define MI_ZOO_ARENA_SIZE_5 128u
 #else
 #define MI_ZOO_ARENA_SIZE_5 MI_ZOO_ARENA_SIZE_4
 #endif
-#if !defined(MI_EXCLUDE_CAN_IDS_ROAD) && 128u > MI_ZOO_ARENA_SIZE_5
-#define MI_ZOO_ARENA_SIZE_6 128u
+#if !defined(MI_EXCLUDE_MIMII_FAN_AE) && 400u > MI_ZOO_ARENA_SIZE_5
+#define MI_ZOO_ARENA_SIZE_6 400u
 #else
 #define MI_ZOO_ARENA_SIZE_6 MI_ZOO_ARENA_SIZE_5
 #endif
-#if !defined(MI_EXCLUDE_MIMII_FAN_AE) && 400u > MI_ZOO_ARENA_SIZE_6
-#define MI_ZOO_ARENA_SIZE_7 400u
-#else
-#define MI_ZOO_ARENA_SIZE_7 MI_ZOO_ARENA_SIZE_6
-#endif
-#define MI_ZOO_ARENA_SIZE MI_ZOO_ARENA_SIZE_7
+#define MI_ZOO_ARENA_SIZE MI_ZOO_ARENA_SIZE_6
 
 #define MI_ZOO_MAX_IN_0 4u
 #if !defined(MI_EXCLUDE_CAN_IDS_MLP) && 32u > MI_ZOO_MAX_IN_0
@@ -63,27 +58,22 @@ extern "C" {
 #else
 #define MI_ZOO_MAX_IN_3 MI_ZOO_MAX_IN_2
 #endif
-#if !defined(MI_EXCLUDE_KWS_DSCNN) && 490u > MI_ZOO_MAX_IN_3
-#define MI_ZOO_MAX_IN_4 490u
+#if !defined(MI_EXCLUDE_HAR_CNN1D) && 1152u > MI_ZOO_MAX_IN_3
+#define MI_ZOO_MAX_IN_4 1152u
 #else
 #define MI_ZOO_MAX_IN_4 MI_ZOO_MAX_IN_3
 #endif
-#if !defined(MI_EXCLUDE_HAR_CNN1D) && 1152u > MI_ZOO_MAX_IN_4
-#define MI_ZOO_MAX_IN_5 1152u
+#if !defined(MI_EXCLUDE_CAN_IDS_ROAD) && 32u > MI_ZOO_MAX_IN_4
+#define MI_ZOO_MAX_IN_5 32u
 #else
 #define MI_ZOO_MAX_IN_5 MI_ZOO_MAX_IN_4
 #endif
-#if !defined(MI_EXCLUDE_CAN_IDS_ROAD) && 32u > MI_ZOO_MAX_IN_5
-#define MI_ZOO_MAX_IN_6 32u
+#if !defined(MI_EXCLUDE_MIMII_FAN_AE) && 200u > MI_ZOO_MAX_IN_5
+#define MI_ZOO_MAX_IN_6 200u
 #else
 #define MI_ZOO_MAX_IN_6 MI_ZOO_MAX_IN_5
 #endif
-#if !defined(MI_EXCLUDE_MIMII_FAN_AE) && 200u > MI_ZOO_MAX_IN_6
-#define MI_ZOO_MAX_IN_7 200u
-#else
-#define MI_ZOO_MAX_IN_7 MI_ZOO_MAX_IN_6
-#endif
-#define MI_ZOO_MAX_IN MI_ZOO_MAX_IN_7
+#define MI_ZOO_MAX_IN MI_ZOO_MAX_IN_6
 
 #define MI_ZOO_MAX_OUT_0 4u
 #if !defined(MI_EXCLUDE_CAN_IDS_MLP) && 2u > MI_ZOO_MAX_OUT_0
@@ -101,32 +91,26 @@ extern "C" {
 #else
 #define MI_ZOO_MAX_OUT_3 MI_ZOO_MAX_OUT_2
 #endif
-#if !defined(MI_EXCLUDE_KWS_DSCNN) && 12u > MI_ZOO_MAX_OUT_3
-#define MI_ZOO_MAX_OUT_4 12u
+#if !defined(MI_EXCLUDE_HAR_CNN1D) && 6u > MI_ZOO_MAX_OUT_3
+#define MI_ZOO_MAX_OUT_4 6u
 #else
 #define MI_ZOO_MAX_OUT_4 MI_ZOO_MAX_OUT_3
 #endif
-#if !defined(MI_EXCLUDE_HAR_CNN1D) && 6u > MI_ZOO_MAX_OUT_4
-#define MI_ZOO_MAX_OUT_5 6u
+#if !defined(MI_EXCLUDE_CAN_IDS_ROAD) && 2u > MI_ZOO_MAX_OUT_4
+#define MI_ZOO_MAX_OUT_5 2u
 #else
 #define MI_ZOO_MAX_OUT_5 MI_ZOO_MAX_OUT_4
 #endif
-#if !defined(MI_EXCLUDE_CAN_IDS_ROAD) && 2u > MI_ZOO_MAX_OUT_5
-#define MI_ZOO_MAX_OUT_6 2u
+#if !defined(MI_EXCLUDE_MIMII_FAN_AE) && 200u > MI_ZOO_MAX_OUT_5
+#define MI_ZOO_MAX_OUT_6 200u
 #else
 #define MI_ZOO_MAX_OUT_6 MI_ZOO_MAX_OUT_5
 #endif
-#if !defined(MI_EXCLUDE_MIMII_FAN_AE) && 200u > MI_ZOO_MAX_OUT_6
-#define MI_ZOO_MAX_OUT_7 200u
-#else
-#define MI_ZOO_MAX_OUT_7 MI_ZOO_MAX_OUT_6
-#endif
-#define MI_ZOO_MAX_OUT MI_ZOO_MAX_OUT_7
+#define MI_ZOO_MAX_OUT MI_ZOO_MAX_OUT_6
 
 extern const mi_model_t mi_model_can_ids_mlp;
 extern const mi_model_t mi_model_sensor_ae;
 extern const mi_model_t mi_model_imu_gnss_cnn1d;
-extern const mi_model_t mi_model_kws_dscnn;
 extern const mi_model_t mi_model_har_cnn1d;
 extern const mi_model_t mi_model_can_ids_road;
 extern const mi_model_t mi_model_mimii_fan_ae;

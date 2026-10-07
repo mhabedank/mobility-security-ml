@@ -1,8 +1,8 @@
 """Train the bench models on real, openly licensed datasets.
 
     pip install -e ".[train]"
-    hilbench data download speech-commands
-    python -m hilbench.ml.train_real kws [--epochs 20] [--version 0.2.0]
+    hilbench data download road
+    python -m hilbench.ml.train_real can [--epochs 20] [--version 0.2.0]
 
 Pipeline per task: features -> Keras model -> full-integer int8 TFLite ->
 hilbench.ml.tflite_import (bit-exact with the TFLite reference kernels) ->
@@ -226,111 +226,6 @@ def fit(task: Task, epochs: int) -> None:
               metrics=["accuracy"])
     m.fit(task.x_train, task.y_train, validation_data=(task.x_val, task.y_val), epochs=epochs,
           batch_size=128, verbose=2, **task.fit_kwargs)
-
-
-# ------------------------------------------------------------------ KWS --
-
-KWS_WORDS = ["yes", "no", "up", "down", "left", "right", "on", "off", "stop", "go"]
-KWS_LABELS = ["_silence_", "_unknown_"] + KWS_WORDS
-
-
-def _kws_features(args):
-    from .features import mfcc, read_wav
-
-    path, noise, shift, vol = args
-    x = read_wav(path) if path else np.zeros(16000, np.float32)
-    if shift:
-        x = np.roll(x, shift)
-        if shift > 0:
-            x[:shift] = 0
-        else:
-            x[shift:] = 0
-    if noise is not None:
-        x = x + vol * noise
-    return mfcc(x)
-
-
-def load_kws(seed: int = 0, unknown_ratio: float = 0.1, silence_ratio: float = 0.1, workers: int = 4):
-    from multiprocessing import Pool
-
-    from .features import read_wav
-
-    root = dataset_dir("speech-commands") / "extracted"
-    if not (root / "testing_list.txt").exists():
-        raise SystemExit("speech-commands not downloaded: hilbench data download speech-commands")
-    rng = np.random.default_rng(seed)
-    test = set((root / "testing_list.txt").read_text().split())
-    val = set((root / "validation_list.txt").read_text().split())
-    noises = [read_wav(p, length=0) for p in sorted((root / "_background_noise_").glob("*.wav"))]
-
-    splits = {"train": [], "val": [], "test": []}
-    for d in sorted(p for p in root.iterdir() if p.is_dir() and not p.name.startswith("_")):
-        for f in sorted(d.glob("*.wav")):
-            rel = f"{d.name}/{f.name}"
-            split = "test" if rel in test else "val" if rel in val else "train"
-            label = KWS_LABELS.index(d.name) if d.name in KWS_WORDS else 1
-            splits[split].append((str(f), label))
-
-    def noise_clip():
-        n = noises[rng.integers(len(noises))]
-        s = rng.integers(0, len(n) - 16000)
-        return n[s:s + 16000]
-
-    out = {}
-    for split, items in splits.items():
-        known = [it for it in items if it[1] != 1]
-        unknown = [it for it in items if it[1] == 1]
-        n_unk = int(len(known) * unknown_ratio / (1 - unknown_ratio - silence_ratio))
-        n_sil = int(len(known) * silence_ratio / (1 - unknown_ratio - silence_ratio))
-        pick = [unknown[i] for i in rng.permutation(len(unknown))[:n_unk]]
-        jobs = []
-        for path, _label in known + pick:
-            aug = split == "train"
-            jobs.append((path, noise_clip() if aug and rng.random() < 0.8 else None,
-                         int(rng.integers(-1600, 1601)) if aug else 0, float(rng.uniform(0, 0.1))))
-        labels = [lab for _, lab in known + pick]
-        for _ in range(n_sil):  # silence = background noise only
-            jobs.append((None, noise_clip(), 0, float(rng.uniform(0, 1.0))))
-            labels.append(0)
-        with Pool(workers) as pool:
-            feats = pool.map(_kws_features, jobs, chunksize=256)
-        x = np.stack(feats)[..., None].astype(np.float32)
-        y = np.array(labels, dtype=np.int64)
-        perm = rng.permutation(len(y))
-        out[split] = (x[perm], y[perm])
-        print(f"kws {split}: {len(y)} samples", flush=True)
-    return out
-
-
-def kws_model(filters: int = 32, blocks: int = 4):
-    tf = _tf()
-    L = tf.keras.layers
-    x = inp = L.Input((49, 10, 1))
-    x = L.Conv2D(filters, (10, 4), strides=(2, 2), padding="same", use_bias=False)(x)
-    x = L.BatchNormalization()(x)
-    x = L.ReLU()(x)
-    for _ in range(blocks):
-        x = L.DepthwiseConv2D((3, 3), padding="same", use_bias=False)(x)
-        x = L.BatchNormalization()(x)
-        x = L.ReLU()(x)
-        x = L.Conv2D(filters, 1, use_bias=False)(x)
-        x = L.BatchNormalization()(x)
-        x = L.ReLU()(x)
-    x = L.AveragePooling2D((25, 5))(x)  # global average pool microinfer can run
-    x = L.Flatten()(x)
-    x = L.Dropout(0.2)(x)
-    x = L.Dense(len(KWS_LABELS))(x)
-    x = L.Softmax()(x)
-    return tf.keras.Model(inp, x)
-
-
-def task_kws(seed: int) -> Task:
-    d = load_kws(seed)
-    return Task(
-        name="kws_dscnn", model=kws_model(),
-        x_train=d["train"][0], y_train=d["train"][1], x_val=d["val"][0], y_val=d["val"][1],
-        x_test=d["test"][0], y_test=d["test"][1], datasets=["speech-commands"], labels=KWS_LABELS,
-        description="Keyword spotting DS-CNN (12 classes, 49x10 MFCC), trained on Speech Commands v0.02")
 
 
 # ------------------------------------------------------------------ HAR --
@@ -642,8 +537,8 @@ def task_mimii(seed: int) -> Task:
                     "log": "natural log of mel power + 1e-6", "mean": mean.tolist(), "std": std.tolist()})
 
 
-TASKS = {"kws": task_kws, "har": task_har, "can": task_can, "mimii": task_mimii}
-TASK_DATASETS = {"kws": ["speech-commands"], "har": ["uci-har"], "can": ["road"], "mimii": ["mimii"]}
+TASKS = {"har": task_har, "can": task_can, "mimii": task_mimii}
+TASK_DATASETS = {"har": ["uci-har"], "can": ["road"], "mimii": ["mimii"]}
 
 
 def main(argv=None):

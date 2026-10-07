@@ -133,12 +133,3 @@ def imu_gnss_windows(n: int = 512, length: int = 64, channels: int = 6, seed: in
     x[:, :, 3] += np.cumsum(rng.normal(0, 0.05, (n, length)), axis=1)
     x[:, :, 4] += np.sin(2 * np.pi * rng.uniform(0.2, 2, (n, 1)) * t)
     return x.reshape(n, 1, length, channels).astype(np.float32)
-
-
-def mfcc_like(n: int = 256, frames: int = 49, coeffs: int = 10, seed: int = 3):
-    """MFCC-shaped calibration data for the keyword-spotting benchmark model."""
-    rng = np.random.default_rng(seed)
-    scale = np.linspace(4.0, 0.5, coeffs)
-    x = rng.normal(0, 1, (n, frames, coeffs)) * scale
-    x += np.sin(np.linspace(0, 3 * np.pi, frames))[None, :, None] * rng.uniform(0, 3, (n, 1, 1))
-    return x.reshape(n, frames, coeffs, 1).astype(np.float32)

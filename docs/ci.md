@@ -28,7 +28,7 @@ schlägt `test_benchmark` fehl, sobald ein Modell auf einem Board mehr als 25 % 
 
 ```yaml
 esp8266:
-  budgets: {can_ids_mlp: 5000, kws_dscnn: 2000000}   # Mikrosekunden
+  budgets: {can_ids_road: 5000, har_cnn1d: 1000000}   # Mikrosekunden
 ```
 
 ## Artefakte
