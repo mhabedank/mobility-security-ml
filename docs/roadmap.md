@@ -18,7 +18,7 @@ Grundlage: [Recherche](research/README.md). Stand: 2026-10-07.
 
 | # | Modell | Daten (Lizenz) | Status |
 |---|---|---|---|
-| 1 | `can-ids-tiny`: CAN-Angriffserkennung pro Frame mit Features für unbekannte Fahrzeuge, Random Forest → C (emlearn) | can-train-and-test (CC BY 4.0; über Bitbucket erreichbar) | in Arbeit |
+| 1 | `can-ids-tiny`: CAN-Angriffserkennung pro Frame mit Features für unbekannte Fahrzeuge, Random Forest → C (emlearn) | can-train-and-test (CC BY 4.0; über Bitbucket erreichbar) | v0.1 fertig ([Model Card](../models/can-ids-tiny/MODEL_CARD.md)); offen: Latenz auf echter Hardware, Upload |
 | 2 | `v2x-misbehavior-tiny` | VeReMi Extension (CC BY 4.0) | Datenzugang klären |
 | 3 | `gnss-spoofing-tiny` | Aissou GPS Spoofing (CC BY 4.0) | Datenzugang klären |
 

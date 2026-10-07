@@ -1,0 +1,93 @@
+{
+  "model": "can-ids-tiny",
+  "task": "frame-level CAN intrusion detection (binary: benign / attack)",
+  "algorithm": "random forest, hard voting, exported to C with emlearn (float)",
+  "hyperparameters": {
+    "n_estimators": 20,
+    "max_depth": 10,
+    "min_samples_leaf": 20
+  },
+  "inputs": [
+    "dt_id_ms",
+    "dt_ratio",
+    "dt_bus_ms",
+    "bus_dt_ewma_ms",
+    "id_count",
+    "warmup",
+    "new_id_rate",
+    "dlc",
+    "dlc_changed",
+    "hamming",
+    "bytes_changed",
+    "ham_ratio"
+  ],
+  "input_index": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "threshold": 0.6499999761581421,
+  "score": "share of trees voting attack",
+  "tree_nodes": 11244,
+  "training_data": {
+    "dataset": "can-train-and-test (Lampe & Meng)",
+    "doi": "10.11583/DTU.24805533",
+    "license": "CC BY 4.0",
+    "subsets": "train_01 of set_01..set_04 (4 vehicles)",
+    "benign_frames_kept": 0.1
+  },
+  "selection": [
+    {
+      "n_estimators": 10,
+      "max_depth": 8,
+      "threshold": 0.699999988079071,
+      "val_f1": 0.942612976381437,
+      "val_auc_pr": 0.9439091109353245
+    },
+    {
+      "n_estimators": 20,
+      "max_depth": 10,
+      "threshold": 0.6499999761581421,
+      "val_f1": 0.9543918803155218,
+      "val_auc_pr": 0.9672949574800236
+    },
+    {
+      "n_estimators": 30,
+      "max_depth": 12,
+      "threshold": 0.5666666626930237,
+      "val_f1": 0.9528188286808976,
+      "val_auc_pr": 0.9600517129500066
+    }
+  ],
+  "parity_c_vs_python": {
+    "set_01/test_02_unknown_vehicle_known_attack/DoS-3": {
+      "frames": 200000,
+      "identical": 1.0,
+      "max_abs_diff": 0.0
+    },
+    "set_02/test_01_known_vehicle_known_attack/fuzzing-3": {
+      "frames": 200000,
+      "identical": 1.0,
+      "max_abs_diff": 0.0
+    },
+    "set_03/test_03_known_vehicle_unknown_attack/speed-1": {
+      "frames": 200000,
+      "identical": 1.0,
+      "max_abs_diff": 0.0
+    },
+    "set_04/test_04_unknown_vehicle_unknown_attack/triple-1": {
+      "frames": 200000,
+      "identical": 1.0,
+      "max_abs_diff": 0.0
+    }
+  }
+}

@@ -4,7 +4,7 @@
     python models/can-ids-tiny/publish.py --repo ORG/can-ids-tiny --upload   # needs HF_TOKEN
 
 The model card is models/can-ids-tiny/MODEL_CARD.md; the evaluation tables in it are generated
-from artifacts/can-ids-tiny/protocol_results.json by `tables`.
+from results/protocol_results.json by `tables`.
 """
 
 from __future__ import annotations
@@ -17,6 +17,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 ART = REPO / "artifacts" / "can-ids-tiny"
+RESULTS = HERE / "results"  # versioned copies of protocol results, export config, benchmarks
 HF_DIR = ART / "hf"
 SPLIT_LABELS = {
     "test_01_known_vehicle_known_attack": "known vehicle, known attacks",
@@ -74,7 +75,7 @@ def per_attack_table(results: dict, feature_set: str = "no_can_id") -> str:
 
 
 def cmd_tables(_args) -> None:
-    results = json.loads((ART / "protocol_results.json").read_text())
+    results = json.loads((RESULTS / "protocol_results.json").read_text())
     print("## Summary\n")
     print(summary_table(results))
     print("\n## Per attack\n")
@@ -88,8 +89,8 @@ def build() -> Path:
         shutil.rmtree(HF_DIR)
     (HF_DIR / "c").mkdir(parents=True)
     shutil.copy(HERE / "MODEL_CARD.md", HF_DIR / "README.md")
-    shutil.copy(ART / "export" / "config.json", HF_DIR / "config.json")
-    shutil.copy(ART / "protocol_results.json", HF_DIR / "protocol_results.json")
+    shutil.copy(RESULTS / "config.json", HF_DIR / "config.json")
+    shutil.copy(RESULTS / "protocol_results.json", HF_DIR / "protocol_results.json")
     for p in (HERE / "c").glob("*.[ch]"):
         if p.name != "host_score.c":
             shutil.copy(p, HF_DIR / "c" / p.name)
@@ -98,7 +99,7 @@ def build() -> Path:
     feat = REPO / "firmware" / "components" / "msml_can_features"
     shutil.copy(feat / "msml_can_features.c", HF_DIR / "c")
     shutil.copy(feat / "include" / "msml_can_features.h", HF_DIR / "c")
-    bench = ART / "benchmarks"
+    bench = RESULTS / "benchmarks"
     if bench.exists():
         shutil.copytree(bench, HF_DIR / "benchmarks")
     shutil.copy(REPO / "LICENSE", HF_DIR / "LICENSE")

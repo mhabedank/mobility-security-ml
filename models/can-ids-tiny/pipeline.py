@@ -257,9 +257,78 @@ def parity_check(clf, idx: list[int], export_dir: Path) -> dict:
     return report
 
 
-def cmd_export(args) -> None:
-    import emlearn
+def float32_split_literal(threshold: float) -> str:
+    """C literal t such that, for every float32 x, (x < t) == (x <= threshold).
 
+    scikit-learn sends x left when x <= threshold (threshold in float64); the emlearn
+    generated code tests x < t with a float literal. Using the next float32 above the largest
+    float32 <= threshold makes both tests agree exactly.
+    """
+    a = np.float32(threshold)
+    if float(a) > threshold:
+        a = np.nextafter(a, np.float32(-np.inf))
+    t = np.nextafter(a, np.float32(np.inf))
+    return np.format_float_scientific(t, unique=True) + "f"
+
+
+def to_c(clf, idx: list[int], thr: float, export_dir: Path) -> None:
+    import emlearn
+    import emlearn.cgen
+
+    original = emlearn.cgen.constant
+
+    def exact_constant(val, dtype="float"):
+        return float32_split_literal(float(val)) if dtype == "float" else original(val, dtype)
+
+    emlearn.cgen.constant = exact_constant
+    try:
+        cmodel = emlearn.convert(clf, method="inline", dtype="float")
+        cmodel.save(file=str(export_dir / f"{MODEL_NAME}.h"), name=MODEL_NAME)
+    finally:
+        emlearn.cgen.constant = original
+    write_config_header(export_dir / "can_ids_tiny_config.h", idx, thr)
+
+
+def write_export_config(clf, idx, thr, hp, selection, parity, export_dir: Path) -> dict:
+    config = {
+        "model": "can-ids-tiny",
+        "task": "frame-level CAN intrusion detection (binary: benign / attack)",
+        "algorithm": "random forest, hard voting, exported to C with emlearn (float)",
+        "hyperparameters": {**hp, "min_samples_leaf": 20},
+        "inputs": [FEATURE_NAMES[i] for i in idx],
+        "input_index": idx,
+        "threshold": thr,
+        "score": "share of trees voting attack",
+        "tree_nodes": int(sum(e.tree_.node_count for e in clf.estimators_)),
+        "training_data": {
+            "dataset": "can-train-and-test (Lampe & Meng)",
+            "doi": "10.11583/DTU.24805533",
+            "license": "CC BY 4.0",
+            "subsets": "train_01 of set_01..set_04 (4 vehicles)",
+            "benign_frames_kept": BENIGN_KEEP,
+        },
+        "selection": selection,
+        "parity_c_vs_python": parity,
+    }
+    (export_dir / "config.json").write_text(json.dumps(config, indent=2))
+    return config
+
+
+def convert_and_check(export_dir: Path) -> None:
+    saved = joblib.load(export_dir / "model.joblib")
+    clf, thr, idx = saved["model"], saved["threshold"], saved["input_index"]
+    to_c(clf, idx, thr, export_dir)
+    parity = parity_check(clf, idx, export_dir)
+    hp = {"n_estimators": clf.n_estimators, "max_depth": clf.max_depth}
+    config = write_export_config(clf, idx, thr, hp, saved["selection"], parity, export_dir)
+    print(json.dumps({k: config[k] for k in ("hyperparameters", "threshold", "tree_nodes",
+                                             "parity_c_vs_python")}, indent=2))
+    bad = {k: v for k, v in parity.items() if v["identical"] < 1.0}
+    if bad:
+        raise SystemExit(f"C and Python scores differ: {bad}")
+
+
+def cmd_export(args) -> None:
     export_dir = OUT / "export"
     export_dir.mkdir(parents=True, exist_ok=True)
     idx = cols(FEATURE_SETS[EXPORT_FEATURES])
@@ -285,35 +354,12 @@ def cmd_export(args) -> None:
     clf = fit(X[:, idx], y, hp)
     joblib.dump({"model": clf, "threshold": thr, "input_index": idx, "selection": selection},
                 export_dir / "model.joblib")
+    convert_and_check(export_dir)
 
-    cmodel = emlearn.convert(clf, method="inline", dtype="float")
-    cmodel.save(file=str(export_dir / f"{MODEL_NAME}.h"), name=MODEL_NAME)
-    write_config_header(export_dir / "can_ids_tiny_config.h", idx, thr)
-    parity = parity_check(clf, idx, export_dir)
-    n_nodes = int(sum(e.tree_.node_count for e in clf.estimators_))
-    config = {
-        "model": "can-ids-tiny",
-        "task": "frame-level CAN intrusion detection (binary: benign / attack)",
-        "algorithm": "random forest, hard voting, exported to C with emlearn (float)",
-        "hyperparameters": {**hp, "min_samples_leaf": 20},
-        "inputs": [FEATURE_NAMES[i] for i in idx],
-        "input_index": idx,
-        "threshold": thr,
-        "score": "share of trees voting attack",
-        "tree_nodes": n_nodes,
-        "training_data": {
-            "dataset": "can-train-and-test (Lampe & Meng)",
-            "doi": "10.11583/DTU.24805533",
-            "license": "CC BY 4.0",
-            "subsets": "train_01 of set_01..set_04 (4 vehicles)",
-            "benign_frames_kept": BENIGN_KEEP,
-        },
-        "selection": selection,
-        "parity_c_vs_python": parity,
-    }
-    (export_dir / "config.json").write_text(json.dumps(config, indent=2))
-    print(json.dumps({k: config[k] for k in ("hyperparameters", "threshold", "tree_nodes",
-                                             "parity_c_vs_python")}, indent=2))
+
+def cmd_convert(args) -> None:
+    """Re-run C conversion and the parity check on the saved model (no retraining)."""
+    convert_and_check(OUT / "export")
 
 
 TV_CAPTURE = ("set_04", "test_04_unknown_vehicle_unknown_attack", "triple-1")
@@ -390,6 +436,8 @@ def main() -> None:
     ev.set_defaults(func=cmd_evaluate)
     ex = sub.add_parser("export")
     ex.set_defaults(func=cmd_export)
+    cv = sub.add_parser("convert")
+    cv.set_defaults(func=cmd_convert)
     tv = sub.add_parser("testvectors")
     tv.set_defaults(func=cmd_testvectors)
     args = ap.parse_args()

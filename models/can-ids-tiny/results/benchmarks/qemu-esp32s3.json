@@ -1,0 +1,11 @@
+{
+  "target": "esp32s3",
+  "cpu_mhz": 80,
+  "frames": 4000,
+  "score_mismatches": 0,
+  "attack_frames": 738,
+  "detected": 730,
+  "state_bytes": 65560,
+  "free_heap": 307216,
+  "environment": "QEMU (esp_develop_9.2.2), functional check only: latency in QEMU is not representative"
+}
