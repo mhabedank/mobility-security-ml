@@ -29,7 +29,7 @@ from .ml.codegen import model_to_c
 from .ml.model import QModel
 from .ml.zoo import load_zoo
 
-ARTIFACTS = REPO_ROOT / "build" / "models"
+ARTIFACTS = REPO_ROOT / "models" / "zoo"
 COLLECTION_TITLE = "hilbench TinyML zoo"
 TARGETS = ["ESP8266", "ESP32", "ESP32-S3", "ESP32-C3", "RP2040", "RP2350", "STM32F4", "nRF52840"]
 

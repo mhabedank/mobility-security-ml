@@ -43,6 +43,8 @@ jobs:
       - run: hilbench data tree ${{ matrix.dataset }} --max 150
       - name: sample content
         run: |
-          cat "$HILBENCH_DATA/${{ matrix.dataset }}/SOURCE.json"
-          find "$HILBENCH_DATA/${{ matrix.dataset }}/extracted" -type f \( -name '*.log' -o -name '*.csv' -o -name '*.txt' -o -name '*.json' -o -name '*.md' \) | head -12 | while read f; do
-            echo "===== $f ($(wc -l < "$f") lines)"; head -n 6 "$f" | cut -c1-400; done
+          D="$HILBENCH_DATA/${{ matrix.dataset }}/extracted"
+          find "$D" -name capture_metadata.json -o -name metadata.json -o -name readme.md -o -name README* | grep -v __MACOSX | while read f; do
+            echo "===== $f"; head -c 6000 "$f"; echo; done
+          find "$D" -type f \( -name '*.log' -o -name '*.csv' -o -name '*.txt' \) | grep -v __MACOSX | sort | head -8 | while read f; do
+            echo "===== $f ($(wc -l < "$f") lines)"; head -n 5 "$f" | cut -c1-300; done

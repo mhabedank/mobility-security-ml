@@ -134,9 +134,13 @@ def load_zoo(zoo_dir: str | Path = ZOO_DIR, custom_dir: str | Path | None = CUST
 
 
 def load_eval(name: str, zoo_dir: str | Path = ZOO_DIR) -> dict | None:
+    from ..data.download import data_root
+
     p = Path(zoo_dir) / f"{name}.eval.npz"
     if not p.exists():
         p = CUSTOM_DIR / f"{name}.eval.npz"
+    if not p.exists():  # held-out features of real datasets live outside the repo
+        p = data_root() / "derived" / f"{name}.eval.npz"
     if not p.exists():
         return None
     with np.load(p) as z:

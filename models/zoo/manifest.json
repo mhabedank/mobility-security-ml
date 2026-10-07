@@ -63,7 +63,7 @@
     },
     {
       "name": "kws_dscnn",
-      "description": "Keyword spotting DS-CNN (MLPerf-Tiny-like, 49x10 MFCC, benchmark weights)",
+      "description": "Keyword spotting DS-CNN (12 classes, 49x10 MFCC), trained on Speech Commands v0.02",
       "in_shape": [
         49,
         10,
@@ -74,12 +74,14 @@
         1,
         12
       ],
-      "layers": 8,
-      "macs": 488384,
-      "param_bytes": 5836,
+      "layers": 12,
+      "macs": 816384,
+      "param_bytes": 9612,
       "arena_size": 8000,
-      "crc32": "33cf6517",
-      "n_tests": 8
+      "crc32": "8d019949",
+      "n_tests": 8,
+      "version": "0.2.0",
+      "source": "real-data"
     }
   ]
 }

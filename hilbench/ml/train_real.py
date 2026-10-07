@@ -10,8 +10,8 @@ evaluation of the *device arithmetic* on the held-out test split.
 
 Outputs
   models/zoo/<name>.npz           quantized model (parameters only, no data)
-  build/models/<name>.tflite      TFLite flatbuffer (for Hugging Face / other runtimes)
-  build/models/<name>.json        metrics, dataset provenance, license
+  models/zoo/<name>.tflite        int8 TFLite flatbuffer (for Hugging Face / other runtimes)
+  models/zoo/<name>.report.json   metrics, dataset provenance, license
   $HILBENCH_DATA/derived/<name>.eval.npz   held-out features for HIL accuracy tests
 Training data is never written into the repository.
 """
@@ -30,7 +30,7 @@ from ..data.download import data_root, dataset_dir
 from ..data.registry import SOURCES
 
 ZOO_DIR = REPO_ROOT / "models" / "zoo"
-ARTIFACTS = REPO_ROOT / "build" / "models"
+ARTIFACTS = ZOO_DIR
 
 
 @dataclass
@@ -48,6 +48,7 @@ class Task:
     labels: list[str] = field(default_factory=list)
     metric: str = "accuracy"
     fit_kwargs: dict = field(default_factory=dict)
+    preprocess: dict = field(default_factory=dict)  # host-side feature normalisation
 
 
 def _tf():
@@ -104,6 +105,7 @@ def export(task: Task, version: str, seed: int = 0) -> dict:
         if (dataset_dir(d) / "SOURCE.json").exists() else None,
     } for d in task.datasets]
     qm.meta.update(task="classification", classes=task.labels, version=version, datasets=provenance,
+                   preprocess=task.preprocess,
                    trained_at=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), **metrics)
     qm.save(ZOO_DIR / f"{task.name}.npz")
 
@@ -114,7 +116,7 @@ def export(task: Task, version: str, seed: int = 0) -> dict:
 
     report = {"name": task.name, "version": version, "description": task.description, "labels": task.labels,
               "summary": qm.summary(), **metrics, "datasets": provenance}
-    (ARTIFACTS / f"{task.name}.json").write_text(json.dumps(report, indent=2) + "\n")
+    (ARTIFACTS / f"{task.name}.report.json").write_text(json.dumps(report, indent=2) + "\n")
     _update_manifest(qm, version)
     return report
 
@@ -243,7 +245,70 @@ def task_kws(seed: int) -> Task:
         description="Keyword spotting DS-CNN (12 classes, 49x10 MFCC), trained on Speech Commands v0.02")
 
 
-TASKS = {"kws": task_kws}
+# ------------------------------------------------------------------ HAR --
+
+HAR_LABELS = ["walking", "walking_upstairs", "walking_downstairs", "sitting", "standing", "laying"]
+HAR_SIGNALS = ["body_acc_x", "body_acc_y", "body_acc_z", "body_gyro_x", "body_gyro_y", "body_gyro_z",
+               "total_acc_x", "total_acc_y", "total_acc_z"]
+
+
+def load_har():
+    root = dataset_dir("uci-har") / "extracted"
+    hits = sorted(root.rglob("train/Inertial Signals"))
+    if not hits:
+        raise SystemExit("uci-har not downloaded: hilbench data download uci-har")
+    base = hits[0].parent.parent
+
+    def split(name):
+        x = np.stack([np.loadtxt(base / name / "Inertial Signals" / f"{sig}_{name}.txt", dtype=np.float32)
+                      for sig in HAR_SIGNALS], axis=-1)  # (n, 128, 9)
+        y = np.loadtxt(base / name / f"y_{name}.txt", dtype=np.int64) - 1
+        return x, y
+
+    return split("train"), split("test")
+
+
+def har_model():
+    tf = _tf()
+    L = tf.keras.layers
+    x = inp = L.Input((1, 128, 9))
+    for filters, k in ((16, 5), (32, 5)):
+        x = L.Conv2D(filters, (1, k), padding="same", use_bias=False)(x)
+        x = L.BatchNormalization()(x)
+        x = L.ReLU()(x)
+        x = L.MaxPooling2D((1, 2))(x)
+    x = L.Conv2D(32, (1, 3), padding="same", use_bias=False)(x)
+    x = L.BatchNormalization()(x)
+    x = L.ReLU()(x)
+    x = L.AveragePooling2D((1, 32))(x)
+    x = L.Flatten()(x)
+    x = L.Dropout(0.3)(x)
+    x = L.Dense(len(HAR_LABELS))(x)
+    x = L.Softmax()(x)
+    return tf.keras.Model(inp, x)
+
+
+def task_har(seed: int) -> Task:
+    (xtr, ytr), (xte, yte) = load_har()
+    mean = xtr.reshape(-1, 9).mean(0)
+    std = xtr.reshape(-1, 9).std(0) + 1e-6
+    norm = lambda a: ((a - mean) / std)[:, None, :, :].astype(np.float32)  # noqa: E731
+    rng = np.random.default_rng(seed)
+    perm = rng.permutation(len(ytr))
+    n_val = len(ytr) // 7
+    val, tr = perm[:n_val], perm[n_val:]
+    task = Task(
+        name="har_cnn1d", model=har_model(),
+        x_train=norm(xtr[tr]), y_train=ytr[tr], x_val=norm(xtr[val]), y_val=ytr[val],
+        x_test=norm(xte), y_test=yte, datasets=["uci-har"], labels=HAR_LABELS,
+        description="Human activity recognition 1D-CNN over 2.56 s of accelerometer + gyroscope "
+                    "(9 x 128 @50 Hz), trained on UCI HAR")
+    task.preprocess = {"channels": HAR_SIGNALS, "mean": mean.tolist(), "std": std.tolist()}
+    return task
+
+
+TASKS = {"kws": task_kws, "har": task_har}
+TASK_DATASETS = {"kws": ["speech-commands"], "har": ["uci-har"]}
 
 
 def main(argv=None):
@@ -252,7 +317,14 @@ def main(argv=None):
     ap.add_argument("--epochs", type=int, default=20)
     ap.add_argument("--version", default="0.2.0")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--download", action="store_true", help="download the datasets first")
     args = ap.parse_args(argv)
+    if args.download:
+        from ..data.download import download
+
+        for name in args.tasks:
+            for ds in TASK_DATASETS.get(name, []):
+                download(ds)
     tf = _tf()
     tf.keras.utils.set_random_seed(args.seed)
     reports = []

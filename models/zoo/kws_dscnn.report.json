@@ -1,0 +1,54 @@
+{
+  "name": "kws_dscnn",
+  "version": "0.2.0",
+  "description": "Keyword spotting DS-CNN (12 classes, 49x10 MFCC), trained on Speech Commands v0.02",
+  "labels": [
+    "_silence_",
+    "_unknown_",
+    "yes",
+    "no",
+    "up",
+    "down",
+    "left",
+    "right",
+    "on",
+    "off",
+    "stop",
+    "go"
+  ],
+  "summary": {
+    "name": "kws_dscnn",
+    "description": "Keyword spotting DS-CNN (12 classes, 49x10 MFCC), trained on Speech Commands v0.02",
+    "in_shape": [
+      49,
+      10,
+      1
+    ],
+    "out_shape": [
+      1,
+      1,
+      12
+    ],
+    "layers": 12,
+    "macs": 816384,
+    "param_bytes": 9612,
+    "arena_size": 8000,
+    "crc32": "8d019949",
+    "n_tests": 8
+  },
+  "float_accuracy": 0.9073055773762765,
+  "int8_accuracy": 0.9053417124901807,
+  "test_samples": 5092,
+  "tflite_interpreter_mismatches": 0,
+  "datasets": [
+    {
+      "id": "speech-commands",
+      "title": "Speech Commands v0.02",
+      "license": "CC-BY-4.0",
+      "attribution": "Speech Commands dataset v0.02 by Pete Warden, Google (CC BY 4.0)",
+      "citation": "P. Warden, 'Speech Commands: A Dataset for Limited-Vocabulary Speech Recognition', arXiv:1804.03209, 2018",
+      "homepage": "https://arxiv.org/abs/1804.03209",
+      "retrieved": "2026-10-07T12:05:54Z"
+    }
+  ]
+}

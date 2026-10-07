@@ -184,6 +184,8 @@ def _extract(archive: Path, target: Path) -> None:
                 if not str(p).startswith(str(target.resolve())):
                     raise DataError(f"unsafe path in {archive.name}: {m.name}")
             t.extractall(target, **kwargs)
+    for junk in list(target.rglob("__MACOSX")):  # macOS resource forks
+        shutil.rmtree(junk, ignore_errors=True)
     # nested archives (UCI zips often contain another zip)
     for inner in list(target.rglob("*.zip")):
         sub = inner.with_suffix("")

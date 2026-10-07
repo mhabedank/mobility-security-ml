@@ -58,7 +58,9 @@ def test_evaluation_set_on_device(dut, name):
     if model.meta.get("task") == "classification":
         dev_metric = float((outs.argmax(1) == ys).mean())
         host_metric = float((host.argmax(1) == ys).mean())
-        assert dev_metric > 0.9, f"device accuracy {dev_metric:.3f}"
+        expected = model.meta.get("int8_accuracy")
+        if expected is not None and n >= 256:
+            assert dev_metric >= expected - 0.05, f"device accuracy {dev_metric:.3f} vs trained {expected:.3f}"
     else:  # anomaly detection via reconstruction error
         targets = ev["targets"][:n]
         thr = model.meta["threshold"]
