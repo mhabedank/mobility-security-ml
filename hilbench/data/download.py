@@ -8,16 +8,19 @@
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import os
 import re
 import shutil
+import struct
 import subprocess
 import sys
 import tarfile
 import time
 import urllib.request
 import zipfile
+import zlib
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -87,7 +90,7 @@ def remote_files(src: Source) -> list[RemoteFile]:
         files = []
         for f in rec.get("files", []):
             name = f.get("key") or f.get("filename")
-            if src.zenodo_files and not any(p in name for p in src.zenodo_files):
+            if src.zenodo_files and not any(name.startswith(p) for p in src.zenodo_files):
                 continue
             url = (f.get("links") or {}).get("self") or f"https://zenodo.org/records/{src.zenodo_record}/files/{name}"
             files.append(RemoteFile(url=url, name=name, size=f.get("size"), checksum=f.get("checksum")))
@@ -100,6 +103,141 @@ def remote_files(src: Source) -> list[RemoteFile]:
         url = f"https://archive.ics.uci.edu/static/public/{src.uci_id}/{slug}.zip"
         return [RemoteFile(url=url, name=f"{src.id}.zip")]
     return [RemoteFile(url=u, name=u.rsplit("/", 1)[-1]) for u in src.urls]
+
+
+# ------------------------------------------------ partial (range) zip reads --
+
+def _range_get(url: str, start: int, end: int, retries: int = 4) -> bytes:
+    """Bytes [start, end] (inclusive) of a remote file; the server must honour Range."""
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Range": f"bytes={start}-{end}"})
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                if resp.status != 206:
+                    raise DataError(f"{url}: server ignores Range requests")
+                return resp.read()
+        except OSError:
+            if attempt == retries - 1:
+                raise
+            time.sleep(2 ** (attempt + 1))
+    raise AssertionError("unreachable")
+
+
+class HttpRangeFile(io.RawIOBase):
+    """Seekable read-only view of a remote file via HTTP Range requests. zipfile uses it
+    to read the central directory of multi-GB archives without downloading them."""
+
+    def __init__(self, url: str, size: int, block: int = 1 << 20):
+        self.url, self.size, self.block, self.pos = url, size, block, 0
+        self._cache: dict[int, bytes] = {}
+
+    def _get_block(self, idx: int) -> bytes:
+        if idx not in self._cache:
+            start = idx * self.block
+            self._cache[idx] = _range_get(self.url, start, min(start + self.block, self.size) - 1)
+            if len(self._cache) > 64:  # bound memory
+                self._cache.pop(next(iter(self._cache)))
+        return self._cache[idx]
+
+    def readable(self):
+        return True
+
+    def seekable(self):
+        return True
+
+    def tell(self):
+        return self.pos
+
+    def seek(self, offset, whence=io.SEEK_SET):
+        self.pos = {io.SEEK_SET: offset, io.SEEK_CUR: self.pos + offset, io.SEEK_END: self.size + offset}[whence]
+        return self.pos
+
+    def readinto(self, b):
+        n = min(len(b), max(self.size - self.pos, 0))
+        out = bytearray()
+        while len(out) < n:
+            idx, off = divmod(self.pos + len(out), self.block)
+            chunk = self._get_block(idx)[off:off + n - len(out)]
+            if not chunk:
+                break
+            out += chunk
+        b[:len(out)] = out
+        self.pos += len(out)
+        return len(out)
+
+
+_LOCAL_HEADER = struct.Struct("<4s5HLLLHH")  # zip local file header (30 bytes)
+
+
+def _read_member(url: str, info: zipfile.ZipInfo) -> bytes:
+    """One member of a remote zip with a single Range request (plus one more if the
+    local extra field is larger than guessed); CRC-checked."""
+    guess = _LOCAL_HEADER.size + len(info.orig_filename.encode()) + len(info.extra) + 64
+    raw = _range_get(url, info.header_offset, info.header_offset + guess + info.compress_size - 1)
+    sig, *_, n_name, n_extra = _LOCAL_HEADER.unpack_from(raw)
+    if sig != b"PK\x03\x04":
+        raise DataError(f"{info.filename}: bad local header")
+    begin = _LOCAL_HEADER.size + n_name + n_extra
+    if begin + info.compress_size > len(raw):
+        raw += _range_get(url, info.header_offset + len(raw), info.header_offset + begin + info.compress_size - 1)
+    data = raw[begin:begin + info.compress_size]
+    if info.compress_type == zipfile.ZIP_DEFLATED:
+        data = zlib.decompressobj(-15).decompress(data)
+    elif info.compress_type != zipfile.ZIP_STORED:
+        raise DataError(f"{info.filename}: unsupported compression {info.compress_type}")
+    if zlib.crc32(data) != info.CRC or len(data) != info.file_size:
+        raise DataError(f"{info.filename}: CRC/size mismatch")
+    return data
+
+
+def select_members(names: list[str], select: tuple[tuple[str, int], ...], seed: int = 0) -> list[str]:
+    """Deterministic random sample of up to `limit` names per glob pattern."""
+    import fnmatch
+    import random
+
+    rng = random.Random(seed)
+    chosen: list[str] = []
+    for pattern, limit in select:
+        hits = sorted(n for n in names if fnmatch.fnmatch(n, pattern) and n not in chosen)
+        rng.shuffle(hits)
+        chosen += sorted(hits[:limit])
+        print(f"  {pattern}: {min(len(hits), limit)} of {len(hits)} members", flush=True)
+    return chosen
+
+
+def fetch_zip_members(f: RemoteFile, target: Path, select: tuple[tuple[str, int], ...], seed: int = 0,
+                      workers: int = 8) -> int:
+    """Extract only members matching (glob, max count) pairs from a remote zip:
+    the central directory is read via ranges, then each member with one request."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    size = f.size or int(urllib.request.urlopen(urllib.request.Request(
+        f.url, method="HEAD", headers={"User-Agent": USER_AGENT}), timeout=60).headers["Content-Length"])
+    with zipfile.ZipFile(io.BufferedReader(HttpRangeFile(f.url, size), buffer_size=1 << 20)) as z:
+        infos = {i.filename: i for i in z.infolist() if not i.is_dir() and "__MACOSX" not in i.filename}
+    root = target.resolve()
+    todo = []
+    for name in select_members(list(infos), select, seed):
+        dest = (target / name).resolve()
+        if not dest.is_relative_to(root):
+            raise DataError(f"unsafe path in {f.name}: {name}")
+        if not dest.exists():
+            todo.append((infos[name], dest))
+
+    def one(item):
+        info, dest = item
+        data = _read_member(f.url, info)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        tmp = dest.with_suffix(dest.suffix + ".part")
+        tmp.write_bytes(data)
+        tmp.replace(dest)
+
+    t0 = time.monotonic()
+    with ThreadPoolExecutor(workers) as ex:
+        for i, _ in enumerate(ex.map(one, todo), 1):
+            if i % 100 == 0 or i == len(todo):
+                print(f"  {i}/{len(todo)} members ({time.monotonic() - t0:.0f} s)", flush=True)
+    return len(todo)
 
 
 # -------------------------------------------------------------- download --
@@ -212,6 +350,12 @@ def download(ds_id: str, extract: bool = True, force: bool = False, check_licens
     raw = d / "raw"
     raw.mkdir(exist_ok=True)
     record = []
+    if src.zip_members:  # only a subset of a huge archive, read via HTTP ranges
+        for f in files:
+            n = fetch_zip_members(f, d / "extracted", src.zip_members)
+            record.append({"name": f.name, "url": f.url, "archive_bytes": f.size, "checksum": f.checksum,
+                           "members_extracted": n, "selection": [list(s) for s in src.zip_members]})
+        files = []
     for f in files:
         dest = raw / f.name
         if not dest.exists():

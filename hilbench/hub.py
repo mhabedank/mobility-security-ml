@@ -31,6 +31,9 @@ from .ml.zoo import load_zoo
 
 ARTIFACTS = REPO_ROOT / "models" / "zoo"
 COLLECTION_TITLE = "hilbench TinyML zoo"
+CARD_METRICS = ("float_accuracy", "int8_accuracy", "int8_precision", "int8_recall", "int8_f1",
+                "int8_false_positive_rate", "float_auc", "int8_auc", "int8_pauc", "int8_window_auc",
+                "int8_detection_rate", "threshold", "test_samples", "test_clips")
 TARGETS = ["ESP8266", "ESP32", "ESP32-S3", "ESP32-C3", "RP2040", "RP2350", "STM32F4", "nRF52840"]
 
 
@@ -51,14 +54,15 @@ def render_card(m: QModel, version: str) -> str:
     meta = m.meta
     datasets = meta.get("datasets", [])
     lic = model_license(m)
+    audio = any(d.get("id") in ("speech-commands", "mimii") for d in datasets) or "kws" in m.name
     front = ["---", f"license: {lic}", "library_name: hilbench", "pipeline_tag: "
-             + ("audio-classification" if "kws" in m.name else "tabular-classification"),
+             + ("audio-classification" if audio else "tabular-classification"),
              "tags:", "- tinyml", "- int8", "- microcontroller", "- embedded", "- hardware-in-the-loop"]
     front += [f"- {t.lower()}" for t in ("esp32", "esp8266", "rp2040", "stm32")]
     if datasets:
         front.append("datasets:")
         front += [f"- {d['id']}" for d in datasets]
-    metrics = {k: meta[k] for k in ("float_accuracy", "int8_accuracy", "test_samples") if k in meta}
+    metrics = {k: v for k, v in meta.items() if k in CARD_METRICS or k.startswith("int8_auc_")}
     front += ["---", ""]
     body = [
         f"# {m.name} (v{version})", "",
@@ -83,7 +87,12 @@ def render_card(m: QModel, version: str) -> str:
     if metrics:
         body += ["## Evaluation", "", "| metric | value |", "|---|---|"]
         body += [f"| {k} | {v:.4f} |" if isinstance(v, float) else f"| {k} | {v} |" for k, v in metrics.items()]
-        body += ["", "int8 numbers are computed with the bit-exact host reference of the device engine.", ""]
+        body += ["", "int8 numbers are computed with the bit-exact host reference of the device engine."]
+        if meta.get("task") == "anomaly":
+            body += ["Anomaly score = mean squared reconstruction error of the dequantized output; "
+                     "AUC/pAUC (max FPR 0.1) are computed per clip, `threshold` is the 95th percentile "
+                     "of validation normals per window."]
+        body += [""]
     body += ["## Training data", ""]
     if datasets:
         for d in datasets:

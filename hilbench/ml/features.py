@@ -19,14 +19,16 @@ N_MFCC = 10
 FMIN, FMAX = 20.0, 4000.0
 
 
-def read_wav(path, length: int = SR) -> np.ndarray:
-    """Mono 16-bit PCM wav -> float32 in [-1, 1], padded/cropped to `length`."""
+def read_wav(path, length: int = SR, channel: int | None = None) -> np.ndarray:
+    """16-bit PCM wav -> mono float32 in [-1, 1], padded/cropped to `length`.
+    Multi-channel files are averaged, or reduced to `channel` if given."""
     with wave.open(str(path), "rb") as w:
         if w.getsampwidth() != 2:
             raise ValueError(f"{path}: expected 16-bit PCM")
         x = np.frombuffer(w.readframes(w.getnframes()), dtype="<i2").astype(np.float32) / 32768.0
         if w.getnchannels() > 1:
-            x = x.reshape(-1, w.getnchannels()).mean(axis=1)
+            x = x.reshape(-1, w.getnchannels())
+            x = x.mean(axis=1) if channel is None else x[:, channel]
     if length:
         x = x[:length] if len(x) >= length else np.pad(x, (0, length - len(x)))
     return x

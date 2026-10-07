@@ -18,7 +18,7 @@ protokolliert Herkunft, Lizenz, Abrufzeit und SHA-256 in `SOURCE.json`.
 | `uci-har` | IMU-Bewegungserkennung (Beschleunigung + Gyro, 6 Aktivitäten) | CC BY 4.0 | ja | ja | 60 MB | Pipeline fertig, Training in CI |
 | `road` | CAN-Bus-Intrusion-Detection (echtes Fahrzeug, Fuzzing, Fabrication, Masquerade) | CC BY 4.0 | ja | ja | 560 MB | Download + Inspektion ok, Parser in Arbeit |
 | `can-mirgu` | CAN-IDS auf modernem Fahrzeug während der Fahrt | CC BY 4.0 | ja | ja | 500 MB | Download-Format wird angepasst |
-| `mimii` | wie oben, Originaldatensatz | CC BY-SA 4.0 | ja | ja, **Share-Alike** | 10 GB pro Maschine/SNR | registriert, für CI zu groß |
+| `mimii` | Anomalie-Erkennung an Maschinengeräuschen (Lüfter, Pumpen, Ventile; Predictive Maintenance) | CC BY-SA 4.0 | ja | ja, **Share-Alike** | 10 GB pro Maschine/SNR; wir lesen per HTTP-Range nur ~1150 Clips (~2 GB) | Training in CI (`mimii_fan_ae`) |
 
 Lizenzprüfung: `hilbench data verify` vergleicht die Lizenz, die der Anbieter **heute**
 deklariert (Zenodo-API), mit der Registry. Ein Lizenzwechsel lässt den CI-Job
@@ -67,6 +67,11 @@ hilbench data download uci-har        # nach $HILBENCH_DATA
 hilbench train har --download         # trainieren, int8 exportieren, bit-exakt prüfen
 hilbench run -b sim                   # HIL-Suite inkl. Genauigkeit auf dem Gerät
 ```
+
+**Große Archive:** Bei `mimii` lädt der Downloader nicht das 10-GB-Zip, sondern liest
+per HTTP-Range nur das zentrale Verzeichnis und danach jede ausgewählte Datei mit einer
+einzigen Range-Anfrage (CRC-geprüft, parallel). Die Auswahl (Glob + Anzahl, fester Seed)
+steht in der Registry (`zip_members`) und wird in `SOURCE.json` protokolliert.
 
 In CI: `models/train-request.json` ändern und pushen. Der Workflow `train` lädt die Daten,
 trainiert, testet und committet ausschließlich Modellparameter und Berichte zurück.

@@ -33,8 +33,10 @@ class Source:
     zenodo_record: str | None = None
     uci_id: int | None = None
     urls: tuple[str, ...] = ()
-    # only fetch these files from a Zenodo record (substring match, empty = all)
+    # only fetch these files from a Zenodo record (prefix match, empty = all)
     zenodo_files: tuple[str, ...] = ()
+    # read only these members (glob, max count) out of the archive(s) via HTTP ranges
+    zip_members: tuple[tuple[str, int], ...] = ()
     approx_size_mb: int = 0
     # may we mirror the (unmodified or preprocessed) data on the HF Hub?
     hf_rehost: str = "no"  # "yes" | "yes (share-alike)" | "no"
@@ -117,9 +119,12 @@ SOURCES: dict[str, Source] = {s.id: s for s in [
                  "Investigation and Inspection', DCASE 2019 Workshop",
         zenodo_record="3384388",
         zenodo_files=("6_dB_fan",),
-        approx_size_mb=10000,
+        zip_members=(("*/id_00/normal/*.wav", 500), ("*/id_00/abnormal/*.wav", 200),
+                     ("*/id_02/normal/*.wav", 300), ("*/id_02/abnormal/*.wav", 150)),
+        approx_size_mb=2000,
         hf_rehost="yes (share-alike: mirror and derived data must stay CC BY-SA 4.0)",
-        notes="Only the 6 dB fan subset is fetched by default.",
+        notes="Only a sample of the 6 dB fan recordings (machines id_00, id_02) is read out of the "
+              "10 GB archive via HTTP range requests.",
         tags=("audio", "anomaly"),
     ),
 ]}

@@ -48,7 +48,7 @@ jobs:
       - name: reports
         run: |
           for f in models/zoo/*.report.json; do
-            python -c "import json,sys; r=json.load(open(sys.argv[1])); print({k: r.get(k) for k in ('name','version','float_accuracy','int8_accuracy','test_samples','tflite_interpreter_mismatches')})" "$f"
+            python -c "import json,sys; r=json.load(open(sys.argv[1])); print({k: v for k, v in r.items() if k not in ('datasets','summary','labels','description')})" "$f"
           done
       - name: commit models
         run: |

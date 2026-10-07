@@ -2,7 +2,7 @@
 import numpy as np
 
 from hilbench.ml.features import mfcc
-from hilbench.ml.train_real import _road_labels, can_features, parse_candump
+from hilbench.ml.train_real import _road_labels, can_features, parse_candump, mimii_windows, roc_auc
 
 
 def _log(tmp_path):
@@ -38,3 +38,20 @@ def test_road_labels_interval_and_id(tmp_path):
 def test_mfcc_shape():
     x = np.sin(np.linspace(0, 2000 * np.pi, 16000)).astype(np.float32)
     assert mfcc(x).shape == (49, 10)
+
+
+def test_roc_auc_and_partial_auc():
+    y = np.array([0, 0, 0, 0, 1, 1, 1, 1])
+    assert roc_auc(np.arange(8.0), y) == 1.0
+    assert roc_auc(-np.arange(8.0), y) == 0.0
+    assert roc_auc(np.ones(8), y) == 0.5  # ties
+    assert abs(roc_auc(np.array([0, 1, 2, 5, 3, 4, 6, 7.0]), y) - 14 / 16) < 1e-9
+    assert roc_auc(np.arange(8.0), y, max_fpr=0.1) == 1.0
+
+
+def test_mimii_windows_stack_context():
+    lm = np.arange(311 * 40, dtype=np.float32).reshape(311, 40)
+    w = mimii_windows(lm)
+    assert w.shape == (307, 200)
+    assert np.array_equal(w[1], lm[1:6].reshape(-1))
+    assert mimii_windows(lm, stride=8).shape == (39, 200)
