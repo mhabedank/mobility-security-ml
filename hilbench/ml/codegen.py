@@ -68,17 +68,28 @@ def model_to_c(model: QModel) -> str:
     return "".join(out)
 
 
+def _max_chain(macro: str, values: list) -> str:
+    """Preprocessor running maximum that skips models excluded via MI_EXCLUDE_*."""
+    out = [f"#define {macro}_0 4u\n"]
+    for i, (m, v) in enumerate(values):
+        guard = f"MI_EXCLUDE_{_ident(m.name).upper()}"
+        out.append(f"#if !defined({guard}) && {v}u > {macro}_{i}\n#define {macro}_{i + 1} {v}u\n"
+                   f"#else\n#define {macro}_{i + 1} {macro}_{i}\n#endif\n")
+    out.append(f"#define {macro} {macro}_{len(values)}\n\n")
+    return "".join(out)
+
+
 def zoo_sources(models: list[QModel]) -> tuple[str, str]:
     for model in models:
         for l in model.layers:
             if l.op not in OPS:
                 raise ValueError(f"{model.name}: unsupported op {l.op}")
-    arena = max(m.arena_size() for m in models)
-    max_in = max(m.in_size for m in models)
-    max_out = max(m.out_size for m in models)
     h = [HEADER, "#ifndef MODEL_ZOO_H\n#define MODEL_ZOO_H\n\n#include \"microinfer.h\"\n\n",
          "#ifdef __cplusplus\nextern \"C\" {\n#endif\n\n",
-         f"#define MI_ZOO_ARENA_SIZE {arena}u\n#define MI_ZOO_MAX_IN {max_in}u\n#define MI_ZOO_MAX_OUT {max_out}u\n\n"]
+         "/* Buffer sizes = maximum over the models that are compiled in. */\n",
+         _max_chain("MI_ZOO_ARENA_SIZE", [(m, m.arena_size()) for m in models]),
+         _max_chain("MI_ZOO_MAX_IN", [(m, m.in_size) for m in models]),
+         _max_chain("MI_ZOO_MAX_OUT", [(m, m.out_size) for m in models])]
     for m in models:
         h.append(f"extern const mi_model_t mi_model_{_ident(m.name)};\n")
     h.append("\n/* NULL-terminated; models can be dropped with -DMI_EXCLUDE_<NAME>. */\n")

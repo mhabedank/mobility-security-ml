@@ -1,0 +1,21 @@
+# udev rules for the HIL bench - installed by hil/setup-host.sh
+# Serial devices of supported boards: accessible for the dialout group and
+# stable symlinks /dev/hil/<vid>-<pid>-<serial or usb-path>.
+
+# USB-UART bridges: CH340/CH9102 (WCH), CP210x (Silabs), FTDI
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", MODE="0660", GROUP="dialout", SYMLINK+="hil/%s{idVendor}-%s{idProduct}-$env{ID_PATH_TAG}"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", MODE="0660", GROUP="dialout", SYMLINK+="hil/%s{idVendor}-%s{idProduct}-$env{ID_PATH_TAG}"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", MODE="0660", GROUP="dialout", SYMLINK+="hil/%s{idVendor}-%s{idProduct}-$env{ID_PATH_TAG}"
+# Native USB: Espressif USB-Serial/JTAG, Raspberry Pi RP2040/RP2350, Arduino, ST-LINK
+SUBSYSTEM=="tty", ATTRS{idVendor}=="303a", MODE="0660", GROUP="dialout", SYMLINK+="hil/%s{idVendor}-%s{idProduct}-$env{ID_PATH_TAG}"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2e8a", MODE="0660", GROUP="dialout", SYMLINK+="hil/%s{idVendor}-%s{idProduct}-$env{ID_PATH_TAG}"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", MODE="0660", GROUP="dialout", SYMLINK+="hil/%s{idVendor}-%s{idProduct}-$env{ID_PATH_TAG}"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0483", MODE="0660", GROUP="dialout", SYMLINK+="hil/%s{idVendor}-%s{idProduct}-$env{ID_PATH_TAG}"
+
+# Debug probes / bootloaders used for flashing (ST-LINK, RP2 BOOTSEL, Espressif JTAG)
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374*", MODE="0660", GROUP="dialout"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", MODE="0660", GROUP="dialout"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="303a", MODE="0660", GROUP="dialout"
+
+# Per-port power switching with uhubctl without root (all hubs)
+SUBSYSTEM=="usb", DRIVER=="hub", ACTION=="add", RUN+="/bin/sh -c 'chgrp dialout /sys%p/*-port*/disable || true; chmod g+w /sys%p/*-port*/disable || true'"

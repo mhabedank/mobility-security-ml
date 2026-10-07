@@ -23,7 +23,7 @@
     },
     {
       "name": "sensor_ae",
-      "description": "Wheel-speed sensor anomaly autoencoder 64-32-8-32-64",
+      "description": "Wheel-speed sensor anomaly autoencoder 64-64-16-64-64",
       "in_shape": [
         1,
         1,
@@ -35,10 +35,10 @@
         64
       ],
       "layers": 4,
-      "macs": 4608,
-      "param_bytes": 5832,
+      "macs": 10240,
+      "param_bytes": 12112,
       "arena_size": 128,
-      "crc32": "f8c70c85",
+      "crc32": "8100a13d",
       "n_tests": 8
     },
     {

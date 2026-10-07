@@ -8,9 +8,75 @@
 extern "C" {
 #endif
 
-#define MI_ZOO_ARENA_SIZE 8000u
-#define MI_ZOO_MAX_IN 490u
-#define MI_ZOO_MAX_OUT 64u
+/* Buffer sizes = maximum over the models that are compiled in. */
+#define MI_ZOO_ARENA_SIZE_0 4u
+#if !defined(MI_EXCLUDE_CAN_IDS_MLP) && 64u > MI_ZOO_ARENA_SIZE_0
+#define MI_ZOO_ARENA_SIZE_1 64u
+#else
+#define MI_ZOO_ARENA_SIZE_1 MI_ZOO_ARENA_SIZE_0
+#endif
+#if !defined(MI_EXCLUDE_SENSOR_AE) && 128u > MI_ZOO_ARENA_SIZE_1
+#define MI_ZOO_ARENA_SIZE_2 128u
+#else
+#define MI_ZOO_ARENA_SIZE_2 MI_ZOO_ARENA_SIZE_1
+#endif
+#if !defined(MI_EXCLUDE_IMU_GNSS_CNN1D) && 2048u > MI_ZOO_ARENA_SIZE_2
+#define MI_ZOO_ARENA_SIZE_3 2048u
+#else
+#define MI_ZOO_ARENA_SIZE_3 MI_ZOO_ARENA_SIZE_2
+#endif
+#if !defined(MI_EXCLUDE_KWS_DSCNN) && 8000u > MI_ZOO_ARENA_SIZE_3
+#define MI_ZOO_ARENA_SIZE_4 8000u
+#else
+#define MI_ZOO_ARENA_SIZE_4 MI_ZOO_ARENA_SIZE_3
+#endif
+#define MI_ZOO_ARENA_SIZE MI_ZOO_ARENA_SIZE_4
+
+#define MI_ZOO_MAX_IN_0 4u
+#if !defined(MI_EXCLUDE_CAN_IDS_MLP) && 32u > MI_ZOO_MAX_IN_0
+#define MI_ZOO_MAX_IN_1 32u
+#else
+#define MI_ZOO_MAX_IN_1 MI_ZOO_MAX_IN_0
+#endif
+#if !defined(MI_EXCLUDE_SENSOR_AE) && 64u > MI_ZOO_MAX_IN_1
+#define MI_ZOO_MAX_IN_2 64u
+#else
+#define MI_ZOO_MAX_IN_2 MI_ZOO_MAX_IN_1
+#endif
+#if !defined(MI_EXCLUDE_IMU_GNSS_CNN1D) && 384u > MI_ZOO_MAX_IN_2
+#define MI_ZOO_MAX_IN_3 384u
+#else
+#define MI_ZOO_MAX_IN_3 MI_ZOO_MAX_IN_2
+#endif
+#if !defined(MI_EXCLUDE_KWS_DSCNN) && 490u > MI_ZOO_MAX_IN_3
+#define MI_ZOO_MAX_IN_4 490u
+#else
+#define MI_ZOO_MAX_IN_4 MI_ZOO_MAX_IN_3
+#endif
+#define MI_ZOO_MAX_IN MI_ZOO_MAX_IN_4
+
+#define MI_ZOO_MAX_OUT_0 4u
+#if !defined(MI_EXCLUDE_CAN_IDS_MLP) && 2u > MI_ZOO_MAX_OUT_0
+#define MI_ZOO_MAX_OUT_1 2u
+#else
+#define MI_ZOO_MAX_OUT_1 MI_ZOO_MAX_OUT_0
+#endif
+#if !defined(MI_EXCLUDE_SENSOR_AE) && 64u > MI_ZOO_MAX_OUT_1
+#define MI_ZOO_MAX_OUT_2 64u
+#else
+#define MI_ZOO_MAX_OUT_2 MI_ZOO_MAX_OUT_1
+#endif
+#if !defined(MI_EXCLUDE_IMU_GNSS_CNN1D) && 2u > MI_ZOO_MAX_OUT_2
+#define MI_ZOO_MAX_OUT_3 2u
+#else
+#define MI_ZOO_MAX_OUT_3 MI_ZOO_MAX_OUT_2
+#endif
+#if !defined(MI_EXCLUDE_KWS_DSCNN) && 12u > MI_ZOO_MAX_OUT_3
+#define MI_ZOO_MAX_OUT_4 12u
+#else
+#define MI_ZOO_MAX_OUT_4 MI_ZOO_MAX_OUT_3
+#endif
+#define MI_ZOO_MAX_OUT MI_ZOO_MAX_OUT_4
 
 extern const mi_model_t mi_model_can_ids_mlp;
 extern const mi_model_t mi_model_sensor_ae;

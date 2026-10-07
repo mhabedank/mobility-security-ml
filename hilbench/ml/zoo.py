@@ -62,15 +62,15 @@ def build_can_ids(out: Path) -> QModel:
 def build_sensor_ae(out: Path) -> QModel:
     x, _ = datasets.sensor_windows(4000, seed=1)
     net = FloatNet((1, 1, 64), [
-        FLayer("dense", 32, act="relu"),
-        FLayer("dense", 8, act="relu"),
-        FLayer("dense", 32, act="relu"),
+        FLayer("dense", 64, act="relu"),
+        FLayer("dense", 16),  # linear bottleneck: no dead units
+        FLayer("dense", 64, act="relu"),
         FLayer("dense", 64),
     ]).build(np.random.default_rng(1))
-    train_dense(net, x, x, loss="mse", epochs=30, lr=2e-3)
+    train_dense(net, x, x, loss="mse", epochs=400, lr=2e-3, batch=64)
     xe, ye = datasets.sensor_windows(512, seed=11, anomaly_ratio=0.3)
     model = net.quantize("sensor_ae", x[:2000],
-                         description="Wheel-speed sensor anomaly autoencoder 64-32-8-32-64", test_data=xe)
+                         description="Wheel-speed sensor anomaly autoencoder 64-64-16-64-64", test_data=xe)
     xq = quantize(xe.reshape(len(xe), -1), model.input_scale, model.input_zp)
     rec = (run_batch(model, xq).astype(np.float64) - model.output_zp) * model.output_scale
     err = ((rec - xe.reshape(len(xe), -1)) ** 2).mean(1)
