@@ -310,12 +310,24 @@ def _embedded_payload(archive: Path) -> Path | None:
         head = fh.read(22)
         if len(head) < 22 or not head.startswith(b"PK\x05\x06") or archive.stat().st_size < 1024:
             return None
-        fh.seek(22 + struct.unpack_from("<H", head, 20)[0])  # skip the zip comment
-        start = fh.tell()
+        start = 22 + struct.unpack_from("<H", head, 20)[0]  # skip the zip comment
+        fh.seek(start)
+        while True:  # skip zero padding
+            block = fh.read(1 << 20)
+            nz = len(block) - len(block.lstrip(b"\0"))
+            if nz < len(block):
+                start += nz
+                break
+            if not block:
+                raise DataError(f"{archive.name}: the publisher served an empty zip followed only by zero "
+                                f"bytes ({archive.stat().st_size} bytes) - the download is broken at the source")
+            start += len(block)
+        fh.seek(start)
         ext = _sniff(fh.read(512))
         if ext is None:
             fh.seek(start)
-            raise DataError(f"{archive.name}: empty zip followed by unknown data {fh.read(16).hex()}")
+            raise DataError(f"{archive.name}: empty zip followed by unknown data at offset {start}: "
+                            f"{fh.read(32).hex()}")
         out = archive.with_name(archive.name[:-4] + ".payload" + ext)
         if not out.exists():
             fh.seek(start)

@@ -72,6 +72,15 @@ def test_empty_zip_wrapper_with_embedded_archive(tmp_path, kind):
     assert len(empty.getvalue()) == 22
     wrapped = tmp_path / "raw" / "ds.zip"
     wrapped.parent.mkdir()
-    wrapped.write_bytes(empty.getvalue() + payload.read_bytes() + b"\0" * 2048)
+    wrapped.write_bytes(empty.getvalue() + b"\0" * 3000 + payload.read_bytes() + b"\0" * 2048)
     dl._extract(wrapped, tmp_path / "out")
     assert (tmp_path / "out" / "set" / "a.log").read_text().startswith("(1.0)")
+
+
+def test_zero_filled_wrapper_is_reported(tmp_path):
+    empty = io.BytesIO()
+    zipfile.ZipFile(empty, "w").close()
+    wrapped = tmp_path / "ds.zip"
+    wrapped.write_bytes(empty.getvalue() + b"\0" * (3 << 20))
+    with pytest.raises(dl.DataError, match="only by zero bytes"):
+        dl._extract(wrapped, tmp_path / "out")
