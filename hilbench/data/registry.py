@@ -105,22 +105,6 @@ SOURCES: dict[str, Source] = {s.id: s for s in [
         tags=("imu", "har"),
     ),
     Source(
-        id="dcase2020-t2",
-        title="DCASE 2020 Task 2 development dataset (MIMII + ToyADMOS subsets)",
-        use_case="anomalous machine-sound detection (fan, pump, slider, valve, toy car, toy conveyor)",
-        license="CC-BY-SA-4.0",
-        license_url="https://creativecommons.org/licenses/by-sa/4.0/",
-        homepage="https://zenodo.org/records/3678171",
-        attribution="DCASE 2020 Challenge Task 2 development dataset by Y. Koizumi, Y. Kawaguchi, K. Imoto "
-                    "et al., built from MIMII (Hitachi) and ToyADMOS (NTT)",
-        citation="Koizumi et al., 'Description and Discussion on DCASE2020 Challenge Task2', DCASE 2020",
-        zenodo_record="3678171",
-        zenodo_files=("dev_data_fan",),
-        approx_size_mb=1000,
-        hf_rehost="pending license verification",
-        tags=("audio", "anomaly"),
-    ),
-    Source(
         id="mimii",
         title="MIMII - Sound Dataset for Malfunctioning Industrial Machine Investigation and Inspection",
         use_case="anomalous machine-sound detection (pumps, fans, valves, slide rails)",
@@ -146,6 +130,8 @@ REJECTED: dict[str, str] = {
     "syncan": "ETAS SynCAN: non-commercial use only (custom license terms)",
     "hcrl-car-hacking": "HCRL Car-Hacking/OTIDS: download after registration, no open redistribution license",
     "dcase2021+-task2/toyadmos2": "DCASE 2021+ task 2 / ToyADMOS2: CC BY-NC-SA 4.0 (non-commercial)",
+    "dcase2020-task2-dev": "DCASE 2020 task 2 dev set (Zenodo 3678171): Zenodo declares CC BY-NC-SA 4.0 "
+                           "(found by `hilbench data verify`, 2026-10-07)",
     "gnss-interference-mendeley": "GNSS interference & spoofing (Mendeley): CC BY-NC (non-commercial)",
     "driverBehaviorDataset (jair-jr)": "GitHub repo without any license (all rights reserved)",
 }

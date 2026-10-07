@@ -21,6 +21,7 @@ import argparse
 import json
 import os
 import time
+import zlib
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -97,6 +98,16 @@ def export(task: Task, version: str, seed: int = 0) -> dict:
         "test_samples": int(len(task.y_test)),
         "tflite_interpreter_mismatches": int(mismatches),
     }
+    if len(task.labels) == 2:  # detection tasks: report recall/precision of the positive class
+        pred = out.argmax(1)
+        tp = int(((pred == 1) & (task.y_test == 1)).sum())
+        fp = int(((pred == 1) & (task.y_test == 0)).sum())
+        fn = int(((pred == 0) & (task.y_test == 1)).sum())
+        prec = tp / max(tp + fp, 1)
+        rec = tp / max(tp + fn, 1)
+        metrics.update(int8_precision=prec, int8_recall=rec,
+                       int8_f1=2 * prec * rec / max(prec + rec, 1e-9),
+                       int8_false_positive_rate=fp / max(int((task.y_test == 0).sum()), 1))
     provenance = [{
         "id": SOURCES[d].id, "title": SOURCES[d].title, "license": SOURCES[d].license,
         "attribution": SOURCES[d].attribution, "citation": SOURCES[d].citation,
@@ -307,8 +318,157 @@ def task_har(seed: int) -> Task:
     return task
 
 
-TASKS = {"kws": task_kws, "har": task_har}
-TASK_DATASETS = {"kws": ["speech-commands"], "har": ["uci-har"]}
+# ------------------------------------------------------------------ CAN --
+
+CAN_LINE = None  # compiled lazily
+
+
+def parse_candump(path) -> dict:
+    """candump log "(ts) iface ID#DATA" -> arrays t, can_id, dlc, data[n, 8]."""
+    import re
+
+    global CAN_LINE
+    if CAN_LINE is None:
+        CAN_LINE = re.compile(rb"\(\s*([0-9.]+)\)\s+\S+\s+([0-9A-Fa-f]{1,8})#([0-9A-Fa-f]*)")
+    ts, ids, dlc, data = [], [], [], []
+    with open(path, "rb") as fh:
+        for m in CAN_LINE.finditer(fh.read()):
+            payload = bytes.fromhex(m.group(3).decode()[:16])
+            ts.append(float(m.group(1)))
+            ids.append(int(m.group(2), 16))
+            dlc.append(len(payload))
+            data.append(payload.ljust(8, b"\0"))
+    return {"t": np.array(ts), "id": np.array(ids, dtype=np.int64), "dlc": np.array(dlc, dtype=np.int64),
+            "data": np.frombuffer(b"".join(data), dtype=np.uint8).reshape(-1, 8)}
+
+
+CAN_FEATURES = 32
+
+
+def can_features(f: dict, known_ids: set) -> np.ndarray:
+    """Per-frame features a CAN gateway can compute with O(#IDs) state:
+    11 ID bits, DLC, 8 payload bytes, log inter-arrival time of this ID, ratio to
+    the previous inter-arrival time, payload Hamming distance and per-byte deltas
+    to the previous frame of the same ID, known-ID flag."""
+    n = len(f["t"])
+    order = np.lexsort((f["t"], f["id"]))  # group by ID, then time
+    same = np.zeros(n, bool)
+    same[1:] = f["id"][order][1:] == f["id"][order][:-1]
+    prev = np.where(same, np.roll(order, 1), -1)  # previous frame of the same ID (sorted space)
+    prev_idx = np.full(n, -1)
+    prev_idx[order] = prev
+    has = prev_idx >= 0
+    p = np.where(has, prev_idx, 0)
+    dt = np.where(has, f["t"] - f["t"][p], 1.0)
+    pp = np.where(has, prev_idx[p], -1)
+    dt_prev = np.where(pp >= 0, f["t"][p] - f["t"][np.maximum(pp, 0)], dt)
+    d = f["data"].astype(np.int64)
+    dprev = np.where(has[:, None], d[p], d)
+    x = np.zeros((n, CAN_FEATURES), np.float32)
+    x[:, 0:11] = (f["id"][:, None] >> np.arange(11)) & 1
+    x[:, 11] = f["dlc"] / 8.0
+    x[:, 12:20] = d / 255.0
+    x[:, 20] = np.clip((np.log10(np.maximum(dt, 1e-6)) + 6) / 6, 0, 1.5)
+    x[:, 21] = np.clip(np.log2(np.maximum(dt, 1e-6) / np.maximum(dt_prev, 1e-6)) / 8 + 0.5, 0, 1)
+    x[:, 22] = np.unpackbits((d ^ dprev).astype(np.uint8), axis=1).sum(1) / 64.0
+    x[:, 23:31] = np.abs(d - dprev) / 255.0
+    x[:, 31] = np.isin(f["id"], list(known_ids)).astype(np.float32)
+    return x
+
+
+def _road_root():
+    root = dataset_dir("road") / "extracted"
+    hits = [p for p in root.rglob("attacks") if p.is_dir() and (p / "capture_metadata.json").exists()]
+    if not hits:
+        raise SystemExit("road not downloaded: hilbench data download road")
+    return hits[0].parent
+
+
+def _road_labels(f: dict, meta: dict) -> np.ndarray:
+    """Frames inside the injection interval that carry the injected ID (or any
+    ID for fuzzing) are attacks."""
+    y = np.zeros(len(f["t"]), np.int64)
+    interval = meta.get("injection_interval") or meta.get("injection_time") or meta.get("interval")
+    if not interval:
+        return y
+    t0 = f["t"][0] if len(f["t"]) else 0.0
+    start, end = float(interval[0]), float(interval[1])
+    rel = f["t"] - t0 if start < 1e6 else f["t"]  # relative or absolute timestamps
+    inside = (rel >= start) & (rel <= end)
+    inj = meta.get("injection_id")
+    if inj in (None, "", "XXX", "random"):
+        y[inside] = 1
+    else:
+        ids = inj if isinstance(inj, list) else [inj]
+        ids = [int(str(i), 16) if isinstance(i, str) else int(i) for i in ids]
+        y[inside & np.isin(f["id"], ids)] = 1
+    return y
+
+
+def load_can(seed: int = 0):
+    root = _road_root()
+    ameta = json.loads((root / "attacks" / "capture_metadata.json").read_text())
+    print("road attack metadata keys:", list(ameta)[:5], "->", json.dumps(ameta[next(iter(ameta))])[:300],
+          flush=True)
+    ambient = sorted((root / "ambient").glob("*.log"))
+    ambient = [p for p in ambient if p.stat().st_size < 120e6]  # keep CI time/RAM bounded
+    known = set()
+    amb = []
+    for p in ambient:
+        f = parse_candump(p)
+        known |= set(np.unique(f["id"]).tolist())
+        amb.append((p.name, f))
+    rng = np.random.default_rng(seed)
+    parts = {"train": [], "test": []}
+    for name, f in amb:  # ambient: hold out every 4th capture
+        split = "test" if zlib.crc32(name.encode()) % 4 == 0 else "train"  # deterministic
+        keep = rng.random(len(f["t"])) < 0.15  # subsample long benign captures
+        parts[split].append((can_features(f, known)[keep], np.zeros(keep.sum(), np.int64)))
+    for p in sorted((root / "attacks").glob("*.log")):
+        key = p.stem
+        meta = ameta.get(key) or ameta.get(p.name) or {}
+        f = parse_candump(p)
+        y = _road_labels(f, meta)
+        split = "test" if key.removesuffix("_masquerade").endswith("_2") else "train"
+        parts[split].append((can_features(f, known), y))
+        print(f"road {key}: {len(y)} frames, {y.sum()} attack, {split}", flush=True)
+    out = {}
+    for split, items in parts.items():
+        x = np.concatenate([a for a, _ in items])
+        y = np.concatenate([b for _, b in items])
+        perm = rng.permutation(len(y))
+        out[split] = (x[perm], y[perm])
+        print(f"can {split}: {len(y)} frames, {y.mean() * 100:.2f}% attack", flush=True)
+    return out
+
+
+def can_model():
+    tf = _tf()
+    L = tf.keras.layers
+    x = inp = L.Input((CAN_FEATURES,))
+    x = L.Dense(64, activation="relu")(x)
+    x = L.Dense(32, activation="relu")(x)
+    x = L.Dense(2)(x)
+    x = L.Softmax()(x)
+    return tf.keras.Model(inp, x)
+
+
+def task_can(seed: int) -> Task:
+    d = load_can(seed)
+    xtr, ytr = d["train"]
+    n_val = len(ytr) // 10
+    pos = max(ytr.mean(), 1e-4)
+    return Task(
+        name="can_ids_road", model=can_model(),
+        x_train=xtr[n_val:], y_train=ytr[n_val:], x_val=xtr[:n_val], y_val=ytr[:n_val],
+        x_test=d["test"][0], y_test=d["test"][1], datasets=["road"], labels=["normal", "attack"],
+        description="CAN bus intrusion detection MLP (32-64-32-2) on per-frame features, trained on the "
+                    "ROAD dataset (real vehicle; fuzzing, fabrication, masquerade attacks)",
+        fit_kwargs={"class_weight": {0: 1.0, 1: float(min(0.5 / pos, 50.0))}})
+
+
+TASKS = {"kws": task_kws, "har": task_har, "can": task_can}
+TASK_DATASETS = {"kws": ["speech-commands"], "har": ["uci-har"], "can": ["road"]}
 
 
 def main(argv=None):

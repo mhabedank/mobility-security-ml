@@ -19,7 +19,7 @@ jobs:
         run: hilbench data verify
       - name: remote files
         run: |
-          hilbench data files road can-mirgu uci-har speech-commands dcase2020-t2
+          hilbench data files road can-mirgu uci-har speech-commands
           curl -s https://zenodo.org/api/records/3384388 | python -c "import json,sys; [print('mimii', f['key'], f['size']) for f in json.load(sys.stdin)['files']]"
           curl -s https://zenodo.org/api/records/3678171 | python -c "import json,sys; d=json.load(sys.stdin); print(d['metadata'].get('license')); [print('dcase', f['key'], f['size']) for f in d['files']]"
           curl -s "https://archive.ics.uci.edu/api/dataset?id=1035" | python -c "import json,sys; d=json.load(sys.stdin)['data']; print({k: (str(v)[:120]) for k, v in d.items()})"
@@ -29,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        dataset: [road, can-mirgu, uci-har, dcase2020-t2]
+        dataset: [road, can-mirgu, uci-har]
     env:
       HILBENCH_DATA: ${{ github.workspace }}/../hbdata
     steps:
@@ -40,6 +40,9 @@ jobs:
       - run: pip install -e .
       - run: sudo apt-get install -y -qq p7zip-full unzip > /dev/null
       - run: hilbench data download ${{ matrix.dataset }}
+      - name: archive listing
+        run: |
+          for z in "$HILBENCH_DATA/${{ matrix.dataset }}"/raw/*; do ls -la "$z"; file "$z"; 7z l "$z" | head -40; done
       - run: hilbench data tree ${{ matrix.dataset }} --max 150
       - name: sample content
         run: |
