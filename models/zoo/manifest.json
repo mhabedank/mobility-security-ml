@@ -82,6 +82,28 @@
       "n_tests": 8,
       "version": "0.2.0",
       "source": "real-data"
+    },
+    {
+      "name": "har_cnn1d",
+      "description": "Human activity recognition 1D-CNN over 2.56 s of accelerometer + gyroscope (9 x 128 @50 Hz), trained on UCI HAR",
+      "in_shape": [
+        1,
+        128,
+        9
+      ],
+      "out_shape": [
+        1,
+        1,
+        6
+      ],
+      "layers": 8,
+      "macs": 354496,
+      "param_bytes": 7318,
+      "arena_size": 4096,
+      "crc32": "94bee56a",
+      "n_tests": 8,
+      "version": "0.2.0",
+      "source": "real-data"
     }
   ]
 }
