@@ -14,6 +14,10 @@ on:
         description: "HF organisation/user (empty = vars.HF_ORG or token owner)"
         required: false
         default: ""
+      ref:
+        description: "git commit/branch whose models/zoo is published (empty = this branch)"
+        required: false
+        default: ""
       public:
         description: "create public repos"
         type: boolean
@@ -24,6 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+      # the publishing code always comes from the dispatching branch
+      - uses: actions/checkout@v4
+        with:
+          path: tooling
+      - run: cp -r tooling/hilbench tooling/pyproject.toml . && rm -rf tooling
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
